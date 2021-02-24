@@ -1,0 +1,4 @@
+{
+  "port": "5000",
+  "dbUri": "mongodb+srv://fanfics:wccp0sb2Q4XKLvuV@cluster0.pbb7p.mongodb.net/app?retryWrites=true&w=majority"
+}
