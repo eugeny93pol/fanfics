@@ -1,0 +1,34 @@
+{
+  "name": "fanfics-mordor",
+  "version": "1.0.0",
+  "description": "fanfics web application from belarus with love",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js",
+    "client": "npm run start --prefix client",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "fanfic",
+    "itransition",
+    "web",
+    "front-end",
+    "react",
+    "express",
+    "mongodb",
+    "nodejs"
+  ],
+  "author": "Evgeny Poluyanovich <eugeny.pol93@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.3",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.18"
+  },
+  "devDependencies": {
+    "concurrently": "^6.0.0",
+    "nodemon": "^2.0.7"
+  }
+}
