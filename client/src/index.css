@@ -1,0 +1,19 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+
+.form-check .form-check-input {
+    float: right;
+    margin-left: .5em;
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-gray);
+    border-color: var(--bs-gray);
+}
+
+.form-signup {
+    width: 100%;
+    max-width: 330px;
+    margin: auto;
+}
