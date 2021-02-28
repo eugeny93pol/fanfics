@@ -1,4 +1,6 @@
 {
   "port": "5000",
+  "expiresToken": "1h",
+  "jwtSecret": "9b2b3a2491c45154a0c3f614035d4e019e2ba8b677da60b1a85e37d8ee3633ab",
   "dbUri": "mongodb+srv://fanfics:wccp0sb2Q4XKLvuV@cluster0.pbb7p.mongodb.net/app?retryWrites=true&w=majority"
 }

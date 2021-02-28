@@ -1,10 +1,19 @@
-import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {Link, useHistory} from 'react-router-dom'
+import {SocialButtons} from '../components/SocialButtons'
+import {useHttp} from '../hooks/http.hook'
 
 export const SignupPage = () => {
+    const {loading, error, clearError, request} = useHttp()
     const [form, setForm] = useState({
         name: '', email: '', password: ''
     })
+    const history = useHistory()
+
+    useEffect( () => {
+        console.log(error)
+        clearError()
+    }, [error])
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
@@ -16,10 +25,11 @@ export const SignupPage = () => {
 
     const signupHandler = async () => {
         try {
-
-        } catch (e) {
-
-        }
+            const data = await request('/api/auth/signup', 'POST', {...form})
+            if (data) {
+                history.push('/signin')
+            }
+        } catch (e) { }
     }
 
     return(
@@ -78,9 +88,10 @@ export const SignupPage = () => {
                     className="w-100 btn btn-lg btn-dark mb-2"
                     type="submit"
                     onClick={ signupHandler }
-                    // disabled={loading}
+                    disabled={ loading }
                 >Sign up</button>
                 <Link to="/signin" className="w-100 btn btn-lg btn-outline-secondary">Sign In</Link>
+                <SocialButtons/>
             </form>
         </main>
     )

@@ -1,7 +1,13 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {Link} from 'react-router-dom'
+import {SocialButtons} from '../components/SocialButtons'
+import {AuthContext} from '../context/AuthContext'
+import {useHttp} from '../hooks/http.hook'
 
 export const SigninPage = () => {
+    const {loading, error, clearError, request} = useHttp()
+    const auth = useContext(AuthContext)
+
     const [form, setForm] = useState({
         email: '', password: ''
     })
@@ -16,7 +22,8 @@ export const SigninPage = () => {
 
     const signinHandler = async () => {
         try {
-
+            const data = await request('/api/auth/signin', 'POST', {...form})
+            auth.login(data.token)
         } catch (e) {
 
         }
@@ -63,10 +70,11 @@ export const SigninPage = () => {
                     className="w-100 btn btn-lg btn-dark mb-2"
                     type="submit"
                     onClick={ signinHandler }
-                    // disabled={loading}
+                    disabled={ loading }
                 >Sign up</button>
 
                 <Link to="/signup" className="w-100 btn btn-lg btn-outline-secondary">Sign Up</Link>
+                <SocialButtons/>
             </form>
         </main>
     )
