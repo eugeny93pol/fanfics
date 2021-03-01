@@ -11,7 +11,6 @@ export const SignupPage = () => {
     const history = useHistory()
 
     useEffect( () => {
-        console.log(error)
         clearError()
     }, [error])
 
@@ -89,7 +88,7 @@ export const SignupPage = () => {
                     type="submit"
                     onClick={ signupHandler }
                     disabled={ loading }
-                >Sign up</button>
+                >Sign Up</button>
                 <Link to="/signin" className="w-100 btn btn-lg btn-outline-secondary">Sign In</Link>
                 <SocialButtons/>
             </form>

@@ -1,39 +1,31 @@
-import React, {useContext, useState} from 'react'
-import {Link} from 'react-router-dom'
-import {AuthContext} from '../context/AuthContext'
+import React, { useContext, useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
+import { SearchBlock } from './SearchBlock'
+import { ThemeContext } from '../context/ThemeContext'
 
 export const Navbar = () => {
-    const [role, setRole] = useState('guest')
-    const [darkMode, setDarkMode] = useState(false)
-    const [searchText, setSearchText] = useState('')
+    const [role, setRole] = useState(null)
     const auth = useContext(AuthContext)
-
-    const searchChangeHandler = event => {
-        setSearchText(event.target.value)
-    }
-
-    const searchPressHandler = event => {
-        event.key === 'Enter' && searchHandler()
-    }
-
-    const searchHandler = event => {
-
-        try {
-
-        } catch (e) {
-
-        }
-    }
+    const theme = useContext(ThemeContext)
 
     const logoutHandler = () => {
         auth.logout()
     }
 
+    const toggleThemeHandler = () => {
+        theme.toggleTheme(!theme.theme)
+    }
+
+    useEffect(() => {
+        setRole(auth.user ? auth.user.role : null)
+    }, [auth.user])
+
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
 
-                <Link className="navbar-brand" to="/">Mordor</Link>
+                <NavLink className="navbar-brand" to="/">Mordor</NavLink>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
@@ -45,39 +37,41 @@ export const Navbar = () => {
 
                         { auth.isAuth &&
                         <li className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" id="profileDropdown" role="button"
+                            <NavLink className="nav-link dropdown-toggle" id="profileDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false" to="">
                                 Profile
-                            </Link>
+                            </NavLink>
                             <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                <li><Link className="dropdown-item" to="/profile">Go to profile</Link></li>
-                                <li><Link className="dropdown-item" to="/profile/settings">Settings</Link></li>
+                                <li><NavLink className="dropdown-item" to="/profile">Go to profile</NavLink></li>
+                                <li><NavLink className="dropdown-item" to="/settings">Settings</NavLink></li>
                                 <li>
                                     <hr className="dropdown-divider"/>
                                 </li>
-                                <li><Link
-                                    className="dropdown-item"
-                                    to="/logout"
-                                    onClick={ logoutHandler }
-                                >Logout</Link></li>
+                                <li>
+                                    <NavLink
+                                        className="dropdown-item"
+                                        to="/logout"
+                                        onClick={ logoutHandler }
+                                    >Logout</NavLink>
+                                </li>
                             </ul>
                         </li>
                         }
 
                         <li className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" id="genresDropdown" role="button"
+                            <NavLink className="nav-link dropdown-toggle" id="genresDropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="false" to="">
                                 Genres
-                            </Link>
+                            </NavLink>
                             <ul className="dropdown-menu" aria-labelledby="genresDropdown">
-                                <li><Link className="dropdown-item" to="/genre/ ">Genre 1</Link></li>
-                                <li><Link className="dropdown-item" to="/genre/">Genre 2</Link></li>
+                                <li><NavLink className="dropdown-item" to="/genre/">Genre 1</NavLink></li>
+                                <li><NavLink className="dropdown-item" to="/genre/">Genre 2</NavLink></li>
                             </ul>
                         </li>
 
                         { role === 'admin' &&
                         <li className="nav-item">
-                            <Link className="nav-link" to="/users">Users</Link>
+                            <NavLink className="nav-link" to="/users">Users</NavLink>
                         </li>
                         }
 
@@ -86,35 +80,18 @@ export const Navbar = () => {
                                 <span className="form-check-label">Dark mode</span>
                                 <input className="form-check-input" type="checkbox"
                                        id="themeSwitcher"
-                                       checked={ darkMode }
-                                       onChange={ () => setDarkMode(!darkMode) }
+                                       checked={ theme.theme }
+                                       onChange={ toggleThemeHandler }
                                 />
                             </label>
                         </li>
                     </ul>
 
-                    <form className="d-flex">
-                        <input className="form-control me-2"
-                               type="search"
-                               onChange={ searchChangeHandler }
-                               onKeyPress={ searchPressHandler }
-                               value={ searchText }
-                               placeholder="Search"
-                               aria-label="Search"/>
-                        <button className="btn btn-outline-dark"
-                                type="submit"
-                                onClick={ searchHandler }
-                                aria-label="Search button"
-                        ><i className="bi bi-search"/></button>
-                    </form>
+                    <SearchBlock/>
 
                     <div className="d-flex justify-content-center ms-lg-2 pt-2 pt-lg-0">
-                        <Link
-                            to={ auth.isAuth ? '/create' : '/signin'}
-                            className="btn btn-dark ms-0"
-                        >
-                            { auth.isAuth ? 'Create' : 'Sign In'}
-                        </Link>
+                        { !auth.isAuth && <NavLink to='/signin' className="btn btn-dark ms-0">Sign In</NavLink> }
+                        { auth.isAuth && <NavLink to='/create' className="btn btn-dark ms-0">Create</NavLink> }
                     </div>
 
                 </div>

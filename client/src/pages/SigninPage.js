@@ -23,7 +23,8 @@ export const SigninPage = () => {
     const signinHandler = async () => {
         try {
             const data = await request('/api/auth/signin', 'POST', {...form})
-            auth.login(data.token)
+            auth.login(data.token, data.userData)
+
         } catch (e) {
 
         }
@@ -57,7 +58,7 @@ export const SigninPage = () => {
                         id="password"
                         name="password"
                         placeholder="Password"
-                        autoComplete="new-password"
+                        autoComplete="password"
                         value={ form.password }
                         onChange={ changeHandler }
                         onKeyPress={ pressHandler }
@@ -71,7 +72,7 @@ export const SigninPage = () => {
                     type="submit"
                     onClick={ signinHandler }
                     disabled={ loading }
-                >Sign up</button>
+                >Sign In</button>
 
                 <Link to="/signup" className="w-100 btn btn-lg btn-outline-secondary">Sign Up</Link>
                 <SocialButtons/>
