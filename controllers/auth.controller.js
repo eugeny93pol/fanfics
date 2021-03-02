@@ -1,4 +1,4 @@
-const {check, validationResult} = require('express-validator')
+const { validationResult } = require('express-validator')
 const config = require('config')
 const User = require('../models/User')
 const Role = require('../models/Role')
@@ -30,8 +30,6 @@ const login = async (req, res) => {
         res.status(200).json( {
             userData: {
                 id: user._id,
-                name: user.name,
-                email: user.email,
                 role: user.role
             },
             token
@@ -71,7 +69,7 @@ const registration = async (req, res) => {
 
         res.status(201).json({ message: 'User created' })
     } catch (e) {
-        res.status(500).json({error: e})
+        res.status(500).json({ error: e })
     }
 }
 
@@ -88,15 +86,4 @@ const generateToken = (userId, userRole) => {
     )
 }
 
-const checkLoginData = [
-    check('email', 'Incorrect email').isEmail(),
-    check('password', 'Empty password').notEmpty()
-]
-
-const checkRegistrationData = [
-    check('name', 'Empty name').notEmpty(),
-    check('email', 'Incorrect email ').isEmail(),
-    check('password', 'Short password').isLength( {min: config.get('passwordLength')})
-]
-
-module.exports = { login, registration, checkAuth, checkLoginData, checkRegistrationData }
+module.exports = { login, registration, checkAuth }

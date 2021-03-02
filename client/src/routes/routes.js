@@ -14,12 +14,12 @@ export const useRoutes = (isAuth) => {
         return (
             <Switch>
                 <Route path='/' exact component={MainPage}/>
-                <Route path='/profile/:id' component={ProfilePage}/>
-                <Route path='/settings' component={SettingsPage}/>
-                <Route path='/create' component={CreatePage}/>
-                <Route path='/publication' component={PublicationPage}/>
-                <Route path='/genre/' component={GenresPage}/>
-                <Route path='/filter/:id' component={MainPage}/>
+                <Route path='/profile/:id' exact component={ProfilePage}/>
+                <Route path='/settings' exact component={SettingsPage}/>
+                <Route path='/create' exact component={CreatePage}/>
+                <Route path='/publication' exact component={PublicationPage}/>
+                <Route path='/genre/' exact component={GenresPage}/>
+                <Route path='/filter/:id' exact component={MainPage}/>
                 <Redirect to='/'/>
             </Switch>
         )
@@ -28,11 +28,11 @@ export const useRoutes = (isAuth) => {
     return (
         <Switch>
             <Route path='/' exact component={MainPage}/>
-            <Route path='/signup' component={SignupPage}/>
-            <Route path='/signin' component={SigninPage}/>
-            <Route path='/publication' component={PublicationPage}/>
-            <Route path='/genre/' component={GenresPage}/>
-            <Route path='/filter/:id' component={MainPage}/>
+            <Route path='/signup' exact component={SignupPage}/>
+            <Route path='/signin' exact component={SigninPage}/>
+            <Route path='/publication' exact component={PublicationPage}/>
+            <Route path='/genre/' exact component={GenresPage}/>
+            <Route path='/filter/:id' exact component={MainPage}/>
             <Redirect to='/'/>
         </Switch>
     )

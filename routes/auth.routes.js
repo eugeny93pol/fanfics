@@ -1,17 +1,11 @@
-const {Router} = require('express')
+const router = require('express').Router()
 const auth = require('../middleware/auth.middleware')
-const router = Router()
+const check = require('../handlers/checkFields.handler')
+const { login, registration, checkAuth } = require('../controllers/auth.controller')
 
-const {
-    login,
-    registration,
-    checkAuth,
-    checkLoginData,
-    checkRegistrationData
-} = require('../controllers/auth.controller')
 
-router.post('/signin', checkLoginData, login)
-router.post('/signup', checkRegistrationData, registration)
-router.get('/auth', auth, checkAuth)
+router.post('/signin', [check.email, check.password], login)
+router.post('/signup', [check.name, check.email, check.password], registration)
+router.get('/auth', auth, checkAuth) ////TODO: refresh token
 
 module.exports = router

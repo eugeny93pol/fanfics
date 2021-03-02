@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { SearchBlock } from './SearchBlock'
 import { ThemeContext } from '../context/ThemeContext'
@@ -8,6 +8,7 @@ export const Navbar = () => {
     const [role, setRole] = useState(null)
     const auth = useContext(AuthContext)
     const theme = useContext(ThemeContext)
+    const history = useHistory()
 
     const logoutHandler = () => {
         auth.logout()
@@ -42,7 +43,12 @@ export const Navbar = () => {
                                 Profile
                             </NavLink>
                             <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                <li><NavLink className="dropdown-item" to="/profile">Go to profile</NavLink></li>
+                                <li>
+                                    <NavLink
+                                        className="dropdown-item"
+                                        to={`/profile/${auth.user.id}`}
+                                    >Go to profile</NavLink>
+                                </li>
                                 <li><NavLink className="dropdown-item" to="/settings">Settings</NavLink></li>
                                 <li>
                                     <hr className="dropdown-divider"/>

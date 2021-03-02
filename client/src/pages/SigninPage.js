@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {SocialButtons} from '../components/SocialButtons'
 import {AuthContext} from '../context/AuthContext'
@@ -12,8 +12,13 @@ export const SigninPage = () => {
         email: '', password: ''
     })
 
+    useEffect( () => {
+        clearError()
+    }, [error, clearError])
+
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
+        //validate
     }
 
     const pressHandler = event => {
@@ -24,9 +29,9 @@ export const SigninPage = () => {
         try {
             const data = await request('/api/auth/signin', 'POST', {...form})
             auth.login(data.token, data.userData)
-
         } catch (e) {
-
+            //TODO
+            console.log(e.message)
         }
     }
 

@@ -12,10 +12,11 @@ export const SignupPage = () => {
 
     useEffect( () => {
         clearError()
-    }, [error])
+    }, [error, clearError])
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
+        //validate
     }
 
     const pressHandler = event => {
@@ -81,6 +82,9 @@ export const SignupPage = () => {
                         required
                     />
                     <label htmlFor="password">Password</label>
+                    <div className="form-text">
+                        Your password must be 6-20 characters long.
+                    </div>
                 </div>
 
                 <button
