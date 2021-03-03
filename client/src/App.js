@@ -12,21 +12,21 @@ import { Loader } from './components/Loader'
 
 
 function App() {
-    const { token, login, logout, user, isAuth, ready } = useAuth()
+    const { token, login, logout, userData, isAuth, ready } = useAuth()
     const { theme, toggleTheme } = useTheme()
     const routes = useRoutes(isAuth)
 
     if (!ready) {
-        return <Loader/>
+        return <Loader classes={['my-5']}/>
     }
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <LanguageContext.Provider value='en'>
-                <AuthContext.Provider value={{ token, login, logout, user, isAuth }}>
+                <AuthContext.Provider value={{ token, login, logout, userData, isAuth }}>
                     <Router>
                         <Navbar/>
-                        <div className="container">
+                        <div className="container-md">
                             { routes }
                         </div>
                     </Router>

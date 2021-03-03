@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const config = require('config')
 
 module.exports = (roles) => {
     return (req, res, next) => {
@@ -11,7 +10,7 @@ module.exports = (roles) => {
             if(!token) {
                 return res.status(401).json({message: "No authorisation"})
             }
-            const decodedToken = jwt.verify(token, config.get("jwtSecret"))
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
             const userRole = decodedToken.userRole
             if (!roles.includes(userRole)) {
                 return res.status(403).json({message: "Not authorized"})

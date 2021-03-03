@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator')
-const config = require('config')
 const User = require('../models/User')
 const Role = require('../models/Role')
 const bcrypt = require('bcrypt')
@@ -26,7 +25,7 @@ const login = async (req, res) => {
             return res.status(401).json({ message: 'Auth failed'})
         }
 
-        const token = generateToken(user._id, user.role)
+        const token = generateAccessToken(user._id, user.role)
         res.status(200).json( {
             userData: {
                 id: user._id,
@@ -74,15 +73,15 @@ const registration = async (req, res) => {
 }
 
 const checkAuth = async (req, res) => {
-    const token = generateToken(req.userData.userId, req.userData.userRole)
+    const token = generateAccessToken(req.userData.userId, req.userData.userRole)
     res.status(200).json( { token })
 }
 
-const generateToken = (userId, userRole) => {
+const generateAccessToken = (userId, userRole) => {
     return jwt.sign(
         { userId, userRole },
-        config.get('jwtSecret'),
-        { expiresIn: config.get('expiresToken') }
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.EXPIRES_ACCESS_TOKEN }
     )
 }
 

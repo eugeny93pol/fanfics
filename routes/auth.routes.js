@@ -6,6 +6,6 @@ const { login, registration, checkAuth } = require('../controllers/auth.controll
 
 router.post('/signin', [check.email, check.password], login)
 router.post('/signup', [check.name, check.email, check.password], registration)
-router.get('/auth', auth, checkAuth) ////TODO: refresh token
+router.get('/check', auth, checkAuth) ////TODO: refresh token
 
 module.exports = router

@@ -19,12 +19,12 @@ export const Navbar = () => {
     }
 
     useEffect(() => {
-        setRole(auth.user ? auth.user.role : null)
-    }, [auth.user])
+        setRole(auth.userData ? auth.userData.role : null)
+    }, [auth.userData])
 
     return(
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container">
+            <div className="container-md">
 
                 <NavLink className="navbar-brand" to="/">Mordor</NavLink>
 
@@ -46,7 +46,7 @@ export const Navbar = () => {
                                 <li>
                                     <NavLink
                                         className="dropdown-item"
-                                        to={`/profile/${auth.user.id}`}
+                                        to={`/profile/${auth.userData.id}`}
                                     >Go to profile</NavLink>
                                 </li>
                                 <li><NavLink className="dropdown-item" to="/settings">Settings</NavLink></li>

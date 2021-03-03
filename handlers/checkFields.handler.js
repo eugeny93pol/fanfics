@@ -1,10 +1,11 @@
 const { check } = require('express-validator')
-const config = require('config')
 
 const checkFields = {
     name: check('name', 'Empty name').notEmpty(),
     email: check('email', 'Incorrect email').isEmail(),
-    password: check('password', 'Short password').isLength( {min: config.get('passwordLength')})
+    password: check('password', 'Short password').isLength( {
+        min: process.env.MIN_PASSWORD_LENGTH
+    })
 }
 
 module.exports = checkFields

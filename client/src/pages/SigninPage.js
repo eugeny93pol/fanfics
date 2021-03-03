@@ -1,12 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
-import {SocialButtons} from '../components/SocialButtons'
-import {AuthContext} from '../context/AuthContext'
-import {useHttp} from '../hooks/http.hook'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { SocialButtons } from '../components/SocialButtons'
+import { AuthContext } from '../context/AuthContext'
+import { useHttp } from '../hooks/http.hook'
 
 export const SigninPage = () => {
-    const {loading, error, clearError, request} = useHttp()
+    const { loading, error, clearError, request } = useHttp()
     const auth = useContext(AuthContext)
+    const queryString = require('query-string')
 
     const [form, setForm] = useState({
         email: '', password: ''
@@ -34,6 +35,17 @@ export const SigninPage = () => {
             console.log(e.message)
         }
     }
+
+    const checkOauth = useCallback(async () => {
+        const parsed = queryString.parse(window.location.search)
+        if (parsed.code) {
+            console.log(parsed.code)
+        }
+    }, [])
+
+    useEffect(() => {
+        checkOauth()
+    },[])
 
     return(
         <main className="form-signup my-4">

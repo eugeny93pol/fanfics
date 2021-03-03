@@ -56,10 +56,6 @@
     background-color: rgba(29,160,241,.85);
 }
 
-.loader {
-    min-height: 10rem;
-}
-
 .form-edit {
     cursor: pointer;
     background-repeat: no-repeat;
