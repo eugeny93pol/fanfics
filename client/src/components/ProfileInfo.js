@@ -51,6 +51,7 @@ export const ProfileInfo = (props) => {
     }
 
     return (
+        <>
             <form>
                 <input type="text"
                        className="form-control form-control-plaintext form-edit"
@@ -61,17 +62,20 @@ export const ProfileInfo = (props) => {
                        onKeyPress={ pressHandler }
                        onBlur={ cancelHandler }
                 />
-                { user.email &&
-                    <input type="email"
-                           id="email"
-                           name="email"
-                           className="form-control form-control-plaintext form-edit"
-                           value={ form.email }
-                           onChange={ changeHandler }
-                           onKeyPress={ pressHandler }
-                           onBlur={ cancelHandler }
-                    />
-                }
-        </form>
+            </form>
+            { user.email &&
+            <form>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       className="form-control form-control-plaintext form-edit"
+                       value={ form.email }
+                       onChange={ changeHandler }
+                       onKeyPress={ pressHandler }
+                       onBlur={ cancelHandler }
+                />
+            </form>
+            }
+        </>
     )
 }
