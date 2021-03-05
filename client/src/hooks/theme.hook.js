@@ -13,7 +13,7 @@ export const useTheme = () => {
         if (saved) {
             setTheme(saved)
         }
-    }, [toggleTheme])
+    }, [])
 
     return { theme, toggleTheme }
 }

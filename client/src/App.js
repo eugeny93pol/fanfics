@@ -9,11 +9,13 @@ import { useAuth } from './hooks/auth.hook'
 import { useRoutes } from './routes/routes'
 import { Navbar } from './components/Navbar'
 import { Loader } from './components/Loader'
+import { useLanguage } from './hooks/language.hook'
 
 
 function App() {
     const { token, login, logout, userData, isAuth, ready } = useAuth()
     const { theme, toggleTheme } = useTheme()
+    const { language, toggleLanguage } = useLanguage()
     const routes = useRoutes(isAuth)
 
     if (!ready) {
@@ -22,7 +24,7 @@ function App() {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <LanguageContext.Provider value='en'>
+            <LanguageContext.Provider value={{ language, toggleLanguage }}>
                 <AuthContext.Provider value={{ token, login, logout, userData, isAuth }}>
                     <Router>
                         <Navbar/>

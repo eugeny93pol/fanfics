@@ -24,6 +24,15 @@ const getUser = async (req, res) => {
     }
 }
 
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({},{ password: 0 })
+        res.status(200).json({ users })
+    } catch (e) {
+        res.status(500).json({error: e})
+    }
+}
+
 const updateUser = async (req, res) => {
     try {
         const errors = validationResult(req)
@@ -49,4 +58,4 @@ const updateUser = async (req, res) => {
     }
 }
 
-module.exports = { getUser, updateUser }
+module.exports = { getUser, getUsers, updateUser }

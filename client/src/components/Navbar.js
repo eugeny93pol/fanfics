@@ -3,10 +3,12 @@ import { NavLink, useHistory } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { SearchBlock } from './SearchBlock'
 import { ThemeContext } from '../context/ThemeContext'
+import { LanguageContext } from '../context/LanguageContext'
 
 export const Navbar = () => {
     const [role, setRole] = useState(null)
     const auth = useContext(AuthContext)
+    const language = useContext(LanguageContext)
     const theme = useContext(ThemeContext)
     const history = useHistory()
 

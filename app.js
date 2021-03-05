@@ -9,7 +9,7 @@ const app = express()
 const PORT = process.env.PORT
 
 app.use(express.json({ extended: true}))
-app.use('/api', require('./routes/index.routes'))
+app.use('/api', require('./routes/index.route'))
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
