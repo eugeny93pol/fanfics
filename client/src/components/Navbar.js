@@ -1,23 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../context/AuthContext'
-import { SearchBlock } from './SearchBlock'
-import { ThemeContext } from '../context/ThemeContext'
-import { LanguageContext } from '../context/LanguageContext'
+import { SearchBlock } from './navbar/SearchBlock'
+import { LanguageSelector } from './navbar/LanguageSelectior'
+import { ThemeSelector } from './navbar/ThemeSelector'
+import { useThemedClasses } from '../classnames/ThemedClasses'
+
 
 export const Navbar = () => {
     const [role, setRole] = useState(null)
     const auth = useContext(AuthContext)
-    const language = useContext(LanguageContext)
-    const theme = useContext(ThemeContext)
-    const history = useHistory()
+    const { t } = useTranslation()
+    const { c } = useThemedClasses()
 
     const logoutHandler = () => {
         auth.logout()
-    }
-
-    const toggleThemeHandler = () => {
-        theme.toggleTheme(!theme.theme)
     }
 
     useEffect(() => {
@@ -25,83 +23,60 @@ export const Navbar = () => {
     }, [auth.userData])
 
     return(
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-md">
-
-                <NavLink className="navbar-brand" to="/">Mordor</NavLink>
-
+        <nav className={c.navbarClass}>
+            <div className="container-xxl">
+                <NavLink className="navbar-brand" to="/">{t('site.name')}</NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
                         aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"/>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarToggler">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         { auth.isAuth &&
-                        <li className="nav-item dropdown">
-                            <NavLink className="nav-link dropdown-toggle" id="profileDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false" to="">
-                                Profile
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to={`/profile/${auth.userData.id}`}>
+                                <i className="bi bi-person"/>
+                                {` ${t('profile')}`}
                             </NavLink>
-                            <ul className="dropdown-menu" aria-labelledby="profileDropdown">
-                                <li>
-                                    <NavLink
-                                        className="dropdown-item"
-                                        to={`/profile/${auth.userData.id}`}
-                                    >Go to profile</NavLink>
-                                </li>
-                                <li><NavLink className="dropdown-item" to="/settings">Settings</NavLink></li>
-                                <li>
-                                    <hr className="dropdown-divider"/>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        className="dropdown-item"
-                                        to="/logout"
-                                        onClick={ logoutHandler }
-                                    >Logout</NavLink>
-                                </li>
-                            </ul>
                         </li>
                         }
-
-                        <li className="nav-item dropdown">
-                            <NavLink className="nav-link dropdown-toggle" id="genresDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false" to="">
-                                Genres
-                            </NavLink>
-                            <ul className="dropdown-menu" aria-labelledby="genresDropdown">
-                                <li><NavLink className="dropdown-item" to="/genre/">Genre 1</NavLink></li>
-                                <li><NavLink className="dropdown-item" to="/genre/">Genre 2</NavLink></li>
-                            </ul>
-                        </li>
-
                         { role === 'admin' &&
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/users">Users</NavLink>
+                            <NavLink className="nav-link" to="/users">
+                                <i className="bi bi-shield-lock"/>
+                                {` ${t('admin.panel')}`}
+                            </NavLink>
                         </li>
                         }
-
-                        <li className="nav-item">
-                            <label className="form-check form-switch nav-link" htmlFor="themeSwitcher">
-                                <span className="form-check-label">Dark mode</span>
-                                <input className="form-check-input" type="checkbox"
-                                       id="themeSwitcher"
-                                       checked={ theme.theme }
-                                       onChange={ toggleThemeHandler }
-                                />
-                            </label>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#root" id="settingsDropdown" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                <i className="bi bi-gear"/>
+                                {` ${t('settings')}`}</a>
+                            <ul className={c.dropdownClass} aria-labelledby="settingsDropdown">
+                                <li><div className="dropdown-item nofocus"><ThemeSelector/></div></li>
+                                <li><div className="dropdown-item nofocus"><LanguageSelector/></div></li>
+                            </ul>
                         </li>
+                        { auth.isAuth &&
+                        <li className="nav-item">
+                            <a className="nav-link" href="/logout" onClick={ logoutHandler }>
+                                <i className="bi bi-door-open"/>
+                                {` ${t('logout')}`}
+                            </a>
+                        </li>
+                        }
                     </ul>
 
                     <SearchBlock/>
 
                     <div className="d-flex justify-content-center ms-lg-2 pt-2 pt-lg-0">
-                        { !auth.isAuth && <NavLink to='/signin' className="btn btn-dark ms-0">Sign In</NavLink> }
-                        { auth.isAuth && <NavLink to='/create' className="btn btn-dark ms-0">Create</NavLink> }
+                        { auth.isAuth ?
+                            <NavLink to='/create' className={c.btnClass}>{t('create')}</NavLink> :
+                            <NavLink to='/signin' className={c.btnClass}>{t('signin')}</NavLink> }
                     </div>
-
                 </div>
             </div>
         </nav>

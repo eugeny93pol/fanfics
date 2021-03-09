@@ -1,14 +1,19 @@
-import React, {useEffect, useState} from 'react'
-import {Link, useHistory} from 'react-router-dom'
-import {SocialButtons} from '../components/SocialButtons'
-import {useHttp} from '../hooks/http.hook'
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { SocialButtons } from '../components/SocialButtons'
+import { useHttp } from '../hooks/http.hook'
+import { useThemedClasses } from '../classnames/ThemedClasses'
 
 export const SignupPage = () => {
-    const {loading, error, clearError, request} = useHttp()
+    const { loading, error, clearError, request } = useHttp()
+    const { t } = useTranslation()
+    const { c } = useThemedClasses()
     const [form, setForm] = useState({
         name: '', email: '', password: ''
     })
     const history = useHistory()
+
 
     useEffect( () => {
         clearError()
@@ -16,7 +21,7 @@ export const SignupPage = () => {
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
-        //validate
+        //TODO: validate
     }
 
     const pressHandler = event => {
@@ -33,29 +38,29 @@ export const SignupPage = () => {
     }
 
     return(
-        <main className="form-signup my-4">
-            <form action="">
-                <h1 className="h2 mb-4">Registration</h1>
+        <main className="form-signup py-5">
+            <form className={ c.formClass }>
+                <h1 className="h2 mb-4">{t('registration')}</h1>
 
                 <div className="form-floating mb-3">
                     <input
                         type="text"
-                        className="form-control"
+                        className={ c.inputClass }
                         id="name"
                         name="name"
-                        placeholder="Name"
+                        placeholder={t('name')}
                         value={ form.name }
                         onChange={ changeHandler }
                         onKeyPress={ pressHandler }
                         required
                     />
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">{t('name')}</label>
                 </div>
 
                 <div className="form-floating mb-3">
                     <input
                         type="email"
-                        className="form-control"
+                        className={ c.inputClass }
                         id="email"
                         name="email"
                         placeholder="name@example.com"
@@ -65,35 +70,35 @@ export const SignupPage = () => {
                         onKeyPress={ pressHandler }
                         required
                     />
-                    <label htmlFor="email">Email address</label>
+                    <label htmlFor="email">{t('email')}</label>
                 </div>
 
                 <div className="form-floating mb-3">
                     <input
                         type="password"
-                        className="form-control"
+                        className={ c.inputClass }
                         id="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder={t('password')}
                         autoComplete="new-password"
                         value={ form.password }
                         onChange={ changeHandler }
                         onKeyPress={ pressHandler }
                         required
                     />
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">{t('password')}</label>
                     <div className="form-text">
-                        Your password must be 6-20 characters long.
+                        {t('password.hint')}
                     </div>
                 </div>
 
                 <button
-                    className="w-100 btn btn-lg btn-dark mb-2"
+                    className={`w-100 btn-lg mb-2 ${c.btnClass}`}
                     type="submit"
                     onClick={ signupHandler }
                     disabled={ loading }
-                >Sign Up</button>
-                <Link to="/signin" className="w-100 btn btn-lg btn-outline-secondary">Sign In</Link>
+                >{t('signup')}</button>
+                <Link to="/signin" className={`w-100 btn-lg mb-2 ${c.btnSecClass}`}>{t('signin')}</Link>
                 <SocialButtons/>
             </form>
         </main>

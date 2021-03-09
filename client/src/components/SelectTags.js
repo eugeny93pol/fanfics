@@ -1,37 +1,40 @@
-import React from 'react'
-import Select from 'react-select'
+import React, { useEffect, useState } from 'react'
 import CreatableSelect from 'react-select/creatable'
-
-
-const flavourOptions = [
-    { value: 'vanilla', label: 'Vanilla' },
-    { value: 'chocolate', label: 'Chocolate'},
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'salted-caramel', label: 'Salted Caramel' },
-
-];
-
+import { useTranslation } from 'react-i18next'
 
 
 export const SelectTags = (props) => {
+    const [options, setOptions] = useState([])
+    const { t } = useTranslation()
 
+    useEffect(() => {
+        setOptions(
+            props.tags.map(tag => {
+                return { value: tag._id, label: tag.name }
+            })
+        )
+    }, [props.tags, setOptions])
 
 
     const changeHandler = (selected) => {
         console.log(selected)
+        const tags = selected.map(item => {return { tagId: item.value }})
+        props.callback(tags)
     }
 
     return (
         <CreatableSelect
             closeMenuOnSelect={ true }
+            formatCreateLabel={ (input) => `${t('create')} "${input}"` }
             inputId="inputTags"
             isClearable={ false }
             isMulti
             maxMenuHeight={ 170 }
             menuPlacement="auto"
+            noOptionsMessage={ () => t('tags.no') }
             onChange={ changeHandler }
-            options={ flavourOptions }
-            placeholder="Select tags"
+            options={ options }
+            placeholder={t('tags.select')}
 
 
             //components={animatedComponents}

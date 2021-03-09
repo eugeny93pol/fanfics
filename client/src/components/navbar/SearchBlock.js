@@ -1,9 +1,13 @@
-import React, {useContext, useState} from 'react'
-import {useHttp} from '../hooks/http.hook'
+import React, { useState } from 'react'
+import { useHttp } from '../../hooks/http.hook'
+import { useTranslation } from 'react-i18next'
+import { useThemedClasses } from '../../classnames/ThemedClasses'
 
 export const SearchBlock = () => {
     const [searchText, setSearchText] = useState('')
     const { loading, error, clearError, request } = useHttp()
+    const { t } = useTranslation()
+    const { c } = useThemedClasses()
 
     const searchChangeHandler = event => {
         setSearchText(event.target.value)
@@ -24,14 +28,14 @@ export const SearchBlock = () => {
 
     return (
         <form className="d-flex">
-            <input className="form-control me-2"
+            <input className={`me-2 ${c.inputClass}`}
                    type="search"
                    onChange={ searchChangeHandler }
                    onKeyPress={ searchPressHandler }
                    value={ searchText }
-                   placeholder="Search"
+                   placeholder={t('search')}
                    aria-label="Search"/>
-            <button className="btn btn-outline-dark"
+            <button className={ c.btnOutlineClass }
                     type="submit"
                     onClick={ searchHandler }
                     aria-label="Search button"

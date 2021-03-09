@@ -3,23 +3,28 @@ import { Link } from 'react-router-dom'
 import { SocialButtons } from '../components/SocialButtons'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
+import { useTranslation } from 'react-i18next'
+import { useThemedClasses } from '../classnames/ThemedClasses'
 
 export const SigninPage = () => {
     const { loading, error, clearError, request } = useHttp()
     const auth = useContext(AuthContext)
     const queryString = require('query-string')
+    const { t } = useTranslation()
+    const { c } = useThemedClasses()
 
     const [form, setForm] = useState({
         email: '', password: ''
     })
 
     useEffect( () => {
+        //TODO:
         clearError()
     }, [error, clearError])
 
     const changeHandler = event => {
         setForm({ ...form, [event.target.name]: event.target.value })
-        //validate
+        //TODO: validate
     }
 
     const pressHandler = event => {
@@ -30,10 +35,7 @@ export const SigninPage = () => {
         try {
             const data = await request('/api/auth/signin', 'POST', {...form})
             auth.login(data.token, data.userData)
-        } catch (e) {
-            //TODO
-            console.log(e.message)
-        }
+        } catch (e) { }
     }
 
     const checkOauth = useCallback(async () => {
@@ -48,14 +50,14 @@ export const SigninPage = () => {
     },[])
 
     return(
-        <main className="form-signup my-4">
-            <form action="">
-                <h1 className="h2 mb-4">Sign In</h1>
+        <main className="form-signup py-5">
+            <form className={ c.formClass }>
+                <h1 className="h2 mb-4">{t('login')}</h1>
 
                 <div className="form-floating mb-3">
                     <input
                         type="email"
-                        className="form-control"
+                        className={ c.inputClass }
                         id="email"
                         name="email"
                         placeholder="name@example.com"
@@ -65,33 +67,33 @@ export const SigninPage = () => {
                         onKeyPress={ pressHandler }
                         required
                     />
-                    <label htmlFor="email">Email address</label>
+                    <label htmlFor="email">{t('email')}</label>
                 </div>
 
                 <div className="form-floating mb-3">
                     <input
                         type="password"
-                        className="form-control"
+                        className={ c.inputClass }
                         id="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder={t('password')}
                         autoComplete="password"
                         value={ form.password }
                         onChange={ changeHandler }
                         onKeyPress={ pressHandler }
                         required
                     />
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">{t('password')}</label>
                 </div>
 
                 <button
-                    className="w-100 btn btn-lg btn-dark mb-2"
+                    className={`w-100 btn-lg mb-2 ${c.btnClass}`}
                     type="submit"
                     onClick={ signinHandler }
                     disabled={ loading }
-                >Sign In</button>
+                >{t('signin')}</button>
 
-                <Link to="/signup" className="w-100 btn btn-lg btn-outline-secondary">Sign Up</Link>
+                <Link to="/signup" className={`w-100 btn-lg ${c.btnSecClass}`}>{t('signup')}</Link>
                 <SocialButtons/>
             </form>
         </main>

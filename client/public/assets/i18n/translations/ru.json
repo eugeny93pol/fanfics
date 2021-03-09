@@ -1,0 +1,45 @@
+{
+  "admin.panel": "Администратор",
+
+  "chapter": "Глава",
+  "chapter.add": "Добавить новую главу",
+  "chapter.placeholder": "Введите название главы",
+  "contents": "Содержание",
+  "create": "Создать",
+  "create.title": "Создайте свой фанфик",
+
+  "dropdown.toggle": "Открыть выпадающий список",
+
+  "email": "Электронная почта",
+
+  "genres": "Жанры",
+  "genres.no": "Нет жанров",
+  "genres.select": "Выберите жанры",
+
+  "login": "Вход",
+  "logout": "Выйти",
+
+  "name": "Имя",
+
+  "password": "Пароль",
+  "password.hint": "Ваш пароль должен быть длиннее 6 символов",
+  "profile": "Профиль",
+  "profile.go": "Перейти в профиль",
+  "profile.info": "О профиле",
+
+  "registration": "Регистрация",
+
+  "search": "Поиск",
+  "settings": "Настройки",
+  "signin": "Войти",
+  "signup": "Зарегистрироваться",
+  "site.name": "Мордор",
+  "summary": "Описание",
+
+  "tags": "Теги",
+  "tags.no": "Нет тегов",
+  "tags.select": "Выберите теги",
+  "title": "Название",
+  "title.placeholder": "Введите название своего фанфика",
+  "theme.dark": "Темная тема"
+}

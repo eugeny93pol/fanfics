@@ -1,5 +1,6 @@
 import {useState, useCallback, useEffect} from 'react'
 
+
 export const useLanguage = () => {
     const [language, setLanguage] = useState('en')
 
@@ -10,7 +11,9 @@ export const useLanguage = () => {
 
     useEffect(() => {
         const saved = JSON.parse(localStorage.getItem('language'))
-        saved && setLanguage(saved)
+        if (saved)  {
+            setLanguage(saved)
+        }
     }, [])
 
     return { language, toggleLanguage }

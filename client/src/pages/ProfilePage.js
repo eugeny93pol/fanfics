@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { Loader } from '../components/Loader'
 import { ProfileInfo } from '../components/ProfileInfo'
+import { useTranslation } from 'react-i18next'
+import { useThemedClasses } from '../classnames/ThemedClasses'
 
 
 export const ProfilePage = () => {
@@ -11,6 +13,8 @@ export const ProfilePage = () => {
     const { token } = useContext(AuthContext)
     const [user, setUser] = useState(null)
     const pageId = useParams().id
+    const { t } = useTranslation()
+    const { c } = useThemedClasses()
 
     const loadData = useCallback(async () => {
         try {
@@ -42,11 +46,11 @@ export const ProfilePage = () => {
         <Fragment>
             { !loading && user &&
             <div className="row mt-3">
-                <div className="col-md-4 col-lg-3 bg-light py-2">
-                    <h4>Profile info</h4>
+                <div className={`col-md-4 col-lg-3 me-md-3 ${ c.formClass }`}>
+                    <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
                     <ProfileInfo user={user} changeUserData={ changeUserData }/>
                 </div>
-                <div className="col">
+                <div className={`col ${ c.formClass }`}>
 
                     <h1>Profile Main</h1>
                 </div>

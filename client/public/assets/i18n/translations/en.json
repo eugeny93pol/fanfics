@@ -1,0 +1,45 @@
+{
+  "admin.panel": "Admin panel",
+
+  "chapter": "Chapter",
+  "chapter.add": "Add new chapter",
+  "chapter.placeholder": "Enter title of chapter",
+  "contents": "Contents",
+  "create": "Create",
+  "create.title": "Create your fanfic",
+
+  "dropdown.toggle": "Toggle Dropdown",
+
+  "email": "Email address",
+
+  "genres": "Genres",
+  "genres.no": "No genres",
+  "genres.select": "Select genres",
+
+  "login": "Login",
+  "logout": "Logout",
+
+  "name": "Name",
+
+  "password": "Password",
+  "password.hint": "Your password must be 6 characters long.",
+  "profile": "Profile",
+  "profile.go": "Go to profile",
+  "profile.info": "Profile info",
+
+  "registration": "Registration",
+
+  "search": "Search",
+  "settings": "Settings",
+  "signin": "Sign In",
+  "signup": "Sign Up",
+  "site.name": "Mordor",
+  "summary": "Summary",
+
+  "tags": "Tags",
+  "tags.no": "No tags",
+  "tags.select": "Select tags",
+  "title": "Title",
+  "title.placeholder": "Enter title of your fanfic",
+  "theme.dark": "Dark theme"
+}

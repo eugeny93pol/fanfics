@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { Loader } from './Loader'
+import { useThemedClasses } from '../classnames/ThemedClasses'
 
 
 export const ProfileInfo = (props) => {
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
     const [form, setForm] = useState({ name: '', email: '' })
+
+    const { c } = useThemedClasses()
 
     const user = props.user
     const changeUserData = props.changeUserData
@@ -46,7 +49,7 @@ export const ProfileInfo = (props) => {
         } catch (e) { }
     }
 
-    if(loading) {
+    if (loading) {
         return <Loader classes={['spinner-border-sm my-2']}/>
     }
 
@@ -54,7 +57,7 @@ export const ProfileInfo = (props) => {
         <>
             <form>
                 <input type="text"
-                       className="form-control form-control-plaintext form-edit"
+                       className={ c.inputInfoClass }
                        id="name"
                        name="name"
                        value={ form.name }
@@ -68,7 +71,7 @@ export const ProfileInfo = (props) => {
                 <input type="email"
                        id="email"
                        name="email"
-                       className="form-control form-control-plaintext form-edit"
+                       className={ c.inputInfoClass }
                        value={ form.email }
                        onChange={ changeHandler }
                        onKeyPress={ pressHandler }

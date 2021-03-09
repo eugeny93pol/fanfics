@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
+import { useTranslation } from 'react-i18next'
 
 export const SelectGenres = (props) => {
     const [options, setOptions] = useState([])
+    const { t } = useTranslation()
 
     useEffect(() => {
         setOptions(
@@ -19,15 +21,16 @@ export const SelectGenres = (props) => {
 
     return (
         <Select
-            closeMenuOnSelect={false}
+            closeMenuOnSelect={ false }
             inputId="inputGenres"
-            isClearable={false}
+            isClearable={ false }
             isMulti
-            maxMenuHeight={170}
+            maxMenuHeight={ 170 }
             menuPlacement="auto"
+            noOptionsMessage={ () => t('genres.no') }
             onChange={ changeHandler }
             options={ options }
-            placeholder="Select genres"
+            placeholder={t('genres.select')}
         />
     );
 }
