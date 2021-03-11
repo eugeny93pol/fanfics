@@ -31,6 +31,8 @@ export const SelectGenres = (props) => {
             onChange={ changeHandler }
             options={ options }
             placeholder={t('genres.select')}
+            className='multiselect'
+            classNamePrefix={ 'select' }
         />
     );
 }

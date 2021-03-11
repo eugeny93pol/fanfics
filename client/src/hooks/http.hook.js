@@ -14,6 +14,7 @@ export  const useHttp = () => {
             const data = await response.json()
 
             if (!response.ok) {
+                console.log(`hook response ${response.status}`)
                 throw new Error(data.message)
             }
 

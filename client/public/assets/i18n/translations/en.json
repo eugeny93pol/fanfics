@@ -41,5 +41,20 @@
   "tags.select": "Select tags",
   "title": "Title",
   "title.placeholder": "Enter title of your fanfic",
-  "theme.dark": "Dark theme"
+  "theme.dark": "Dark theme",
+
+  "table-header.name": "User name",
+  "table-header.email": "Email",
+  "table-header.publications": "Publications",
+  "table-header.comments": "Comments",
+  "table-header.status": "Status",
+  "table-header.actions": "Actions",
+  "table-header.search": "Search into {{count}} records",
+  "table-header.all": "All",
+
+  "table-users-actions.open": "Select an action",
+  "table-users-actions.admin": "Assign Administrator",
+  "table-users-actions.user": "Assign by user",
+  "table-users-actions.block": "Block",
+  "table-users-actions.delete": "Delete"
 }

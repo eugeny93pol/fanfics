@@ -35,6 +35,10 @@ export const SelectTags = (props) => {
             onChange={ changeHandler }
             options={ options }
             placeholder={t('tags.select')}
+            blurInputOnSelect={ false }
+            className='multiselect'
+            classNamePrefix={ 'select' }
+
 
 
             //components={animatedComponents}

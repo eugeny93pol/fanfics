@@ -79,7 +79,6 @@ body {
 }
 
 .bg-dark .form-edit:focus {
-
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(248,249,250)" class="bi bi-arrow-return-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/></svg>');
 }
 
@@ -98,10 +97,53 @@ body {
     background-color: var(--bs-gray-dark);
 }
 
+.multiselect .select__control {
+    border-color: #ced4da;
+    cursor: text;
+}
+
+.multiselect .select__control:hover
+{
+    border-color: #ced4da;
+}
+
+.multiselect .select__control--is-focused,
+.multiselect .select__control--menu-is-open,
+.multiselect .select__control--is-focused:hover,
+.multiselect .select__control--menu-is-open:hover
+{
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.bg-dark .select__control {
+    background-color: var(--bs-gray-dark)!important;
+    border-color: var(--bs-gray)!important;
+    color: var(--bs-light)!important;
+}
+
+.bg-dark .select__control--is-focused,
+.bg-dark .select__control--menu-is-open
+{
+    border-color: var(--bs-gray)!important;
+    box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25)!important;
+}
+
+.bg-dark .select__control:hover
+{
+    border-color: var(--bs-gray)!important;
+}
+
+.bg-dark .select__menu {
+    color: var(--bs-dark);
+    background-color: var(--bs-light)!important;
+}
+
+
+
 
 .sidebar-3 {
     position: static;
-    width: 25%;
 }
 
 

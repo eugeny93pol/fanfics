@@ -8,6 +8,7 @@ import { SettingsPage } from '../pages/SettingsPage'
 import { PublicationPage } from '../pages/PublicationPage'
 import { GenresPage } from '../pages/GenresPage'
 import { CreatePage } from '../pages/CreatePage'
+import { UsersPage } from '../pages/UsersPage'
 
 export const useRoutes = (isAuth) => {
 
@@ -26,6 +27,7 @@ export const useRoutes = (isAuth) => {
             {isAuth && <Route path='/profile/:id' exact component={ProfilePage}/>}
             {isAuth && <Route path='/settings' exact component={SettingsPage}/>}
             {isAuth && <Route path='/create' exact component={CreatePage}/>}
+            {isAuth && <Route path='/users' exact component={UsersPage}/>}
 
             <Redirect to='/'/>
         </Switch>

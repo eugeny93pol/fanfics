@@ -41,5 +41,20 @@
   "tags.select": "Выберите теги",
   "title": "Название",
   "title.placeholder": "Введите название своего фанфика",
-  "theme.dark": "Темная тема"
+  "theme.dark": "Темная тема",
+
+  "table-header.name": "Имя пользователя",
+  "table-header.email": "Email",
+  "table-header.publications": "Публикации",
+  "table-header.comments": "Комментарии",
+  "table-header.status": "Статус",
+  "table-header.actions": "Действия",
+  "table-header.search": "Фильтр",
+  "table-header.all": "Все",
+
+  "table-users-actions.open": "Выберите действие",
+  "table-users-actions.admin": "Сделать администратором",
+  "table-users-actions.user": "Сделать пользователем",
+  "table-users-actions.block": "Заблокировать",
+  "table-users-actions.delete": "Удалить"
 }

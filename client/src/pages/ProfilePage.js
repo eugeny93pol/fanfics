@@ -50,7 +50,7 @@ export const ProfilePage = () => {
                     <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
                     <ProfileInfo user={user} changeUserData={ changeUserData }/>
                 </div>
-                <div className={`col ${ c.formClass }`}>
+                <div className={`col mt-3 mt-md-0 ${ c.formClass }`}>
 
                     <h1>Profile Main</h1>
                 </div>
