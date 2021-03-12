@@ -8,13 +8,11 @@ i18n
     .use(languageDetector)
     .use(initReactI18next)
     .init({
-        //lng: 'en',
         backend: {
             loadPath: '/assets/i18n/{{ns}}/{{lng}}.json'
         },
 
         fallbackLng: 'en',
-        debug: true,
         ns: ['translations'],
         defaultNS: 'translations',
         keySeparator: false,

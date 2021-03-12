@@ -1,8 +1,10 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useThemedClasses } from '../../classnames/ThemedClasses'
 
 export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilteredRows, id } }) => {
     const { t } = useTranslation()
+    const { c } = useThemedClasses()
 
     const options = React.useMemo(() => {
         const options = new Set()
@@ -14,7 +16,7 @@ export const SelectColumnFilter = ({ column: { filterValue, setFilter, preFilter
 
     return (
         <select
-            className="form-select"
+            className={c.selectClass}
             value={filterValue}
             onChange={e => {
                 setFilter(e.target.value || undefined)

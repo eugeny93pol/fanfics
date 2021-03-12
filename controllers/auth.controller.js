@@ -54,17 +54,15 @@ const registration = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-        const userRole = await Role.findOne({ name: 'admin'})
+        const userRole = await Role.findOne({ name: 'user'})
         const user = new User({
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword,
             role: userRole.name
         })
-        userRole.users.push(user._id)
 
         await user.save()
-        await userRole.save()
 
         res.status(201).json({ message: 'User created' })
     } catch (e) {

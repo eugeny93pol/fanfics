@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import { SelectColumnFilter } from './SelectColumnFilter'
 import { useTranslation } from 'react-i18next'
 import { SelectActions } from './SelectActions'
+import { useThemedClasses } from '../../classnames/ThemedClasses'
 
-export const useTableSettings = () => {
-    console.log('get settings')
+export const useTableSettings = (refreshTable) => {
     const { t } = useTranslation()
+    const { c } = useThemedClasses()
+
     const columns = [
         {
             id: 'selection',
@@ -21,16 +23,23 @@ export const useTableSettings = () => {
         {
             Header: t('table-header.name'),
             accessor: 'name',
-            Cell: e =><Link to={`/profile/${e.row.original._id}`}>{e.value}</Link>
+            Cell: e =><Link className={ c.linkClass } to={`/profile/${e.row.original._id}`}>{e.value}</Link>
         },
         {
             Header: t('table-header.email'),
             accessor: 'email',
-            Cell: e =><a href={`mailto:${e.value}`}> { e.value } </a>
+            Cell: e =><a className={ c.linkClass } href={`mailto:${e.value}`}> { e.value } </a>
         },
         {
             Header: t('table-header.publications'),
             accessor: 'publications',
+            Cell: e => e.value.length,
+            Filter: ''
+        },
+        {
+            Header: t('table-header.comments'),
+            accessor: 'comments',
+            Cell: e => e.value.length,
             Filter: ''
         },
         {
@@ -43,7 +52,7 @@ export const useTableSettings = () => {
             Header: t('table-header.actions'),
             id: 'actions',
             accessor: 'role',
-            Cell: e => <SelectActions row={e}/>,
+            Cell: e => <SelectActions row={ e.row } refresh={ refreshTable }/>,
             Filter: ''
         }
     ]

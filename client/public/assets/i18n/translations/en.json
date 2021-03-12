@@ -56,5 +56,6 @@
   "table-users-actions.admin": "Assign Administrator",
   "table-users-actions.user": "Assign by user",
   "table-users-actions.block": "Block",
+  "table-users-actions.unblock": "Unblock",
   "table-users-actions.delete": "Delete"
 }

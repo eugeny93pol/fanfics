@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
 const User = require('../models/User')
+const Role = require('../models/Role')
 
 const getUser = async (req, res) => {
     try {
@@ -58,9 +59,34 @@ const updateUser = async (req, res) => {
         await user.save()
 
         res.status(200).json({ user })
+
     } catch (e) {
         res.status(500).json({error: e})
     }
 }
 
-module.exports = { getUser, getUsers, updateUser }
+const updateUsersRoles = async (req, res) => {
+    console.log(req.body.usersIds)
+    try {
+        const role = await Role.findOne({ name: req.body.role })
+        if (!role) {
+            return res.status(400).json({ message: 'Incorrect request data' })
+        }
+        const result = await User.updateMany({_id: {$in: req.body.usersIds}}, {role: role.name})
+        res.status(200).json({ message: `Updated ${result.n} users` })
+    } catch (e) {
+        res.status(500).json({error: e})
+    }
+}
+
+const deleteUsers = async (req, res) => {
+    try {
+        console.log(req.body.usersIds)
+        const result = await User.deleteMany({_id: {$in: req.body.usersIds}})
+        res.status(200).json({ message: `Deleted ${result.n} users` })
+    } catch (e) {
+        res.status(500).json({error: e})
+    }
+}
+
+module.exports = { getUser, getUsers, updateUser, updateUsersRoles, deleteUsers }

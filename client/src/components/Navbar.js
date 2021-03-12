@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../context/AuthContext'
 import { SearchBlock } from './navbar/SearchBlock'
@@ -62,10 +62,10 @@ export const Navbar = () => {
                         </li>
                         { auth.isAuth &&
                         <li className="nav-item">
-                            <a className="nav-link" href="/logout" onClick={ logoutHandler }>
+                            <Link className="nav-link" to="/" onClick={ logoutHandler }>
                                 <i className="bi bi-door-open"/>
                                 {` ${t('logout')}`}
-                            </a>
+                            </Link>
                         </li>
                         }
                     </ul>

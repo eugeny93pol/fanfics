@@ -4,9 +4,12 @@ import { ThemeContext } from '../context/ThemeContext'
 const classNames = require('classnames');
 
 export const useThemedClasses = () => {
-    const [isDark, setIsDark] = useState()
-
     const { theme } = useContext(ThemeContext)
+    const [isDark, setIsDark] = useState(theme === 'dark')
+
+    useEffect(() => {
+        setIsDark(theme === 'dark')
+    }, [theme])
 
 
     const btnClass = classNames({
@@ -60,6 +63,11 @@ export const useThemedClasses = () => {
         'bg-dark': isDark
     })
 
+    const linkClass = classNames({
+        'link-dark': !isDark,
+        'link-info': isDark
+    })
+
     const navbarClass = classNames({
         'navbar': true,
         'navbar-expand-lg': true,
@@ -75,13 +83,34 @@ export const useThemedClasses = () => {
     })
 
     const selectClass = classNames({
-
+        'form-select': true,
+        'bg-gray-dark': isDark,
+        'text-light': isDark,
+        'border-secondary': isDark
     })
 
     const sidebarClass = classNames({
         'navbar': true,
         'navbar-light': !isDark,
         'navbar-dark': isDark
+    })
+
+    const tableClass = classNames({
+        'table': true,
+        'table-hover': true,
+        'table-dark': isDark
+    })
+
+    const tableWrapperClass = classNames({
+        'p-3': true,
+        'rounded': true,
+        'border': true,
+        'table-responsive-md': true,
+        'border-secondary': isDark,
+        'shadow-sm': !isDark,
+        'shadow': isDark,
+        'bg-body': !isDark,
+        'bg-dark': isDark
     })
 
     const textClass = classNames({
@@ -97,16 +126,14 @@ export const useThemedClasses = () => {
         formClass,
         inputClass,
         inputInfoClass,
+        linkClass,
         navbarClass,
         selectClass,
         sidebarClass,
+        tableClass,
+        tableWrapperClass,
         textClass
     }
-
-    useEffect(() => {
-        setIsDark(theme === 'dark')
-    }, [theme])
-
     return { c }
 }
 

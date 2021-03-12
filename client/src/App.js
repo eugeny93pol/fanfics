@@ -8,7 +8,7 @@ import { useAuth } from './hooks/auth.hook'
 import { useRoutes } from './routes/routes'
 import { Navbar } from './components/Navbar'
 import { Loader } from './components/Loader'
-import { useLanguage } from './hooks/language.hook'
+//import { useLanguage } from './hooks/language.hook'
 import './i18n/i18n'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 
@@ -16,7 +16,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min'
 function App() {
     const { token, login, logout, userData, isAuth, ready } = useAuth()
     const { theme, toggleTheme } = useTheme()
-    const { language, toggleLanguage } = useLanguage()
+    //const { language, toggleLanguage } = useLanguage()
     const routes = useRoutes(isAuth)
 
     const loader = <Loader classes={['my-5']}/>
@@ -27,7 +27,7 @@ function App() {
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <LanguageContext.Provider value={{ language, toggleLanguage }}>
+            {/*<LanguageContext.Provider value={{ language, toggleLanguage }}>*/}
                 <AuthContext.Provider value={{ token, login, logout, userData, isAuth }}>
                     <Router>
                         <Suspense fallback={ loader }>
@@ -38,7 +38,7 @@ function App() {
                         </Suspense>
                     </Router>
                 </AuthContext.Provider>
-            </LanguageContext.Provider>
+            {/*</LanguageContext.Provider>*/}
         </ThemeContext.Provider>
     )
 }

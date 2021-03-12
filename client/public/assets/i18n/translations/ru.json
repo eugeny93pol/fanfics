@@ -56,5 +56,6 @@
   "table-users-actions.admin": "Сделать администратором",
   "table-users-actions.user": "Сделать пользователем",
   "table-users-actions.block": "Заблокировать",
+  "table-users-actions.unblock": "Разблокировать",
   "table-users-actions.delete": "Удалить"
 }
