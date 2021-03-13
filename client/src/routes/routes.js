@@ -26,7 +26,7 @@ export const useRoutes = (isAuth) => {
 
             {isAuth && <Route path='/profile/:id' exact component={ProfilePage}/>}
             {isAuth && <Route path='/settings' exact component={SettingsPage}/>}
-            {isAuth && <Route path='/create' exact component={CreatePage}/>}
+            {isAuth && <Route path='/:id/create' exact component={CreatePage}/>}
             {isAuth && <Route path='/users' exact component={UsersPage}/>}
 
             <Redirect to='/'/>

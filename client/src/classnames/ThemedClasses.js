@@ -68,6 +68,21 @@ export const useThemedClasses = () => {
         'link-info': isDark
     })
 
+    const modalClass = classNames({
+        "modal-content": true,
+        "bg-dark": isDark,
+        "bg-light": !isDark,
+        "text-light": isDark,
+        'shadow-sm': !isDark,
+        'shadow': isDark,
+    })
+
+    const modalBackdropClass = classNames({
+        "modal-backdrop": true,
+        "show": true,
+        "bg-gray-dark": isDark
+    })
+
     const navbarClass = classNames({
         'navbar': true,
         'navbar-expand-lg': true,
@@ -127,6 +142,8 @@ export const useThemedClasses = () => {
         inputClass,
         inputInfoClass,
         linkClass,
+        modalClass,
+        modalBackdropClass,
         navbarClass,
         selectClass,
         sidebarClass,

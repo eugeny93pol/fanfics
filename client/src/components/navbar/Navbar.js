@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { AuthContext } from '../context/AuthContext'
-import { SearchBlock } from './navbar/SearchBlock'
-import { LanguageSelector } from './navbar/LanguageSelectior'
-import { ThemeSelector } from './navbar/ThemeSelector'
-import { useThemedClasses } from '../classnames/ThemedClasses'
+import { AuthContext } from '../../context/AuthContext'
+import { SearchBlock } from './SearchBlock'
+import { LanguageSelector } from './LanguageSelectior'
+import { ThemeSelector } from './ThemeSelector'
+import { useThemedClasses } from '../../classnames/ThemedClasses'
 
 
 export const Navbar = () => {
@@ -74,8 +74,14 @@ export const Navbar = () => {
 
                     <div className="d-flex justify-content-center ms-lg-2 pt-2 pt-lg-0">
                         { auth.isAuth ?
-                            <NavLink to='/create' className={c.btnClass}>{t('create')}</NavLink> :
-                            <NavLink to='/signin' className={c.btnClass}>{t('signin')}</NavLink> }
+                            <NavLink to={`/${auth.userData.id}/create`}
+                                     className={c.btnClass}
+                                     activeClassName="active"
+                            >{t('create')}</NavLink> :
+                            <NavLink to='/signin'
+                                     className={c.btnClass}
+                                     activeClassName="active"
+                            >{t('signin')}</NavLink> }
                     </div>
                 </div>
             </div>

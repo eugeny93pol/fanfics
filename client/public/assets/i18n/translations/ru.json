@@ -8,6 +8,10 @@
   "create": "Создать",
   "create.title": "Создайте свой фанфик",
 
+  "create-page.save": "Сохранить фанфик",
+  "create-page-modal.text": "Вы действительно хотите удалить главу {{number}}?",
+  "create-page-modal.title": "Подтвердите удаление",
+
   "dropdown.toggle": "Открыть выпадающий список",
 
   "email": "Электронная почта",
@@ -19,13 +23,20 @@
   "login": "Вход",
   "logout": "Выйти",
 
+  "modal-dialog.cancel": "Отмена",
+  "modal-dialog.close": "Закрыть",
+  "modal-dialog.submit": "Подтвердить",
+
   "name": "Имя",
 
   "password": "Пароль",
   "password.hint": "Ваш пароль должен быть длиннее 6 символов",
   "profile": "Профиль",
   "profile.go": "Перейти в профиль",
+
   "profile.info": "О профиле",
+  "profile-page.create": "Создать фанфик",
+
 
   "registration": "Регистрация",
 

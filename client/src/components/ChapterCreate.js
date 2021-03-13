@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
+import { Modal } from './modal/Modal'
 
 export const ChapterCreate = (props) => {
     const [chapter, setChapter] = useState(props.chapter)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const { t } = useTranslation()
     const { c } = useThemedClasses()
 
@@ -21,7 +23,20 @@ export const ChapterCreate = (props) => {
     }
 
     const removeHandler = () => {
+        if (chapter.title || chapter.content){
+            setIsModalOpen(true)
+        } else {
+            props.removeHandler(chapter.id)
+        }
+    }
+
+    const submitModalHandler = () => {
+        setIsModalOpen(false)
         props.removeHandler(chapter.id)
+    }
+
+    const cancelModalHandler = () => {
+        setIsModalOpen(false)
     }
 
     return(
@@ -47,6 +62,10 @@ export const ChapterCreate = (props) => {
                     <textarea
                         className={ c.inputClass }
                         id={`content-${chapter.id}`}
+                        onChange={ changeHandler }
+                        onBlur={ blurHandler }
+                        name="content"
+                        value={ chapter.content }
                         rows="3"/>
                 </div>
                 <button type="button"
@@ -54,6 +73,13 @@ export const ChapterCreate = (props) => {
                         onClick={ removeHandler }
                 ><i className="bi bi-trash"/></button>
             </form>
+            <Modal title={t('create-page-modal.title')}
+                   isOpen={ isModalOpen }
+                   onCancel={ cancelModalHandler }
+                   onSubmit={ submitModalHandler }
+            >
+                <p>{t('create-page-modal.text', {number: props.index+1})}</p>
+            </Modal>
         </div>
     )
 }

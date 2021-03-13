@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { Loader } from '../components/Loader'
 import { ProfileInfo } from '../components/ProfileInfo'
@@ -49,6 +49,7 @@ export const ProfilePage = () => {
                 <div className={`col-md-4 col-lg-3 me-md-3 ${ c.formClass }`}>
                     <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
                     <ProfileInfo user={user} changeUserData={ changeUserData }/>
+                    <Link to={`/${pageId}/create`} className={c.btnClass}>{t('profile-page.create')}</Link>
                 </div>
                 <div className={`col mt-3 mt-md-0 ${ c.formClass }`}>
 

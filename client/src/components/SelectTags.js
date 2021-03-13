@@ -17,8 +17,7 @@ export const SelectTags = (props) => {
 
 
     const changeHandler = (selected) => {
-        console.log(selected)
-        const tags = selected.map(item => {return { tagId: item.value }})
+        const tags = selected.map(item => {return { id: item.value, name: item.label }})
         props.callback(tags)
     }
 
@@ -38,13 +37,6 @@ export const SelectTags = (props) => {
             blurInputOnSelect={ false }
             className='multiselect'
             classNamePrefix={ 'select' }
-
-
-
-            //components={animatedComponents}
-            //closeMenuOnScroll={true}
-            //isLoading
-            //loadingMessage
         />
     );
 }

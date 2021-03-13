@@ -8,6 +8,10 @@
   "create": "Create",
   "create.title": "Create your fanfic",
 
+  "create-page.save": "Save fanfic",
+  "create-page-modal.text": "Do you really want to delete a chapter {{number}}?",
+  "create-page-modal.title": "Confirm deletion",
+
   "dropdown.toggle": "Toggle Dropdown",
 
   "email": "Email address",
@@ -19,13 +23,19 @@
   "login": "Login",
   "logout": "Logout",
 
+  "modal-dialog.cancel": "Cancel",
+  "modal-dialog.close": "Close",
+  "modal-dialog.submit": "Submit",
+
   "name": "Name",
 
   "password": "Password",
   "password.hint": "Your password must be 6 characters long.",
   "profile": "Profile",
   "profile.go": "Go to profile",
+
   "profile.info": "Profile info",
+  "profile-page.create": "Create fanfic",
 
   "registration": "Registration",
 

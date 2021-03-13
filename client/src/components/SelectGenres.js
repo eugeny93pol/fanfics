@@ -15,7 +15,7 @@ export const SelectGenres = (props) => {
     }, [props.genres, setOptions])
 
     const changeHandler = (selected) => {
-        const genres = selected.map(item => {return { genreId: item.value }})
+        const genres = selected.map(item => {return { id: item.value }})
         props.callback(genres)
     }
 
