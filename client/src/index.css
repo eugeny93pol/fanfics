@@ -100,20 +100,6 @@ body {
     box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25);
 }
 
-.bg-dark .btn-close {
-    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
-    opacity: 0.5;
-}
-
-.bg-dark .btn-close:hover {
-    opacity: 0.75;
-}
-
-.bg-dark .btn-close:focus {
-    box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25)
-}
-
-
 .nofocus:hover,
 .nofocus:focus {
     background-color: inherit!important;
@@ -145,7 +131,6 @@ body {
 .bg-dark .select__control {
     background-color: var(--bs-gray-dark)!important;
     border-color: var(--bs-gray)!important;
-    color: var(--bs-light)!important;
 }
 
 .bg-dark .select__control--is-focused,
@@ -160,6 +145,10 @@ body {
     border-color: var(--bs-gray)!important;
 }
 
+.bg-dark .select__input {
+    color: var(--bs-light);
+}
+
 .bg-dark .select__menu {
     color: var(--bs-dark);
     background-color: var(--bs-light)!important;
@@ -171,6 +160,19 @@ body {
 
 .bg-dark .form-select {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f8f9fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.dropzone {
+    border-width: .15rem;
+    border-style: dashed;
+}
+
+.thumb-inner .btn-close {
+    display: none;
+}
+
+.thumb-inner:hover .btn-close {
+    display: block;
 }
 
 

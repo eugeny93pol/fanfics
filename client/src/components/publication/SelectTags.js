@@ -24,16 +24,16 @@ export const SelectTags = (props) => {
     return (
         <CreatableSelect
             closeMenuOnSelect={ true }
-            formatCreateLabel={ (input) => `${t('create')} "${input}"` }
+            formatCreateLabel={ (input) => `${t('create-page-label.create-tag')} "${input}"` }
             inputId="inputTags"
             isClearable={ false }
             isMulti
             maxMenuHeight={ 170 }
             menuPlacement="auto"
-            noOptionsMessage={ () => t('tags.no') }
+            noOptionsMessage={ () => t('create-page-placeholder.no-tags') }
             onChange={ changeHandler }
             options={ options }
-            placeholder={t('tags.select')}
+            placeholder={t('create-page-placeholder.tags')}
             blurInputOnSelect={ false }
             className='multiselect'
             classNamePrefix={ 'select' }

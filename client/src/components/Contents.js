@@ -7,7 +7,7 @@ export const Contents = (props) => {
     const { c } = useThemedClasses()
     return(
         <Fragment>
-            <h4>{t('contents')}</h4>
+            <h4>{t('contents.title')}</h4>
             <nav className={ c.sidebarClass } id="contents">
                 <ul className="navbar-nav">
                     { props.chapters.map(chapter => {

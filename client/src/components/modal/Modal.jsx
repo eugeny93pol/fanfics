@@ -16,7 +16,7 @@ export const Modal = ({ title, isOpen, onCancel, onSubmit, children }) => {
                         <div className={c.modalClass}>
                             <div className="modal-header">
                                 <h5 className="modal-title" id="modalTitle">{title}</h5>
-                                <button type="button" className="btn-close"
+                                <button type="button" className={c.btnCloseClass}
                                         aria-label={t('modal-dialog.close')}
                                         onClick={onCancel}/>
                             </div>

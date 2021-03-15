@@ -27,10 +27,10 @@ export const SelectGenres = (props) => {
             isMulti
             maxMenuHeight={ 170 }
             menuPlacement="auto"
-            noOptionsMessage={ () => t('genres.no') }
+            noOptionsMessage={ () => t('create-page-placeholder.no-genres') }
             onChange={ changeHandler }
             options={ options }
-            placeholder={t('genres.select')}
+            placeholder={t('create-page-placeholder.genres')}
             className='multiselect'
             classNamePrefix={ 'select' }
         />

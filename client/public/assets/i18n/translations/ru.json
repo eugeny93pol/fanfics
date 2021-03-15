@@ -1,24 +1,50 @@
 {
   "admin.panel": "Администратор",
 
-  "chapter": "Глава",
-  "chapter.add": "Добавить новую главу",
-  "chapter.placeholder": "Введите название главы",
-  "contents": "Содержание",
+  "contents.title": "Содержание",
   "create": "Создать",
-  "create.title": "Создайте свой фанфик",
 
-  "create-page.save": "Сохранить фанфик",
+  "create-page.title": "Создайте свой фанфик",
+  "create-page-button.add": "Добавить главу",
+  "create-page-button.save": "Сохранить фанфик",
+  "create-page-chapter.title": "Глава {{number}}",
+  "create-page-chapter-label.summary": "Содержание",
+  "create-page-chapter-label.title": "Название",
+  "create-page-chapter-placeholder.title": "Введите название главы",
+  "create-page-chapter-placeholder.text": "Напишите свою главу здесь...",
+  "create-page-label.create-tag": "Создать тег",
+  "create-page-label.genres": "Жанры",
+  "create-page-label.summary": "Описание",
+  "create-page-label.tags": "Теги",
+  "create-page-label.title": "Название",
   "create-page-modal.text": "Вы действительно хотите удалить главу {{number}}?",
   "create-page-modal.title": "Подтвердите удаление",
+  "create-page-placeholder.genres": "Выберите жанры",
+  "create-page-placeholder.no-genres": "Нет жанров",
+  "create-page-placeholder.no-tags": "Нет тегов",
+  "create-page-placeholder.summary": "Введите краткое описание фанифика",
+  "create-page-placeholder.tags": "Выберите теги",
+  "create-page-placeholder.title": "Введите название своего фанфика",
 
   "dropdown.toggle": "Открыть выпадающий список",
 
-  "email": "Электронная почта",
+  "dropzone.accept": "Перетащите файл сюда ...",
+  "dropzone.not-active": "Перетащите сюда файл изображения или нажмите, чтобы выбрать файлы",
+  "dropzone.reject": "Неверный формат файла",
+  "dropzone.remove": "Удалить изображение",
 
-  "genres": "Жанры",
-  "genres.no": "Нет жанров",
-  "genres.select": "Выберите жанры",
+  "editor-button.bold": "Полужирный",
+  "editor-button.italic": "Курсив",
+  "editor-button.strike": "Зачеркнутый",
+  "editor-button.heading-1": "Большой заголовок",
+  "editor-button.heading-2": "Средний заголовок",
+  "editor-button.heading-3": "Маленький заголовок",
+  "editor-button.quote": "Цитата",
+  "editor-button.unordered-list": "Ненумерованный список",
+  "editor-button.ordered-list": "Нумерованный список",
+  "editor-button.preview": "Переключить предварительный просмотр",
+
+  "email": "Электронная почта",
 
   "login": "Вход",
   "logout": "Выйти",
@@ -37,7 +63,6 @@
   "profile.info": "О профиле",
   "profile-page.create": "Создать фанфик",
 
-
   "registration": "Регистрация",
 
   "search": "Поиск",
@@ -45,13 +70,7 @@
   "signin": "Войти",
   "signup": "Зарегистрироваться",
   "site.name": "Мордор",
-  "summary": "Описание",
 
-  "tags": "Теги",
-  "tags.no": "Нет тегов",
-  "tags.select": "Выберите теги",
-  "title": "Название",
-  "title.placeholder": "Введите название своего фанфика",
   "theme.dark": "Темная тема",
 
   "table-header.name": "Имя пользователя",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
@@ -12,7 +12,7 @@ const Portal = ({ children, className = 'root-portal', el = 'div' }) => {
         return () => {
             modalRoot.removeChild(container)
         }
-    }, [])
+    }, [container, modalRoot])
 
     return ReactDOM.createPortal(children, container)
 }

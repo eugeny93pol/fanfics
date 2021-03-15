@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 import { Loader } from '../components/Loader'
-import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { TableUsers } from '../components/table/TableUsers'
 import { useTableSettings } from '../components/table/TableSettings'
@@ -12,9 +11,8 @@ import { UsersToolbar } from '../components/toolbar/UsersToolbar'
 export const UsersPage = () => {
     const [users, setUsers] = useState(null)
     const [selectedIds, setSelectedIds] = useState(null)
-    const { loading, error, clearError, request } = useHttp()
+    const { error, clearError, request } = useHttp()
     const { token, userData } = useContext(AuthContext)
-    const { t } = useTranslation()
     const { c } = useThemedClasses()
 
     const loadData = useCallback(async () => {
