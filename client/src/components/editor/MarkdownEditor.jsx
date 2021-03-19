@@ -5,7 +5,7 @@ import 'easymde/dist/easymde.min.css'
 import './index.css'
 
 export const MarkdownEditor = ({setTextContent, value}) => {
-    const [text, setText] = useState('')
+    const [text, setText] = useState(value)
 
     const { options } = EditorOptions()
 

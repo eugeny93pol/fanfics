@@ -32,6 +32,42 @@ body {
     margin: auto;
 }
 
+.likeBtn {
+    padding: 0;
+}
+
+.likeBtn:focus {
+    box-shadow: none;
+}
+
+.bg-dark .likeBtn:hover .bi-heart,
+.bg-dark .likeBtn .bi-heart-fill {
+    color: var(--bs-info);
+}
+
+.likeBtn .bi-heart,
+.bg-dark .likeBtn .bi-heart,
+.likeBtn:hover .bi-heart-fill {
+    color: var(--bs-secondary);
+}
+
+.likeBtn:hover .bi-heart,
+.likeBtn .bi-heart-fill {
+    color: var(--bs-dark);
+}
+
+
+
+
+.bg-dark .likeBtn {
+    color: var(--bs-secondary);
+}
+
+.bg-dark .likeBtn:hover,
+.bg-dark .likeBtn:focus {
+    color: var(--bs-light);
+}
+
 .social-btn {
     width: 48px;
     height: 48px;
@@ -109,57 +145,9 @@ body {
     background-color: var(--bs-gray-dark);
 }
 
-.multiselect .select__control {
-    border-color: #ced4da;
-    cursor: text;
-}
-
-.multiselect .select__control:hover
-{
-    border-color: #ced4da;
-}
-
-.multiselect .select__control--is-focused,
-.multiselect .select__control--menu-is-open,
-.multiselect .select__control--is-focused:hover,
-.multiselect .select__control--menu-is-open:hover
-{
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
-}
-
-.bg-dark .select__control {
-    background-color: var(--bs-gray-dark)!important;
-    border-color: var(--bs-gray)!important;
-}
-
-.bg-dark .select__control--is-focused,
-.bg-dark .select__control--menu-is-open
-{
-    border-color: var(--bs-gray)!important;
-    box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25)!important;
-}
-
-.bg-dark .select__control:hover
-{
-    border-color: var(--bs-gray)!important;
-}
-
-.bg-dark .select__input {
-    color: var(--bs-light);
-}
-
-.bg-dark .select__menu {
-    color: var(--bs-dark);
-    background-color: var(--bs-light)!important;
-}
-
-.select__indicator {
-    cursor: pointer;
-}
-
-.bg-dark .form-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f8f9fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+.chapter {
+    padding-top: 65px;
+    margin-top: -65px;
 }
 
 .dropzone {
@@ -175,13 +163,72 @@ body {
     display: block;
 }
 
+.dragButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    cursor: grab;
+    transition: opacity 0.15s linear;
+    width: 30px;
+    height: 30px;
+}
 
+.chapter:hover .dragButton,
+.chapter:focus .dragButton {
+    opacity: 1;
+}
+
+.nav-link.draggable {
+    position: relative;
+    padding-left: 1.25rem;
+}
+
+.draggable::before {
+    position: absolute;
+    display: block;
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(0,0,0,0.7)" class="bi bi-arrow-down-up" viewBox="0 0 16 16">  <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/></svg>');
+    left: 0;
+    top: .625rem;
+    opacity: 0;
+    transition: opacity 0.15s linear;
+}
+
+.draggable:hover::before {
+    opacity: 1;
+}
+
+.bg-dark .draggable::before {
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(255,255,255,0.75)" class="bi bi-arrow-down-up" viewBox="0 0 16 16">  <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z"/></svg>');
+}
+
+.commentWrapper {
+    background-color: lavender;
+}
+
+.commentWrapper::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: -1rem;
+    left: .5rem;
+    width: 0;
+    height: 0;
+    border: .5rem solid transparent;
+    border-bottom-color: lavender;
+}
+
+.bg-dark .commentWrapper {
+    background-color: var(--bs-gray-dark);
+}
+.bg-dark .commentWrapper::before {
+    border-bottom-color: var(--bs-gray-dark);
+}
 
 
 .sidebar-3 {
     position: static;
 }
-
 
 @media (min-width: 992px) {
     .sidebar-3 {

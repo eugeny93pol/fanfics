@@ -1,25 +1,20 @@
 const Genre = require('../models/Genre')
 
-const getGenres = async (req, res) => {
-    try {
-        const genres = await Genre.find()
-        res.status(200).json({ genres })
-    } catch (e) {
-        res.status(500).json({error: e})
-    }
+const getGenres = async () => {
+    return (await Genre.find())
 }
 
 const createGenre = async (req, res) => {
     try {
-        let candidate = await Genre.findOne({ $or:[{ nameEN: req.body.nameEN }, { nameRU: req.body.nameRU }] })
+        let candidate = await Genre.findOne({ $or:[{ 'name.en': req.body.en }, { 'name.ru': req.body.ru }] })
         if (candidate) {
              return res.status(400).json({message: 'That genre already exist'})
         }
-
-        const genre = new Genre({ nameEN: req.body.nameEN, nameRU: req.body.nameRU })
+        const genre = new Genre({ 'name.en': req.body.en, 'name.ru': req.body.ru })
         await genre.save()
         res.status(201).json({ message: 'Genre created', genre })
     } catch (e) {
+        console.log(e)
         res.status(500).json({error: e})
     }
 }

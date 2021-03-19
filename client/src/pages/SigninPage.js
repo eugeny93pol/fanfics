@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SocialButtons } from '../components/SocialButtons'
+import { SocialButtons } from '../components/socialButtons/SocialButtons'
 import { AuthContext } from '../context/AuthContext'
 import { useHttp } from '../hooks/http.hook'
 import { useTranslation } from 'react-i18next'

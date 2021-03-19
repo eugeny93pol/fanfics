@@ -62,6 +62,15 @@
 
   "profile.info": "О профиле",
   "profile-page.create": "Создать фанфик",
+  "profile-page.title": "Здесь собраны ваши публикации",
+
+  "publication-preview.btn-edit": "Редактировать",
+  "publication-preview.btn-delete": "Удалить",
+  "publication-preview.btn-read": "Читать фанфик",
+  "publication-preview-modal.text": "Удалить фанфик \"{{title}}\"?",
+  "publication-preview-modal.title": "Подтвердите удаление",
+
+  "read-page-chapter.title": "Глава {{number}}",
 
   "registration": "Регистрация",
 

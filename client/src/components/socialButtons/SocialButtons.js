@@ -1,7 +1,7 @@
 import React from 'react'
-import { VKButton } from './buttons/VKButton'
-import { FBButton } from './buttons/FBButton'
-import { TWButton } from './buttons/TWButton'
+import { VKButton } from './VKButton'
+import { FBButton } from './FBButton'
+import { TWButton } from './TWButton'
 
 export const SocialButtons = () => {
 

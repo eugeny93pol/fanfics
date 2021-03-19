@@ -6,6 +6,7 @@ export const useAuth = () => {
     const [userData, setUserData] = useState(null)
     const [isAuth, setIsAuth] = useState(false)
     const [ready, setReady] = useState(false)
+    const [role, setRole] = useState(null)
 
     const login = useCallback((jwtToken, user) => {
         setToken(jwtToken)

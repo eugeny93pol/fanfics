@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import { Modal } from '../components/modal/Modal'
 import { SigninPage } from './SigninPage'
 
@@ -17,8 +17,6 @@ export const MainPage = () => {
     const submitModalHandler = () => {
         setIsModalOpen(false)
     }
-
-
 
     return(
         <Fragment>

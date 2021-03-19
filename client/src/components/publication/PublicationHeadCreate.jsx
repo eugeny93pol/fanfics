@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
-import { SelectGenres } from './SelectGenres'
-import { SelectTags } from './SelectTags'
+import { SelectGenres } from '../select/SelectGenres'
+import { SelectTags } from '../select/SelectTags'
+import './index.css'
 
-export const PublicationHeadCreate = ({meta, setPublicationHead}) => {
+export const PublicationHeadCreate = ({meta, setPublicationHead, initial}) => {
     const [publication, setPublication] = useState({
-        title: '',
-        description: '',
-        genres: [],
-        tags: []
+        title: initial.title,
+        description:  initial.description,
+        genres: initial.genres,
+        tags:  initial.tags
     })
 
     const { c } = useThemedClasses()
@@ -36,7 +37,7 @@ export const PublicationHeadCreate = ({meta, setPublicationHead}) => {
     }, [publication])
 
     return (
-        <>
+        <section className="publicationHead" id="publicationHead">
             <h2>{t('create-page.title')}</h2>
             <form className={`mb-3 ${c.formClass}`} onSubmit={submitHandler}>
                 <div className="mb-3">
@@ -64,13 +65,13 @@ export const PublicationHeadCreate = ({meta, setPublicationHead}) => {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="inputGenres" className="form-label">{t('create-page-label.genres')}</label>
-                    <SelectGenres genres={meta.genres} callback={changeGenres}/>
+                    <SelectGenres genres={meta.genres} callback={changeGenres} initial={publication.genres}/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="inputTags" className="form-label">{t('create-page-label.tags')}</label>
-                    <SelectTags tags={meta.tags} callback={changeTags}/>
+                    <SelectTags tags={meta.tags} callback={changeTags} initial={publication.tags}/>
                 </div>
             </form>
-        </>
+        </section>
     )
 }

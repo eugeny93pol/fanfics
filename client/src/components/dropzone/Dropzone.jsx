@@ -45,7 +45,7 @@ export const Dropzone = ({setSelectedFiles}) => {
         <div className="dropzone-wrapper">
             <div {...getRootProps({ className: c.dropzoneClass })}>
                 <input {...getInputProps()} />
-                {isDragAccept && (<div className="py-2 py-md-5"><span>{t('dropzone.accept')}</span></div>)}
+                {isDragAccept && (<div className="py-2 py-md-5"><span><i className="bi bi-image"/> {t('dropzone.accept')}</span></div>)}
                 {isDragReject && (<div><span>{t('dropzone.reject')}</span></div>)}
                 {!isDragActive && (<div><span>{t('dropzone.not-active')}</span></div>)}
             </div>

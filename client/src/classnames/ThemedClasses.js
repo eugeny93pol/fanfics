@@ -123,6 +123,30 @@ export const useThemedClasses = () => {
         'bg-dark': isDark
     })
 
+    const contentsClass = classNames({
+        'navbar-light': !isDark,
+        'navbar-dark': isDark,
+    })
+
+    const publicationPreviewClass = classNames({
+        'card': true,
+        'mb-3': true,
+        'border': true,
+        'border-secondary': isDark,
+        'text-light': isDark,
+        'shadow-sm': !isDark,
+        'shadow': isDark,
+        'bg-body': !isDark,
+        'bg-dark': isDark
+    })
+
+    const rateFullClass = classNames({
+        'bi': true,
+        'bi-star-fill': true,
+        'text-info': isDark,
+        'text-dark': !isDark
+    })
+
     const selectClass = classNames({
         'form-select': true,
         'bg-gray-dark': isDark,
@@ -131,7 +155,8 @@ export const useThemedClasses = () => {
     })
 
     const sidebarClass = classNames({
-        'navbar': true,
+        'col-md-3': true,
+        'sidebar-3': true,
         'navbar-light': !isDark,
         'navbar-dark': isDark
     })
@@ -165,6 +190,7 @@ export const useThemedClasses = () => {
         btnCloseAbsClass,
         btnOutlineClass,
         btnSecClass,
+        contentsClass,
         dropdownClass,
         dropzoneClass,
         formClass,
@@ -174,6 +200,8 @@ export const useThemedClasses = () => {
         modalClass,
         modalBackdropClass,
         navbarClass,
+        publicationPreviewClass,
+        rateFullClass,
         selectClass,
         sidebarClass,
         tableClass,
@@ -182,4 +210,3 @@ export const useThemedClasses = () => {
     }
     return { c }
 }
-

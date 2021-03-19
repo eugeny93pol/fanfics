@@ -62,6 +62,15 @@
 
   "profile.info": "Profile info",
   "profile-page.create": "Create fanfic",
+  "profile-page.title": "Here you can find your publications",
+
+  "publication-preview.btn-edit": "Edit",
+  "publication-preview.btn-delete": "Delete",
+  "publication-preview.btn-read": "Read fanfic",
+  "publication-preview-modal.text": "Remove fanfic  \"{{title}}\"?",
+  "publication-preview-modal.title": "Confirm deletion",
+
+  "read-page-chapter.title": "Chapter {{number}}",
 
   "registration": "Registration",
 

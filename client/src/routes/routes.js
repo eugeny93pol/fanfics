@@ -15,7 +15,7 @@ export const useRoutes = (isAuth) => {
     return (
         <Switch>
             <Route path='/' exact component={MainPage}/>
-            <Route path='/publication' exact component={PublicationPage}/>
+            <Route path='/publication/:id' exact component={PublicationPage}/>
             <Route path='/genre/' exact component={GenresPage}/>
             <Route path='/filter/:id' exact component={MainPage}/>
 

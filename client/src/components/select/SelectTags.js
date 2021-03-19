@@ -3,26 +3,30 @@ import CreatableSelect from 'react-select/creatable'
 import { useTranslation } from 'react-i18next'
 
 
-export const SelectTags = (props) => {
+export const SelectTags = ({ tags, callback, initial }) => {
     const [options, setOptions] = useState([])
+    const [selected, setSelected] = useState([])
     const { t } = useTranslation()
 
     useEffect(() => {
-        setOptions(
-            props.tags.map(tag => {
-                return { value: tag._id, label: tag.name }
-            })
-        )
-    }, [props.tags, setOptions])
+        setOptions(tags.map(tag => ({ value: tag._id, label: tag.name })))
+    }, [tags, setOptions])
 
+    useEffect(() => {
+        console.log(initial)
+        console.log(options)
+        setSelected(options.filter(opt => ( initial.map(i=>i.id).includes(opt.value))))
+    },[options])
 
     const changeHandler = (selected) => {
+        setSelected(selected)
         const tags = selected.map(item => {return { id: item.value, name: item.label }})
-        props.callback(tags)
+        callback(tags)
     }
 
     return (
         <CreatableSelect
+            blurInputOnSelect={ false }
             closeMenuOnSelect={ true }
             formatCreateLabel={ (input) => `${t('create-page-label.create-tag')} "${input}"` }
             inputId="inputTags"
@@ -34,9 +38,9 @@ export const SelectTags = (props) => {
             onChange={ changeHandler }
             options={ options }
             placeholder={t('create-page-placeholder.tags')}
-            blurInputOnSelect={ false }
+            value={ selected }
             className='multiselect'
             classNamePrefix={ 'select' }
         />
-    );
+    )
 }

@@ -1,0 +1,147 @@
+.multiselect .select__control {
+    border-color: #ced4da;
+    cursor: text;
+}
+
+.multiselect .select__control:hover
+{
+    border-color: #ced4da;
+}
+
+.multiselect .select__control--is-focused,
+.multiselect .select__control--menu-is-open,
+.multiselect .select__control--is-focused:hover,
+.multiselect .select__control--menu-is-open:hover
+{
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.multiselect .select__multi-value__remove {
+    cursor: pointer;
+}
+
+
+.multiselect .select__multi-value,
+.multiselect .select__multi-value__remove {
+    color: var(--bs-light);
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.multiselect .select__multi-value__remove:hover,
+.multiselect .select__multi-value {
+    background-color: var(--bs-secondary);
+}
+
+.multiselect .select__multi-value__remove:hover {
+    color: var(--bs-dark);
+}
+
+.multiselect .select__multi-value__label {
+    color: var(--bs-light);
+}
+
+.select__indicator {
+    cursor: pointer;
+}
+
+.bg-dark .select__control {
+    background-color: var(--bs-gray-dark)!important;
+    border-color: var(--bs-gray)!important;
+}
+
+.bg-dark .select__control--is-focused,
+.bg-dark .select__control--menu-is-open
+{
+    border-color: var(--bs-gray)!important;
+    box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25)!important;
+}
+
+.bg-dark .select__control:hover
+{
+    border-color: var(--bs-gray)!important;
+}
+
+.bg-dark .select__input {
+    color: var(--bs-light);
+}
+
+
+.bg-dark .select__menu {
+    color: var(--bs-dark);
+    background-color: var(--bs-light)!important;
+}
+
+.bg-dark .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f8f9fa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.tag {
+    display: inline-block;
+    padding: .35em .65em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border-radius: .25rem;
+    background-color: var(--bs-info);
+    color: var(--bs-dark);
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.tag:hover {
+    color: var(--bs-dark);
+    background-color: #31d2f2;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "-";
+}
+
+.menuButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: rgba(0,0,0,.55);
+}
+
+.menuButton:focus,
+.menuButton:focus {
+    box-shadow: none;
+    color: rgba(0,0,0,.7);
+}
+
+.bg-dark .menuButton {
+    color: var(--bs-secondary);
+}
+
+.bg-dark .menuButton:hover,
+.bg-dark .menuButton:focus {
+    color: var(--bs-light);
+}
+
+.menu {
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+}
+
+.bg-dark .menu .card {
+    background-color: var(--bs-gray-dark);
+}
+
+.menu .btn {
+    min-width: 10rem;
+    position: relative;
+    padding-right: 2.5rem;
+}
+
+.menu .btn>i.bi {
+    position: absolute;
+    right: 0.75rem;
+}

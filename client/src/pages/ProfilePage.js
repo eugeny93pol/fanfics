@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Link, useParams } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
@@ -6,22 +6,30 @@ import { Loader } from '../components/Loader'
 import { ProfileInfo } from '../components/ProfileInfo'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
+import { PublicationPreview } from '../components/publication/PublicationPreview'
 
 
 export const ProfilePage = () => {
+    const [user, setUser] = useState(null)
+    const [publications, setPublications] = useState([])
+
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
-    const [user, setUser] = useState(null)
     const pageId = useParams().id
     const { t } = useTranslation()
     const { c } = useThemedClasses()
 
     const loadData = useCallback(async () => {
         try {
-            const data = await request(`/api/user/${pageId}`, 'GET', null, {
+            const userData = await request(`/api/user/${pageId}`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            setUser(data.user)
+            setUser(userData.user)
+
+            const userPublications = await request(`/api/publications/?user=${pageId}`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            setPublications(userPublications.publications)
         } catch (e) {}
     }, [token, pageId, request])
 
@@ -43,20 +51,35 @@ export const ProfilePage = () => {
     }
 
     return (
-        <Fragment>
-            { !loading && user &&
-            <div className="row mt-3">
-                <div className={`col-md-4 col-lg-3 me-md-3 ${ c.formClass }`}>
-                    <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
-                    <ProfileInfo user={user} changeUserData={ changeUserData }/>
-                    <Link to={`/${pageId}/create`} className={c.btnClass}>{t('profile-page.create')}</Link>
-                </div>
-                <div className={`col mt-3 mt-md-0 ${ c.formClass }`}>
+        <>
+            <div className={`row mt-3`}>
+                <aside className={c.sidebarClass}>
+                    <div className={`${ c.formClass }`}>
+                        <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
+                        { !loading && user && <>
+                            <ProfileInfo user={user} changeUserData={ changeUserData }/>
+                        </>}
+                    </div>
+                    <div className="mt-3 text-center">
+                        <Link to={`/${pageId}/create`}
+                              className={c.btnClass}
+                        >{t('profile-page.create')}</Link>
+                    </div>
+                </aside>
+                <main className="col-md-9 ms-auto mt-3 mt-md-0">
+                    <div className={c.formClass}>
+                        <h3 className="mb-3">{t('profile-page.title')}</h3>
+                        <div className={c.formClass}>Sort</div>
+                    </div>
 
-                    <h1>Profile Main</h1>
-                </div>
+                    <section className="mt-3">
+                        {publications.map((publication) =>
+                            <PublicationPreview publication={publication} key={publication._id}/>
+                        )}
+                    </section>
+                </main>
             </div>
-            }
-        </Fragment>
+
+        </>
     )
 }

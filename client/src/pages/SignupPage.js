@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { SocialButtons } from '../components/SocialButtons'
+import { SocialButtons } from '../components/socialButtons/SocialButtons'
 import { useHttp } from '../hooks/http.hook'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 
