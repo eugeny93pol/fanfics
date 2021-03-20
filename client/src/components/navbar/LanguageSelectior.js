@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 
 export const LanguageSelector = () => {
     const { i18n } = useTranslation()
@@ -8,6 +8,8 @@ export const LanguageSelector = () => {
     const changeLanguage = (event) => {
         i18n.changeLanguage(event.target.value)
     }
+
+
 
     return (
         <div className="btn-group btn-group-sm w-100" onChange={ changeLanguage }>

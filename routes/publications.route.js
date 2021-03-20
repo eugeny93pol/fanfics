@@ -1,9 +1,12 @@
 const router = require('express').Router()
 const role = require('../middleware/role.middleware')
+const { ratePublication } = require('../controllers/rate.controller')
 const { getPublications } = require('../controllers/publication.controller')
 
-router.get('/',role(['admin', 'user']), getPublications)
+router.get('/', getPublications)
 router.get('/read/', getPublications)
-//router.post('/', role(['admin', 'user']), )
+
+router.get('/user/', role(['admin', 'user']), getPublications)
+router.patch('/rate/', role(['admin', 'user']), ratePublication)
 
 module.exports = router

@@ -1,35 +1,32 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { AuthContext } from '../context/AuthContext'
-import { Loader } from '../components/Loader'
+import { Loader } from '../components/loaders/Loader'
 import { useHttp } from '../hooks/http.hook'
 import { Link, useParams } from 'react-router-dom'
-import { GenresList } from '../components/publication/GenresList'
-import Rating from 'react-rating'
+import { GenresList } from '../components/genres/GenresList'
+import { RatingStars } from '../components/rating/RatingStars'
 import { Contents } from '../components/contents/Contents'
 import { ChapterView } from '../components/chapter/ChapterView'
-import { TagsList } from '../components/publication/TagsList'
+import { TagsList } from '../components/tags/TagsList'
 
 
 export const PublicationPage = () => {
     const [hasAccess, setHasAccess] = useState(false)
     const [publication, setPublication] = useState(null)
     const { c } = useThemedClasses()
-    const { userData, isAuth } = useContext(AuthContext)
+    const { userData, isAuth, token } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
     const pageId = useParams().id
 
     const loadData = useCallback(async () => {
         try {
-            const fetched = await request(`/api/publications/read/?id=${pageId}`, 'GET', null)
+            const fetched = await request(
+                `/api/publications/read/?id=${pageId}&user=${userData ? userData.id : 'guest'}`,
+                'GET', null)
             setPublication(fetched.publications)
         } catch (e) {}
-    }, [token, pageId, request])
-
-    const changeRateHandler = (rate) => {
-        console.log(rate)
-    }
+    }, [token, pageId, request, userData])
 
     useEffect(() => {
         loadData()
@@ -41,23 +38,22 @@ export const PublicationPage = () => {
     }, [error, clearError])
 
     useEffect(() => {
-        publication && isAuth &&
+        publication &&
+        isAuth &&
         setHasAccess(userData.role === 'admin'
             || userData.id === publication.author._id)
-    },[])
+    },[publication, userData])
 
     if (loading) return <Loader classes={['my-5']}/>
 
     return (
-        <>{ publication &&
+        <>{ !loading && publication &&
         <div className="row mt-3">
             <div className={`col ${c.textClass}`}>
                 <h2>{publication.title}</h2>
                 <GenresList genres={publication.genres}/>
                 <p>{publication.description}</p>
-                <div className="mb-3">
-                    <TagsList tags={publication.tags}/>
-                </div>
+                <div className="mb-3"><TagsList tags={publication.tags}/></div>
                 <div className="row">
                     <div className="col-md-6 ms-1 ms-md-3 mt-4">
                         <div className={c.contentsClass}>
@@ -82,14 +78,11 @@ export const PublicationPage = () => {
                               className={`nav-link link-secondary px-0 ${ !hasAccess && 'disabled'}`}
                         >{publication.author.name}</Link>
                     </div>
-                    <Rating
-                        placeholderRating={publication.averageRating}
-                        emptySymbol="bi bi-star"
-                        fullSymbol={c.rateFullClass}
-                        placeholderSymbol={c.rateFullClass}
-                        onChange={ changeRateHandler }
-                        stop={5}
-                        readonly={ !isAuth || userData.id === publication.author._id}
+                    <RatingStars
+                        publicationId={publication._id}
+                        average={publication.averageRating}
+                        userRate={publication.rates[0]}
+                        readonly={!isAuth || userData.id === publication.author._id}
                     />
                 </div>
 

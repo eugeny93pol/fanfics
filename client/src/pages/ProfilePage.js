@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Link, useParams } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
-import { Loader } from '../components/Loader'
+import { Loader } from '../components/loaders/Loader'
 import { ProfileInfo } from '../components/ProfileInfo'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
@@ -26,7 +26,7 @@ export const ProfilePage = () => {
             })
             setUser(userData.user)
 
-            const userPublications = await request(`/api/publications/?user=${pageId}`, 'GET', null, {
+            const userPublications = await request(`/api/publications/user/?user=${pageId}`, 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
             setPublications(userPublications.publications)

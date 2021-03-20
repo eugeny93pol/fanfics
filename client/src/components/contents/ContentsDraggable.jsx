@@ -19,8 +19,8 @@ export const ContentsDraggable = ({ publication, moveChapter }) => {
             <nav className="nav navbar-nav flex-column" id="contents">
                     { publication.chapters.map((chapter, i) => (
                             <ContentsItem
-                                key={chapter.id}
-                                id={chapter.id}
+                                key={chapter._id}
+                                id={chapter._id}
                                 index={i}
                                 chapter={chapter}
                                 moveChapter={moveChapter}

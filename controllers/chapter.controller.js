@@ -1,5 +1,6 @@
 const Chapter = require('../models/Chapter')
 const mongoose = require('mongoose')
+const errorHandler = require('../utils/errorHandler')
 
 
 const saveOrUpdateChapters = async (data, author) => {
@@ -24,31 +25,25 @@ const saveOrUpdateChapters = async (data, author) => {
 const changeChapter = async (req, res) => {
     try {
         let chapter
-        switch (true) {
-            case !!req.query.like:
-                chapter = await likeChapter(req.query.like, req.body.user)
-                break
-            default:
-                console.log('default')
-        }
-
-
         res.status(200).json({ chapter })
     } catch (e) {
-        console.log(e)
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
-const likeChapter = async (id, user) => {
-    const chapter = await Chapter.findById(id)
-    if (chapter.likes.includes(user)) {
-        chapter.likes = chapter.likes.filter(like => like != user)
-    } else {
-        chapter.likes.push(user)
+const likeChapter = async (req, res) => {
+    try {
+        const chapter = await Chapter.findById(req.body.id)
+        if (chapter.likes.includes(req.body.user)) {
+            chapter.likes = chapter.likes.filter(like => like != req.body.user)
+        } else {
+            chapter.likes.push(req.body.user)
+        }
+        await chapter.save()
+        res.status(200).json({ chapter })
+    } catch (e) {
+        errorHandler(res, e)
     }
-    await chapter.save()
-    return chapter
 }
 
-module.exports = { saveOrUpdateChapters, changeChapter }
+module.exports = { saveOrUpdateChapters, likeChapter }

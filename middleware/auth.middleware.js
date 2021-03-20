@@ -7,12 +7,14 @@ module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]
         if(!token) {
-            return res.status(401).json({message: "No authorisation"})
+            req.userData = { userRole: 'guest' }
+        } else {
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+            req.userData = { userId: decodedToken.userId, userRole: decodedToken.userRole }
         }
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        req.userData = { userId: decodedToken.userId, userRole: decodedToken.role }
+        console.log(req.userData)
         next()
     } catch (e) {
-        res.status(401).json({message: "Auth failed"})
+        res.status(401).json({message: "s:auth_failed"})
     }
 }

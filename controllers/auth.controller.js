@@ -1,9 +1,9 @@
 const { validationResult } = require('express-validator')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Role = require('../models/Role')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-
+const errorHandler = require('../utils/errorHandler')
 
 const login = async (req, res) => {
     try {
@@ -34,7 +34,7 @@ const login = async (req, res) => {
             token
         })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
@@ -66,7 +66,7 @@ const registration = async (req, res) => {
 
         res.status(201).json({ message: 'User created' })
     } catch (e) {
-        res.status(500).json({ error: e })
+        errorHandler(res, e)
     }
 }
 

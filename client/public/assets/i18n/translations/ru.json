@@ -49,6 +49,15 @@
   "login": "Вход",
   "logout": "Выйти",
 
+  "main-page-button.more": "Показать больше фанфиков",
+  "main-page-loader.text": "К сожалению, еще не найден ни один фанфик. Если загрузка продолжается длительное время, пожалуйста, возвращайтесь позже, будет очень интересно!",
+  "main-page-loader.title": "Пожалуста подождите",
+  "main-page-tab-btn.last-updates": "Последние",
+  "main-page-tab-btn.most-rated": "Лучшие",
+  "main-page-title.last-updates": "Последние обновления",
+  "main-page-title.most-rated": "Самые популярные",
+  "main-page-title.tag-cloud": "Облако тегов",
+
   "modal-dialog.cancel": "Отмена",
   "modal-dialog.close": "Закрыть",
   "modal-dialog.submit": "Подтвердить",
@@ -70,6 +79,7 @@
   "publication-preview-modal.text": "Удалить фанфик \"{{title}}\"?",
   "publication-preview-modal.title": "Подтвердите удаление",
 
+  "rating.average": "Средний рейтинг {{value}}",
   "read-page-chapter.title": "Глава {{number}}",
 
   "registration": "Регистрация",
@@ -78,6 +88,7 @@
   "settings": "Настройки",
   "signin": "Войти",
   "signup": "Зарегистрироваться",
+  "site.description": "Мордор — техногенная цивилизация, опороченная победителями",
   "site.name": "Мордор",
 
   "theme.dark": "Темная тема",

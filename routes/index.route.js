@@ -7,5 +7,6 @@ router.use('/create', require('./create.route'))
 router.use('/user', require('./user.route'))
 router.use('/publications', require('./publications.route'))
 router.use('/chapters', require('./chapters.route'))
+router.use('/tags', require('./tags.route'))
 
 module.exports = router

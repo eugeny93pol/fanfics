@@ -21,8 +21,9 @@ i18n
             formatSeparator: ','
         },
         react: {
-            wait: true
-        }
+            useSuspense: true
+        },
+
     })
 
 export default i18n

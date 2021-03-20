@@ -4,7 +4,9 @@ import { EditorOptions } from './options'
 import 'easymde/dist/easymde.min.css'
 import './index.css'
 
-export const MarkdownEditor = ({setTextContent, value}) => {
+// const regexp = /!\[[^\[\]]*?\]\(.*?\)/g
+
+export const MarkdownEditor = ({setTextContent, value, image}) => {
     const [text, setText] = useState(value)
 
     const { options } = EditorOptions()
@@ -16,6 +18,16 @@ export const MarkdownEditor = ({setTextContent, value}) => {
     useEffect(() => {
         setTextContent(text)
     }, [text])
+
+    // useEffect(() => {
+    //     if (image) {
+    //         setText(prevState => prevState.replaceAll(regexp,'') +
+    //             `\n![](${image.preview})\n`
+    //         )
+    //     } else {
+    //         setText(prevState => prevState.replaceAll(regexp,''))
+    //     }
+    // },[image])
 
     return(
         <SimpleMDEReact

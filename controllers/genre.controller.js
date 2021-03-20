@@ -1,4 +1,5 @@
 const Genre = require('../models/Genre')
+const errorHandler = require('../utils/errorHandler')
 
 const getGenres = async () => {
     return (await Genre.find())
@@ -14,8 +15,7 @@ const createGenre = async (req, res) => {
         await genre.save()
         res.status(201).json({ message: 'Genre created', genre })
     } catch (e) {
-        console.log(e)
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 

@@ -5,19 +5,21 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
 import { PublicationMenu } from './PublicationMenu'
 import Rating from 'react-rating'
-import { GenresList } from './GenresList'
-import { TagsList } from './TagsList'
+import { GenresList } from '../genres/GenresList'
+import { TagsList } from '../tags/TagsList'
 
 export const PublicationPreview = ({publication}) => {
     const [hasAccess, setHasAccess] = useState(false)
+    const { isAuth } = useContext(AuthContext)
     const { t } = useTranslation()
     const { c } = useThemedClasses()
     const { userData } = useContext(AuthContext)
 
     useEffect(() => {
+        isAuth &&
         setHasAccess(userData.role === 'admin'
             || userData.id === publication.author._id)
-    },[])
+    },[publication, userData])
 
     return (<>
         <div className={c.publicationPreviewClass}>
@@ -28,7 +30,7 @@ export const PublicationPreview = ({publication}) => {
                 <GenresList genres={publication.genres}/>
                 <h5 className="card-title">{publication.title}</h5>
                 <p className="card-text">{publication.description}</p>
-                <div className="mb3">
+                <div className="mb-3">
                     <TagsList tags={publication.tags}/>
                 </div>
                 <div className="text-end">

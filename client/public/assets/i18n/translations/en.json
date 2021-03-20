@@ -49,6 +49,15 @@
   "login": "Login",
   "logout": "Logout",
 
+  "main-page-button.more": "Show more fanfics",
+  "main-page-loader.text": "Sorry, no fanfic has been found yet. If the download takes a long time, please come back later, it will be very interesting!",
+  "main-page-loader.title": "Please wait",
+  "main-page-tab-btn.last-updates": "Latest",
+  "main-page-tab-btn.most-rated": "Top rated",
+  "main-page-title.last-updates": "Last updates",
+  "main-page-title.most-rated": "Top rated",
+  "main-page-title.tag-cloud": "Tag cloud",
+
   "modal-dialog.cancel": "Cancel",
   "modal-dialog.close": "Close",
   "modal-dialog.submit": "Submit",
@@ -70,6 +79,7 @@
   "publication-preview-modal.text": "Remove fanfic  \"{{title}}\"?",
   "publication-preview-modal.title": "Confirm deletion",
 
+  "rating.average": "Average rating {{value}}",
   "read-page-chapter.title": "Chapter {{number}}",
 
   "registration": "Registration",
@@ -78,6 +88,7 @@
   "settings": "Settings",
   "signin": "Sign In",
   "signup": "Sign Up",
+  "site.description": "Mordor - technological civilization, discredited by the victors",
   "site.name": "Mordor",
 
   "theme.dark": "Dark theme",

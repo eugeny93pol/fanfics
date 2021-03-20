@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const User = require('../models/User')
 const Role = require('../models/Role')
+const errorHandler = require('../utils/errorHandler')
 
 const getUser = async (req, res) => {
     try {
@@ -21,7 +22,7 @@ const getUser = async (req, res) => {
 
         res.status(200).json({ user })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
@@ -61,7 +62,7 @@ const updateUser = async (req, res) => {
         res.status(200).json({ user })
 
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
@@ -75,7 +76,7 @@ const updateUsersRoles = async (req, res) => {
         const result = await User.updateMany({_id: {$in: req.body.usersIds}}, {role: role.name})
         res.status(200).json({ message: `Updated ${result.n} users` })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
@@ -85,7 +86,7 @@ const deleteUsers = async (req, res) => {
         const result = await User.deleteMany({_id: {$in: req.body.usersIds}})
         res.status(200).json({ message: `Deleted ${result.n} users` })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 

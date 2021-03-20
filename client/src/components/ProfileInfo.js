@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
-import { Loader } from './Loader'
+import { Loader } from './loaders/Loader'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 
 

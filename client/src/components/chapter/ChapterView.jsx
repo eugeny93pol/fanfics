@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
@@ -13,16 +13,22 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
     const { isAuth, userData, token } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
 
-    const likeHandler = async () => {
+    const likeHandler = useCallback(async () => {
         try {
-            const fetched = await request(`/api/chapters/?like=${chapter._id}`, 'PATCH', {
+            const fetched = await request(`/api/chapters/like`, 'PATCH', {
+                id: chapter._id,
                 user: userData.id
             },{
                 Authorization: `Bearer ${token}`
             })
             setChapter(fetched.chapter)
         } catch (e) {}
-    }
+    },[request, token, userData, chapter])
+
+    useEffect( () => {
+        console.log(error)
+        clearError()
+    }, [error, clearError])
 
 
     return (

@@ -1,12 +1,13 @@
 const Tag = require('../models/Tag')
 const mongoose = require('mongoose')
+const errorHandler = require('../utils/errorHandler')
 
 const loadTags = async (req, res) => {
     try {
         const tags = await Tag.find()
         res.status(200).json({ tags })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 

@@ -4,7 +4,7 @@ import { useHttp } from '../hooks/http.hook'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 import { ChapterCreate } from '../components/chapter/ChapterCreate'
-import { Loader } from '../components/Loader'
+import { Loader } from '../components/loaders/Loader'
 import { nanoid } from 'nanoid'
 import { useParams } from 'react-router-dom'
 import { PublicationHeadCreate } from '../components/publication/PublicationHeadCreate'
@@ -44,12 +44,13 @@ export const CreatePage = () => {
     }, [token, request])
 
     const saveHandler = useCallback(async () => {
+        console.log(publication)
         try {
             const response = await request(`/api/create/`, 'POST', { ...publication }, {
                 Authorization: `Bearer ${token}`
             })
-            console.log(response.publication)
-            setPublication(response.publication)
+            //setPublication(response.publication)
+            console.log(response)
         } catch (e) {}
     })
 
@@ -72,6 +73,7 @@ export const CreatePage = () => {
                     : chp
             )
         })
+        console.log(publication)
     }
 
     const removeChapter = (id) => {

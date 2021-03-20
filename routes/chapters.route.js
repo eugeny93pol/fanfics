@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const role = require('../middleware/role.middleware')
-const { changeChapter } = require('../controllers/chapter.controller')
+const { likeChapter } = require('../controllers/chapter.controller')
 
-router.patch('/', role(['admin', 'user']), changeChapter)
+router.patch('/like/', role(['admin', 'user']), likeChapter)
 
 module.exports = router

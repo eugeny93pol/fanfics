@@ -1,7 +1,9 @@
 const Publication = require('../models/Publication')
+const User = require('../models/User')
 const { saveOrUpdateChapters } = require('./chapter.controller')
 const { getGenres } = require('./genre.controller')
 const { saveOrUpdateTags, getTags } = require('./tag.controller')
+const errorHandler = require('../utils/errorHandler')
 
 const getMeta = async (req, res) => {
     try {
@@ -9,16 +11,13 @@ const getMeta = async (req, res) => {
         const tags = await getTags()
         res.status(200).json({ genres, tags })
     } catch (e) {
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 
 const savePublication = async (req, res) => {
-    try {
-        if (req.body._id) {
-            //let candidate = await Publication.findOne({email: req.body.email})
-        }
 
+    try {
         const { title, description, author, genres } = req.body
 
         const tags = await saveOrUpdateTags(req.body.tags)
@@ -30,13 +29,14 @@ const savePublication = async (req, res) => {
             chapters: chapters.map(chapter => chapter._id)
         })
 
-
+        const user = await User.findById(author)
+        user.publications.push(publication)
 
         await publication.save()
-        res.status(201).json({message: 'created', publication })
+        await user.save()
+        res.status(201).json({message: 's:publication_created', publication })
     } catch (e) {
-        console.log(e)
-        res.status(500).json({error: e})
+        errorHandler(res, e)
     }
 }
 

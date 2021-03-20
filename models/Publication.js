@@ -10,7 +10,7 @@ const publicationSchema = new Schema({
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}],
-    //rating: [{user: , value: }]
-    averageRating: { type: Number }
+    rates: [{ type: Schema.Types.ObjectId, ref: 'Rate'}],
+    averageRating: { type: Number, default: 0 }
 })
 module.exports = model('Publication', publicationSchema)

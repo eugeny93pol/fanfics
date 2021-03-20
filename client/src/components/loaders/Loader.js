@@ -9,7 +9,7 @@ export const Loader = (props) => {
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center">
+        <div className="d-flex justify-content-center align-items-center" style={{padding: '3px 0'}}>
             <div className={ classes.join(' ') } role="status">
                 <span className="visually-hidden">Loading...</span>
             </div>

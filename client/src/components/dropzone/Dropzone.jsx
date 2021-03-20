@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
+import {Image, CloudinaryContext} from 'cloudinary-react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 
@@ -33,16 +34,17 @@ export const Dropzone = ({setSelectedFiles}) => {
         setFiles([])
     }
 
-    useEffect(() => () => {
-        files.forEach(file => URL.revokeObjectURL(file.preview))
-    }, [files])
-
-    useEffect(() =>{
+    useEffect(() => {
         setSelectedFiles(files)
-    },[files])
+        return () => {
+            files.forEach(file => URL.revokeObjectURL(file.preview))
+        }
+    }, [files])
 
     return (
         <div className="dropzone-wrapper">
+
+
             <div {...getRootProps({ className: c.dropzoneClass })}>
                 <input {...getInputProps()} />
                 {isDragAccept && (<div className="py-2 py-md-5"><span><i className="bi bi-image"/> {t('dropzone.accept')}</span></div>)}
