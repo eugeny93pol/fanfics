@@ -11,7 +11,7 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const { isAuth, userData, token } = useContext(AuthContext)
-    const { loading, error, clearError, request } = useHttp()
+    const { error, clearError, request } = useHttp()
 
     const likeHandler = useCallback(async () => {
         try {
@@ -33,18 +33,27 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
 
     return (
         <section className={`${c.textClass} chapter mb-4`} id={`chapter${index}`}>
-            <h6 className="text-muted">{t('read-page-chapter.title', {number: index+1})}</h6>
-            <h3>{chapter.title}</h3>
+            { chapter.files.length ?
+                <div className={c.cardImage}>
+                    <img src={chapter.files[0]} className="card-img" alt={chapter.title}/>
+                    <div className="card-img-overlay user-select-none">
+                        <h5 className="card-title">{t('read-page-chapter.title', { number: index + 1 })}</h5>
+                        <h3 className="card-title">{chapter.title}</h3>
+                        <p className="card-text">{new Date(chapter.updated).toLocaleDateString()}</p>
+                    </div>
+                </div> : ''
+            }
+            { !chapter.files.length ?
+                <>
+                    <h5 className="text-muted">{t('read-page-chapter.title', {number: index+1})}</h5>
+                    <h3>{chapter.title}</h3>
+                    <p className="card-text text-muted">{new Date(chapter.updated).toLocaleDateString()}</p>
+                </> : ''
+            }
+
             <ReactMarkdown>
                 {chapter.content}
             </ReactMarkdown>
-            { chapter.files.length &&
-                <div className="col-10 col-md-5 m-auto mt-4 text-center">
-                    { chapter.files.map((file) =>
-                        <img src={file} className="img-fluid rounded mb-3" alt={chapter.title} key={file}/>
-                    )}
-                </div>
-            }
             { isAuth &&
                 <div className="d-flex gap-2">
                     <div className="btn likeBtn" onClick={likeHandler} role="button">

@@ -10,6 +10,11 @@ blockquote {
     padding-left: 1rem;
 }
 
+img {
+    object-fit: cover;
+    object-position: center;
+}
+
 .form-check-input:focus {
     border-color: var(--bs-gray);
 }
@@ -88,6 +93,33 @@ blockquote {
 .bg-dark .likeBtn:hover,
 .bg-dark .likeBtn:focus {
     color: var(--bs-light);
+}
+
+.card-img-overlay {
+    z-index: 1;
+}
+
+.card-img-overlay:hover::before {
+    opacity: 0;
+}
+
+.card-img-overlay::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(#000, #aaa);
+    opacity: .35;
+    transition: opacity .15s linear;
+    z-index: -1;
+}
+
+.card-img-overlay:hover,
+.card-img-overlay:focus {
+    background-image: linear-gradient(transparent, transparent);
 }
 
 .social-btn {
@@ -178,11 +210,17 @@ blockquote {
 }
 
 .thumb-inner .btn-close {
-    display: none;
+    color: white;
+    background-color: rgba(255,255,255,.1);
+    transition: opacity 0.15s linear;
 }
 
-.thumb-inner:hover .btn-close {
-    display: block;
+.thumb-inner .btn-close:focus,
+.thumb-inner .btn-close:hover {
+    background-color: rgba(255,255,255,.2);
+}
+.thumb-inner .btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(248, 249, 250, .25);
 }
 
 .dragButton {
@@ -277,10 +315,24 @@ blockquote {
     color: var(--bs-secondary);
 }
 
+@media (min-width: 576px) {
+    .card.ratio {
+        --bs-aspect-ratio: 50%;
+    }
+
+    .card-img-overlay::before {
+        background: linear-gradient(#000, transparent);
+    }
+}
+
 @media (min-width: 992px) {
     .sidebar-3 {
         width: calc(960px/4);
         position: fixed;
+    }
+
+    .card.ratio {
+        --bs-aspect-ratio: 42.8%;
     }
 }
 

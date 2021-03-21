@@ -13,7 +13,7 @@ export const useThemedClasses = () => {
 
 
     const btnClass = classNames({
-        btn: true,
+        'btn': true,
         'btn-dark': !isDark,
         'btn-secondary': isDark
     })
@@ -26,7 +26,6 @@ export const useThemedClasses = () => {
     const btnCloseAbsClass = classNames({
         'btn-close': true,
         'position-absolute': true,
-        'bg-danger': true,
         'top-0': true,
         'end-0': true,
         'm-2': true,
@@ -35,15 +34,25 @@ export const useThemedClasses = () => {
     })
 
     const btnOutlineClass = classNames({
-        btn: true,
+        'btn': true,
         'btn-outline-dark': !isDark,
         'btn-outline-secondary': isDark
     })
 
     const btnSecClass = classNames({
-        btn: true,
+        'btn': true,
         'btn-outline-secondary': !isDark,
         'btn-outline-light': isDark
+    })
+
+    const cardImage = classNames({
+        'card': true,
+        'mb-4': true,
+        'bg-dark': isDark,
+        'bg-light': !isDark,
+        'text-white': true,
+        'ratio': true,
+        'ratio-4x3': true
     })
 
     const dropdownClass = classNames({
@@ -190,6 +199,7 @@ export const useThemedClasses = () => {
         btnCloseAbsClass,
         btnOutlineClass,
         btnSecClass,
+        cardImage,
         contentsClass,
         dropdownClass,
         dropzoneClass,

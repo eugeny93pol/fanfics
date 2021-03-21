@@ -41,6 +41,7 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
                     body: formData
                 })
                 const data = await response.json()
+                console.log(data)
                 uploaded.push(data.url)
             }
             setUploading(false)
@@ -96,16 +97,15 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
                 { uploading && <Loader/>}
                 {
                     files.map(file => (
-                        <div key={file} className="d-flex justify-content-center">
-                            <div className="d-inline-block position-relative thumb-inner">
-                                <img src={file} alt={file}
-                                     className="img-fluid rounded"/>
-                                 <button
-                                    className={ c.btnCloseAbsClass }
-                                    aria-label={ t('dropzone.remove') }
-                                    onClick={ removeImageHandler }
-                                />
+                        <div key={file} className="d-flex justify-content-center position-relative thumb-inner">
+                            <div className="ratio ratio-16x9">
+                                <img src={file} alt={file} className="img-fluid rounded mx-auto"/>
                             </div>
+                            <button
+                                className={ c.btnCloseAbsClass }
+                                aria-label={ t('dropzone.remove') }
+                                onClick={ removeImageHandler }
+                            />
                         </div>
                     ))
                 }
