@@ -38,6 +38,13 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
             <ReactMarkdown>
                 {chapter.content}
             </ReactMarkdown>
+            { chapter.files.length &&
+                <div className="col-10 col-md-5 m-auto mt-4 text-center">
+                    { chapter.files.map((file) =>
+                        <img src={file} className="img-fluid rounded mb-3" alt={chapter.title} key={file}/>
+                    )}
+                </div>
+            }
             { isAuth &&
                 <div className="d-flex gap-2">
                     <div className="btn likeBtn" onClick={likeHandler} role="button">

@@ -44,13 +44,11 @@ export const CreatePage = () => {
     }, [token, request])
 
     const saveHandler = useCallback(async () => {
-        console.log(publication)
         try {
             const response = await request(`/api/create/`, 'POST', { ...publication }, {
                 Authorization: `Bearer ${token}`
             })
-            //setPublication(response.publication)
-            console.log(response)
+            setPublication(response.publication)
         } catch (e) {}
     })
 
@@ -73,7 +71,6 @@ export const CreatePage = () => {
                     : chp
             )
         })
-        console.log(publication)
     }
 
     const removeChapter = (id) => {

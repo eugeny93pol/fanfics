@@ -92,7 +92,7 @@ export const ChapterCreate = ({id, index, initial, moveChapter, changeChapter, r
                         </div>
 
                         <div className="mb-3">
-                            <Dropzone setSelectedFiles={setChapterFiles}/>
+                            <Dropzone setSelectedFiles={setChapterFiles} initial={chapter.files}/>
                         </div>
 
                         <button type="button" className="btn btn-danger" onClick={removeHandler}>

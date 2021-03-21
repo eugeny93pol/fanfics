@@ -8,5 +8,7 @@ router.use('/user', require('./user.route'))
 router.use('/publications', require('./publications.route'))
 router.use('/chapters', require('./chapters.route'))
 router.use('/tags', require('./tags.route'))
+router.use('/upload', require('./cloud.route'))
+
 
 module.exports = router

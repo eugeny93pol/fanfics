@@ -1,19 +1,60 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import {Image, CloudinaryContext} from 'cloudinary-react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
+import { useHttp } from '../../hooks/http.hook'
+import { AuthContext } from '../../context/AuthContext'
+import { Loader } from '../loaders/Loader'
 
-export const Dropzone = ({setSelectedFiles}) => {
-    const [files, setFiles] = useState([])
+export const Dropzone = ({setSelectedFiles, initial}) => {
+    const [files, setFiles] = useState(initial || [])
+    const [uploading, setUploading] = useState(false)
     const { c } = useThemedClasses()
     const { t } = useTranslation()
-    const onDrop = useCallback(acceptedFiles => {
-        setFiles(acceptedFiles.map(file => Object.assign(
-            file,
-            { preview: URL.createObjectURL(file) }
-        )))
+
+    const { error, clearError, request } = useHttp()
+    const { token } = useContext(AuthContext)
+
+    const getSign = useCallback(async () => {
+        setUploading(true)
+        try {
+            return await request(`/api/upload/`, 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+        } catch (e) {
+            setUploading(false)
+        }
     })
+
+    const uploadImages = useCallback(async (files, options) => {
+        const formData = new FormData()
+        const uploaded = []
+        try {
+            for (let i=0; i<files.length; i++) {
+                formData.append('file', files[i])
+                formData.append('api_key', options.api_key)
+                formData.append('timestamp', options.timestamp)
+                formData.append('signature', options.signature)
+
+                const response = await fetch(options.url, {
+                    method: "POST",
+                    body: formData
+                })
+                const data = await response.json()
+                uploaded.push(data.url)
+            }
+            setUploading(false)
+            return uploaded
+        } catch (e) {
+            setUploading(false)
+        }
+    },[])
+
+    const onDrop = useCallback(async acceptedFiles => {
+        const options = await getSign()
+        const uploaded = await uploadImages(acceptedFiles, options)
+        setFiles(uploaded)
+    }, [token, request])
 
     const options = {
         onDrop,
@@ -34,17 +75,17 @@ export const Dropzone = ({setSelectedFiles}) => {
         setFiles([])
     }
 
+    useEffect( () => {
+        console.log(error)
+        clearError()
+    }, [error, clearError])
+
     useEffect(() => {
         setSelectedFiles(files)
-        return () => {
-            files.forEach(file => URL.revokeObjectURL(file.preview))
-        }
     }, [files])
 
     return (
         <div className="dropzone-wrapper">
-
-
             <div {...getRootProps({ className: c.dropzoneClass })}>
                 <input {...getInputProps()} />
                 {isDragAccept && (<div className="py-2 py-md-5"><span><i className="bi bi-image"/> {t('dropzone.accept')}</span></div>)}
@@ -52,11 +93,12 @@ export const Dropzone = ({setSelectedFiles}) => {
                 {!isDragActive && (<div><span>{t('dropzone.not-active')}</span></div>)}
             </div>
             <div className="thumbs-container mt-3">
+                { uploading && <Loader/>}
                 {
                     files.map(file => (
-                        <div key={file.name} className="d-flex justify-content-center">
+                        <div key={file} className="d-flex justify-content-center">
                             <div className="d-inline-block position-relative thumb-inner">
-                                <img src={file.preview} alt={file.name}
+                                <img src={file} alt={file}
                                      className="img-fluid rounded"/>
                                  <button
                                     className={ c.btnCloseAbsClass }

@@ -16,7 +16,7 @@ const saveOrUpdateChapters = async (data, author) => {
         }
         chapter.title = ch.title
         chapter.content = ch.content
-        chapter.imageUri = ch.imageUri
+        chapter.files = ch.files
         chapters.push(await chapter.save())
     }
     return chapters
