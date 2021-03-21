@@ -1,10 +1,13 @@
 const express = require('express')
+const http = require('http')
 const mongoose = require('mongoose')
 const path = require('path')
 
 require('dotenv').config()
 
 const app = express()
+const httpServer = http.createServer(app)
+const io = require('socket.io')(httpServer)
 
 const PORT = process.env.PORT
 
@@ -26,7 +29,8 @@ async function start() {
             useUnifiedTopology: true,
             useCreateIndex: true
         })
-        app.listen(PORT, () =>console.log(`Server start on port ${PORT} ...`))
+        httpServer.listen(PORT, () =>console.log(`Server start on port ${PORT} ...`))
+        require('./controllers/comment.controller').subscribeToComments(io)
     } catch (e) {
         console.log('Server error', e.message)
         process.exit(-1);

@@ -1,4 +1,5 @@
 const Publication = require('../models/Publication')
+const Comment = require('../models/Comment')
 const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
 
@@ -53,12 +54,20 @@ const getUserPublications = async (id) => {
 }
 
 const getPublication = async (id, user) => {
-    const publication = await Publication.
-                                findById(id).
-                                populate('author', 'name').
-                                populate('tags').
-                                populate('genres').
-                                populate('chapters')
+    const publication =
+        await Publication.
+        findById(id).
+        populate('author', 'name').
+        populate('tags').
+        populate('genres').
+        populate('chapters').
+        populate({
+            path: 'comments',
+            populate: {
+                path: 'user',
+                select: 'name'
+            }
+        })
 
     if (mongoose.isValidObjectId(user)) {
         publication.populate({

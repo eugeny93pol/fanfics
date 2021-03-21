@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { DndProvider } from 'react-dnd'
 import { TouchBackend } from 'react-dnd-touch-backend'
 import { HTML5Backend } from 'react-dnd-html5-backend'
@@ -10,8 +9,7 @@ import { ContentsItem } from './ContentsItem'
 
 export const ContentsDraggable = ({ publication, moveChapter }) => {
     const { t } = useTranslation()
-    const { c } = useThemedClasses()
-    const backend = useMemo(() => isMobile ? TouchBackend : HTML5Backend)
+    const backend = useMemo(() => isMobile ? TouchBackend : HTML5Backend, [])
 
     return(
         <DndProvider backend={backend}>

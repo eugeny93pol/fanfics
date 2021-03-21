@@ -73,6 +73,12 @@
   "profile-page.create": "Создать фанфик",
   "profile-page.title": "Здесь собраны ваши публикации",
 
+  "publication-page.comments-input-button": "Комментировать",
+  "publication-page.comments-input-label": "Оставить комментарий",
+  "publication-page.comments-input-placeholder": "Написать комментарий",
+  "publication-page.comments-no-comments": "Здесь еще нет комментариев",
+  "publication-page.comments-title": "Комментарии",
+
   "publication-preview.btn-edit": "Редактировать",
   "publication-preview.btn-delete": "Удалить",
   "publication-preview.btn-read": "Читать фанфик",

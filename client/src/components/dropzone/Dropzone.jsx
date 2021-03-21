@@ -24,7 +24,7 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
         } catch (e) {
             setUploading(false)
         }
-    })
+    },[request, token])
 
     const uploadImages = useCallback(async (files, options) => {
         const formData = new FormData()
@@ -55,7 +55,7 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
         const options = await getSign()
         const uploaded = await uploadImages(acceptedFiles, options)
         setFiles(uploaded)
-    }, [token, request])
+    }, [token, request, getSign, uploadImages])
 
     const options = {
         onDrop,

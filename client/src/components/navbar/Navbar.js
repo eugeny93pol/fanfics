@@ -62,7 +62,7 @@ export const Navbar = () => {
                         </li>
                         { auth.isAuth &&
                         <li className="nav-item">
-                            <Link className="nav-link" to="/" onClick={ logoutHandler }>
+                            <Link className="nav-link" to="/logout" onClick={ logoutHandler }>
                                 <i className="bi bi-door-open"/>
                                 {` ${t('logout')}`}
                             </Link>

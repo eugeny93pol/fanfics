@@ -73,6 +73,12 @@
   "profile-page.create": "Create fanfic",
   "profile-page.title": "Here you can find your publications",
 
+  "publication-page.comments-input-button": "Comment",
+  "publication-page.comments-input-label": "Leave a comment",
+  "publication-page.comments-input-placeholder": "Write a comment",
+  "publication-page.comments-no-comments": "There are no comments yet",
+  "publication-page.comments-title": "Comment",
+
   "publication-preview.btn-edit": "Edit",
   "publication-preview.btn-delete": "Delete",
   "publication-preview.btn-read": "Read fanfic",

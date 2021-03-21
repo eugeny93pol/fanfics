@@ -43,8 +43,8 @@ export const MainPage = () => {
         setPage(page + 1)
     }
 
-    useEffect(async () => {
-        await loadPublications()
+    useEffect(() => {
+        loadPublications()
     },[sort, page, loadPublications])
 
     useEffect(() => {

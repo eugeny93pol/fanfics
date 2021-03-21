@@ -8,9 +8,9 @@ import './index.css'
 export const PublicationHeadCreate = ({meta, setPublicationHead, initial}) => {
     const [publication, setPublication] = useState({
         title: initial.title,
-        description:  initial.description,
+        description: initial.description,
         genres: initial.genres,
-        tags:  initial.tags
+        tags: initial.tags
     })
 
     const { c } = useThemedClasses()
