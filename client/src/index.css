@@ -315,6 +315,19 @@ img {
     color: var(--bs-secondary);
 }
 
+.ratingWrapper {
+    min-width: 80px;
+}
+
+.profileLink {
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.publication-title {
+    width: calc(100% - 50px);
+}
+
 @media (min-width: 576px) {
     .card.ratio {
         --bs-aspect-ratio: 50%;

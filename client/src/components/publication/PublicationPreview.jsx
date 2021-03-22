@@ -8,7 +8,7 @@ import Rating from 'react-rating'
 import { GenresList } from '../genres/GenresList'
 import { TagsList } from '../tags/TagsList'
 
-export const PublicationPreview = ({publication}) => {
+export const PublicationPreview = ({publication, cbDelete}) => {
     const [hasAccess, setHasAccess] = useState(false)
     const { isAuth } = useContext(AuthContext)
     const { t } = useTranslation()
@@ -25,7 +25,7 @@ export const PublicationPreview = ({publication}) => {
         <div className={c.publicationPreviewClass}>
             <div className="card-body">
                 {hasAccess &&
-                    <PublicationMenu publication={publication}/>
+                    <PublicationMenu publication={publication} cbDelete={cbDelete}/>
                 }
                 <GenresList genres={publication.genres}/>
                 <h5 className="card-title">{publication.title}</h5>
@@ -39,9 +39,9 @@ export const PublicationPreview = ({publication}) => {
                 </div>
             </div>
             <div className="card-footer text-muted d-flex justify-content-between align-items-center">
-                <div className="d-flex gap-3">
+                <div className="d-flex gap-3 align-items-center">
                     <div className="d-none d-sm-block"><i className="bi bi-clock"/> {new Date(publication.updated).toLocaleDateString()}</div>
-                    <div>
+                    <div className="ratingWrapper">
                         <Rating
                             placeholderRating={publication.averageRating}
                             emptySymbol="bi bi-star"
@@ -50,10 +50,15 @@ export const PublicationPreview = ({publication}) => {
                             readonly
                         />
                     </div>
+                    { publication.comments.length ?
+                        <div className="user-select-none">
+                            <span><i className="bi bi-chat-text"/> {publication.comments.length}</span>
+                        </div> : ''
+                    }
                 </div>
-                <div>
+                <div className="w-50 text-end">
                     <Link to={`/profile/${publication.author._id}`}
-                          className={`nav-link link-secondary px-0 ${ !hasAccess && 'disabled'}`}
+                          className={`nav-link link-secondary profileLink px-0 ${ !hasAccess && 'disabled'}`}
                     >{publication.author.name}</Link>
                 </div>
             </div>

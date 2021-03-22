@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Modal } from '../modal/Modal'
+import { AuthContext } from '../../context/AuthContext'
+import { useHttp } from '../../hooks/http.hook'
 
-export const PublicationMenu = ({publication}) => {
+export const PublicationMenu = ({publication, cbDelete}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const { token } = useContext(AuthContext)
+    const { error, clearError, request } = useHttp()
+    const { t } = useTranslation()
+
+    const removePublication = useCallback(async () => {
+        try {
+            const response = await request('/api/publications/', 'DELETE',
+                { _id: publication._id },
+                { Authorization: `Bearer ${token}` })
+            console.log(response)
+            cbDelete(publication._id)
+        } catch (e) {}
+    },[request, token, publication])
 
     const removeHandler = () => {
         setIsModalOpen(true)
@@ -12,13 +27,18 @@ export const PublicationMenu = ({publication}) => {
 
     const submitModalHandler = () => {
         setIsModalOpen(false)
+        removePublication()
     }
 
     const cancelModalHandler = () => {
         setIsModalOpen(false)
     }
 
-    const { t } = useTranslation()
+    useEffect( () => {
+        console.log(error)
+        clearError()
+    }, [error, clearError])
+
     return (
         <>
             <button className="btn menuButton" type="button" data-bs-toggle="collapse"

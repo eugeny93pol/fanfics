@@ -67,7 +67,6 @@ const updateUser = async (req, res) => {
 }
 
 const updateUsersRoles = async (req, res) => {
-    console.log(req.body.usersIds)
     try {
         const role = await Role.findOne({ name: req.body.role })
         if (!role) {
@@ -82,7 +81,6 @@ const updateUsersRoles = async (req, res) => {
 
 const deleteUsers = async (req, res) => {
     try {
-        console.log(req.body.usersIds)
         const result = await User.deleteMany({_id: {$in: req.body.usersIds}})
         res.status(200).json({ message: `Deleted ${result.n} users` })
     } catch (e) {

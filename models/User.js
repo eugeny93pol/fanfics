@@ -8,10 +8,10 @@ const userSchema = new Schema({
     vkid: { type: String },
     fbid: { type: String },
     twid: { type: String },
-    publications: [{ type: Schema.Types.ObjectId, ref: 'Publication'}],
-    like: [{ type: Schema.Types.ObjectId, ref: 'Chapter'}],
-    rate: [{ type: Schema.Types.ObjectId, ref: 'Rate'}],
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}],
+    //publications: [{ type: Schema.Types.ObjectId, ref: 'Publication'}],
+    //like: [{ type: Schema.Types.ObjectId, ref: 'Chapter'}], //remove
+    //rate: [{ type: Schema.Types.ObjectId, ref: 'Rate'}], //remove
+    //comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}],
     achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement'}],
 })
 

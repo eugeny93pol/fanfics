@@ -12,10 +12,6 @@ export const CommentsModule = ({publication}) => {
     const { t } = useTranslation()
 
     useEffect(() => {
-        socket.on('connect', () => {
-            console.log('connect')
-        })
-
         socket.on('comment', (comment) => {
             setComments(prev => prev.concat(comment))
         })

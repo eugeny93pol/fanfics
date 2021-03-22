@@ -6,10 +6,9 @@ const errorHandler = require('../utils/errorHandler')
 let socketConnection
 
 const postComment = async (req, res) => {
-
     try {
         const publication = await Publication.findById(req.body.publication)
-        const user = await User.findById(req.userData.userId)
+        //const user = await User.findById(req.userData.userId)
         const comment = new Comment({
             publication: publication._id,
             user: req.userData.userId,
@@ -18,9 +17,9 @@ const postComment = async (req, res) => {
 
         await comment.save()
         await publication.comments.push(comment)
-        await user.comments.push(comment)
+        //await user.comments.push(comment)
         await publication.save()
-        await user.save()
+        //await user.save()
 
         const emitComment = await Comment.findById(comment._id).populate({
             path: 'user',
@@ -35,6 +34,11 @@ const postComment = async (req, res) => {
     }
 }
 
+const deleteComments = async (comments) => {
+    const result = await Comment.deleteMany({_id: {$in: comments}})
+    return result.n
+}
+
 const subscribeToComments = (io) => {
     socketConnection = io
     io.on('connection', (socket) => {
@@ -44,4 +48,4 @@ const subscribeToComments = (io) => {
     })
 }
 
-module.exports = { postComment, subscribeToComments }
+module.exports = { postComment, subscribeToComments, deleteComments }

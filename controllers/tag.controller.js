@@ -30,4 +30,15 @@ const saveOrUpdateTags = async (data) => {
     return tags
 }
 
-module.exports = { getTags, loadTags, saveOrUpdateTags }
+const deleteTagsFromPublication = async (data) => {
+    let count = 0
+    for(const id of data) {
+        let tag = await Tag.findById(id)
+        tag.popularity > 1 ? tag.popularity-- : 0
+        await tag.save()
+        count++
+    }
+    return count
+}
+
+module.exports = { getTags, loadTags, saveOrUpdateTags, deleteTagsFromPublication }

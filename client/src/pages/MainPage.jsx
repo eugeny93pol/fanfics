@@ -7,12 +7,13 @@ import { LoaderCard } from '../components/loaders/LoaderCard'
 import { TagsCloud } from '../components/tags/TagsCloud'
 import { Loader } from '../components/loaders/Loader'
 
-
 export const MainPage = () => {
     const [tags, setTags] = useState(null)
     const [publications, setPublications] = useState(null)
     const [page, setPage] = useState(0)
+    const [limit] = useState(10)
     const [sort, setSort] = useState('averageRating')
+    const [end, setEnd] = useState(false)
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const { loading, error, clearError, request } = useHttp()
@@ -20,9 +21,15 @@ export const MainPage = () => {
 
     const loadPublications = useCallback(async () => {
         try {
-            const fetched = await request(`/api/publications/?sort=${sort}&limit=5&p=${page}`, 'GET', null)
+            const fetched = await request(`/api/publications/?sort=${sort}&limit=${limit}&p=${page}`,
+                'GET', null)
             const loaded = fetched.publications
-            setPublications(prev => prev ? prev.concat(loaded) : loaded)
+            if (loaded.length) {
+                setPublications(prev => prev ? prev.concat(loaded) : loaded)
+            }
+            if (loaded.length < limit || !loaded.length) {
+                setEnd(true)
+            }
         } catch (e) {}
     }, [request, sort, page])
 
@@ -36,12 +43,17 @@ export const MainPage = () => {
     const changeTabHandler = (event) => {
         setPublications(null)
         setPage(0)
+        setEnd(false)
         setSort(event.currentTarget.getAttribute('data-sort'))
     }
 
     const nextPageHandler = () => {
         setPage(page + 1)
     }
+
+    const deleteHandler = useCallback((id) => {
+        setPublications(prev => prev.filter(pub => pub._id !== id))
+    }, [publications])
 
     useEffect(() => {
         loadPublications()
@@ -87,14 +99,16 @@ export const MainPage = () => {
                             <h2 className="visually-hidden">{t('main-page-title.most-rated')}</h2>
                             { !publications && <LoaderCard/>}
                             { publications && publications.map(publication => (
-                                <PublicationPreview publication={publication} key={publication._id}/>
+                                <PublicationPreview publication={publication}
+                                                    cbDelete={deleteHandler}
+                                                    key={publication._id}/>
                             ))}
                         </section>
                     </div>
                 </div>
                 <div className="text-center mb-5">
                     { publications && loading && <Loader/>}
-                    { !loading &&
+                    { !loading && !end &&
                         <button role="button" className={c.btnClass}
                                 onClick={ nextPageHandler }
                         >{t('main-page-button.more')}</button>

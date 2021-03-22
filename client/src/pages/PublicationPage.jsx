@@ -3,13 +3,14 @@ import { useThemedClasses } from '../classnames/ThemedClasses'
 import { AuthContext } from '../context/AuthContext'
 import { Loader } from '../components/loaders/Loader'
 import { useHttp } from '../hooks/http.hook'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import { GenresList } from '../components/genres/GenresList'
 import { RatingStars } from '../components/rating/RatingStars'
 import { Contents } from '../components/contents/Contents'
 import { ChapterView } from '../components/chapter/ChapterView'
 import { TagsList } from '../components/tags/TagsList'
 import { CommentsModule } from '../components/comments/CommentsModule'
+import { PublicationMenu } from '../components/publication/PublicationMenu'
 
 
 export const PublicationPage = () => {
@@ -19,6 +20,7 @@ export const PublicationPage = () => {
     const { userData, isAuth } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
     const pageId = useParams().id
+    const history = useHistory()
 
     const loadData = useCallback(async () => {
         try {
@@ -28,6 +30,11 @@ export const PublicationPage = () => {
             setPublication(fetched.publications)
         } catch (e) {}
     }, [pageId, request, userData])
+
+    const deleteHandler = useCallback(() => {
+        setPublication(null)
+        history.goBack()
+    }, [publication])
 
     useEffect(() => {
         loadData()
@@ -50,14 +57,17 @@ export const PublicationPage = () => {
     return (
         <>{ !loading && publication &&
         <div className="row mt-3">
-            <div className={`col ${c.textClass}`}>
-                <h2>{publication.title}</h2>
+            <div className={`col position-relative ${c.textClass}`}>
+                <h2 className="publication-title">{publication.title}</h2>
+                {hasAccess &&
+                    <PublicationMenu publication={publication} cbDelete={deleteHandler}/>
+                }
                 <GenresList genres={publication.genres}/>
                 <p>{publication.description}</p>
                 <div className="mb-3"><TagsList tags={publication.tags}/></div>
                 { publication.chapters.length ?
                     <div className="row">
-                        <div className="col-md-6 ms-1 ms-md-3 mt-4">
+                        <div className="col-md-6 ms-md-3 mt-4">
                             <div className={c.contentsClass}>
                                 <Contents chapters={publication.chapters}/>
                             </div>

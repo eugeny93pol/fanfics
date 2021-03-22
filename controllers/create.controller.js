@@ -29,11 +29,11 @@ const savePublication = async (req, res) => {
             chapters: chapters.map(chapter => chapter._id)
         })
 
-        const user = await User.findById(author)
-        user.publications.push(publication)
+        // const user = await User.findById(author)
+        // user.publications.push(publication)
 
         await publication.save()
-        await user.save()
+        // await user.save()
         res.status(201).json({message: 's:publication_created', publication })
     } catch (e) {
         errorHandler(res, e)

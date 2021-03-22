@@ -22,13 +22,9 @@ const saveOrUpdateChapters = async (data, author) => {
     return chapters
 }
 
-const changeChapter = async (req, res) => {
-    try {
-        let chapter
-        res.status(200).json({ chapter })
-    } catch (e) {
-        errorHandler(res, e)
-    }
+const deleteChapters = async (chapters) => {
+    const result = await Chapter.deleteMany({_id: {$in: chapters}})
+    return result.n
 }
 
 const likeChapter = async (req, res) => {
@@ -46,4 +42,4 @@ const likeChapter = async (req, res) => {
     }
 }
 
-module.exports = { saveOrUpdateChapters, likeChapter }
+module.exports = { saveOrUpdateChapters, likeChapter, deleteChapters }

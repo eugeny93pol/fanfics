@@ -1,7 +1,10 @@
 const Publication = require('../models/Publication')
-const Comment = require('../models/Comment')
 const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
+const { deleteRates } = require('./rate.controller')
+const { deleteChapters } = require('./chapter.controller')
+const { deleteTagsFromPublication } = require('./tag.controller')
+const { deleteComments } = require('./comment.controller')
 
 const getPublications = async (req, res) => {
     try {
@@ -18,9 +21,27 @@ const getPublications = async (req, res) => {
                 publications = await getUserPublications(req.query.user)
                 break
             default:
-                console.log('default')
         }
         res.status(200).json({ publications })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+const deletePublication = async (req, res) => {
+    try {
+        let publication = await Publication.findById(req.body._id)
+
+        await deleteTagsFromPublication(publication.tags)
+
+        await deleteComments(publication.comments)
+
+        await deleteChapters(publication.chapters)
+
+        await deleteRates(publication.rates)
+
+        await publication.delete()
+        res.status(200).json({ message: 's:publication_removed'})
     } catch (e) {
         errorHandler(res, e)
     }
@@ -35,7 +56,13 @@ const getSortedPublications = async (query) => {
         await Publication.find().
         sort({[sort]: order}).
         limit(limit).
-        skip(limit*page).select({title: 1, description: 1, updated: 1}).
+        skip(limit*page).select({
+            title: 1,
+            description: 1,
+            updated: 1,
+            averageRating: 1,
+            comments: 1
+        }).
         populate('author', 'name').
         populate('tags').
         populate('genres')
@@ -79,4 +106,4 @@ const getPublication = async (id, user) => {
     return publication
 }
 
-module.exports = { getPublications }
+module.exports = { getPublications, deletePublication }

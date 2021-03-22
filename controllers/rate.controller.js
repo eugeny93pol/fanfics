@@ -25,4 +25,9 @@ const ratePublication = async (req, res) => {
     }
 }
 
-module.exports = { ratePublication }
+const deleteRates = async (rates) => {
+    const result = await Rate.deleteMany({_id: {$in: rates}})
+    return result.n
+}
+
+module.exports = { ratePublication, deleteRates }
