@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { Loader } from '../components/loaders/Loader'
 import { ProfileInfo } from '../components/ProfileInfo'
@@ -15,9 +15,10 @@ export const ProfilePage = () => {
 
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
-    const pageId = useParams().id
     const { t } = useTranslation()
     const { c } = useThemedClasses()
+    const history = useHistory()
+    const pageId = useParams().id
 
     const loadData = useCallback(async () => {
         try {
@@ -32,6 +33,13 @@ export const ProfilePage = () => {
             setPublications(userPublications.publications)
         } catch (e) {}
     }, [token, pageId, request])
+
+    const createBtnHandler = () => {
+        history.push({
+            pathname: `/create`,
+            state: { author: user._id }
+        })
+    }
 
     const changeUserData = (userData) => {
         setUser(userData)
@@ -53,19 +61,20 @@ export const ProfilePage = () => {
     return (
         <>
             <div className={`row mt-3`}>
-                <aside className={c.sidebarClass}>
-                    <div className={`${ c.formClass }`}>
-                        <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
-                        { !loading && user && <>
-                            <ProfileInfo user={user} changeUserData={ changeUserData }/>
-                        </>}
-                    </div>
-                    <div className="mt-3 text-center">
-                        <Link to={`/${pageId}/create`}
-                              className={c.btnClass}
-                        >{t('profile-page.create')}</Link>
-                    </div>
-                </aside>
+                { user &&
+                    <aside className={c.sidebarClass}>
+                        <div className={`${c.formClass}`}>
+                            <h4><i className="bi bi-person-circle"/>{` ${t('profile.info')}`}</h4>
+                            <ProfileInfo user={user} changeUserData={changeUserData}/>
+                        </div>
+                        <div className="mt-3 text-center">
+                            <button type="button"
+                                    className={c.btnClass}
+                                    onClick={createBtnHandler}
+                            >{t('profile-page.create')}</button>
+                        </div>
+                    </aside>
+                }
                 <main className="col-md-9 ms-auto mt-3 mt-md-0">
                     <div className={c.formClass}>
                         <h3 className="mb-3">{t('profile-page.title')}</h3>

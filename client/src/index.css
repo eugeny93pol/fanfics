@@ -199,7 +199,7 @@ img {
     background-color: var(--bs-gray-dark);
 }
 
-.chapter {
+.anchorScroll {
     padding-top: 65px;
     margin-top: -65px;
 }

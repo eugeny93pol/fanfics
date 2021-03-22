@@ -1,10 +1,64 @@
 const Publication = require('../models/Publication')
 const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
+const { checkChangeChapters } = require('./chapter.controller')
+const { checkChangeTags } = require('./tag.controller')
+const { saveOrUpdateChapters } = require('./chapter.controller')
+const { saveOrUpdateTags } = require('./tag.controller')
 const { deleteRates } = require('./rate.controller')
 const { deleteChapters } = require('./chapter.controller')
 const { deleteTagsFromPublication } = require('./tag.controller')
 const { deleteComments } = require('./comment.controller')
+
+const savePublication = async (req, res) => {
+    try {
+        let publication
+        if (!mongoose.isValidObjectId(req.body._id)) {
+            publication = await createPublication(req.body)
+            return res.status(201).json({message: 's:publication_created', publication })
+        } else {
+            await updatePublication(req, res)
+        }
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+const createPublication = async (data) => {
+    const { title, description, author, genres } = data
+    const tags = await saveOrUpdateTags(data.tags)
+    const chapters = await saveOrUpdateChapters(data.chapters, author)
+    const publication = new Publication({
+        title, description, author,
+        genres: genres.map(genre => genre._id),
+        tags: tags.map(tag => tag._id),
+        chapters: chapters.map(chapter => chapter._id)
+    })
+    return (await publication.save())
+}
+
+const updatePublication = async (req, res) => {
+    const { _id, title, description, author, genres } = req.body
+
+    const duplicate = await Publication.findOne({author, title})
+    if (duplicate && duplicate._id != _id) {
+        return res.status(400).json({message: 's:duplicate_title'})
+    }
+
+    const publication = await Publication.findById(_id)
+    const tags = await checkChangeTags(req.body.tags, publication)
+    const chapters = await checkChangeChapters(req.body.chapters, publication)
+
+    publication.title = title
+    publication.description = description
+    publication.genres = genres.map(genre => genre._id)
+    publication.tags = tags.map(tag => tag._id)
+    publication.chapters = chapters.map(chapter => chapter._id)
+    publication.updated = Date.now()
+
+    await publication.save()
+    return res.status(200).json({message: 's:publication_updated', publication })
+}
 
 const getPublications = async (req, res) => {
     try {
@@ -20,7 +74,11 @@ const getPublications = async (req, res) => {
             case !!req.query.user:
                 publications = await getUserPublications(req.query.user)
                 break
+            case !!req.query.edit:
+                publications = await getPublicationEdit(req.query.edit)
+                break
             default:
+                res.status(400).json({message: 's:incorrect_query_parameters'})
         }
         res.status(200).json({ publications })
     } catch (e) {
@@ -30,14 +88,11 @@ const getPublications = async (req, res) => {
 
 const deletePublication = async (req, res) => {
     try {
-        let publication = await Publication.findById(req.body._id)
+        const publication = await Publication.findById(req.body._id)
 
         await deleteTagsFromPublication(publication.tags)
-
         await deleteComments(publication.comments)
-
         await deleteChapters(publication.chapters)
-
         await deleteRates(publication.rates)
 
         await publication.delete()
@@ -56,7 +111,8 @@ const getSortedPublications = async (query) => {
         await Publication.find().
         sort({[sort]: order}).
         limit(limit).
-        skip(limit*page).select({
+        skip(limit*page).
+        select({
             title: 1,
             description: 1,
             updated: 1,
@@ -106,4 +162,29 @@ const getPublication = async (id, user) => {
     return publication
 }
 
-module.exports = { getPublications, deletePublication }
+const getPublicationEdit = async (req, res) => {
+    try {
+        const id = req.params.id
+        if (!mongoose.isValidObjectId(id)) {
+            return res.status(400).json({ message: 's:incorrect_id'})
+        }
+
+        const publication = await Publication.
+            findById(id).
+            select('title description author').
+            populate('tags').
+            populate('genres').
+            populate('chapters', 'title content files')
+
+        const { userId, userRole } = req.userData
+        if (userId != publication.author && userRole !== 'admin') {
+            return res.status(403).json({ message: 's:not_authorized' })
+        }
+
+        res.status(200).json({ publication })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports = { savePublication, getPublications, deletePublication, getPublicationEdit }

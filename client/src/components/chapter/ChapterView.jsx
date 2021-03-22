@@ -32,7 +32,7 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
 
 
     return (
-        <section className={`${c.textClass} chapter mb-4`} id={`chapter${index}`}>
+        <section className={`${c.textClass} anchorScroll mb-4`} id={`chapter${index}`}>
             { chapter.files.length ?
                 <div className={c.cardImage}>
                     <img src={chapter.files[0]} className="card-img" alt={chapter.title}/>

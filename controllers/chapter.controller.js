@@ -9,7 +9,12 @@ const saveOrUpdateChapters = async (data, author) => {
         let chapter
         if (mongoose.isValidObjectId(ch._id)) {
             chapter = await Chapter.findById(ch._id)
-            chapter.updated = Date.now()
+            if (chapter.title !== ch.title ||
+                chapter.content !== ch.content ||
+                chapter.files.join() !== ch.files.join()
+            ) {
+                chapter.updated = Date.now()
+            }
         } else {
             chapter = new Chapter()
             chapter.author = author
@@ -27,6 +32,14 @@ const deleteChapters = async (chapters) => {
     return result.n
 }
 
+const checkChangeChapters = async (chapters, publication) => {
+    const removed = publication.chapters
+        .filter(id => !chapters.map(ch => ch._id)
+            .includes(id.toString()))
+    await deleteChapters(removed)
+    return (await saveOrUpdateChapters(chapters))
+}
+
 const likeChapter = async (req, res) => {
     try {
         const chapter = await Chapter.findById(req.body.id)
@@ -42,4 +55,4 @@ const likeChapter = async (req, res) => {
     }
 }
 
-module.exports = { saveOrUpdateChapters, likeChapter, deleteChapters }
+module.exports = { saveOrUpdateChapters, likeChapter, deleteChapters, checkChangeChapters }

@@ -61,7 +61,6 @@ export const ChapterCreate = ({id, index, initial, moveChapter, changeChapter, r
     return(
         <>{ chapter &&
             <section
-                id={`chapter${index}`}
                 className={`position-relative chapter ${isDragging ? 'fade' : ''}`}
                 ref={ref}
                 data-handler-id={handlerId}

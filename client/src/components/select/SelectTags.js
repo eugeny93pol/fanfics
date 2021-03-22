@@ -9,18 +9,16 @@ export const SelectTags = ({ tags, callback, initial }) => {
     const { t } = useTranslation()
 
     useEffect(() => {
-        setOptions(tags.map(tag => ({ value: tag._id, label: tag.name })))
+        setOptions(tags.map(tag => ({ value: tag.name, label: tag.name, _id: tag._id })))
     }, [tags, setOptions])
 
     useEffect(() => {
-        console.log(initial)
-        console.log(options)
-        setSelected(options.filter(opt => ( initial.map(i=>i.id).includes(opt.value))))
+        setSelected(options.filter(opt => ( initial.map(i=>i._id).includes(opt._id))))
     },[options])
 
     const changeHandler = (selected) => {
         setSelected(selected)
-        const tags = selected.map(item => {return { id: item.value, name: item.label }})
+        const tags = selected.map(tag => ({ _id: tag._id || tag.label, name: tag.label }))
         callback(tags)
     }
 

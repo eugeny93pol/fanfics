@@ -74,13 +74,16 @@ export const Navbar = () => {
 
                     <div className="d-flex justify-content-center ms-lg-2 pt-2 pt-lg-0">
                         { auth.isAuth ?
-                            <NavLink to={`/${auth.userData.id}/create`}
+                            <NavLink to={{
+                                pathname: '/create',
+                                state: { author: auth.userData.id }
+                            }}
                                      className={c.btnClass}
-                                     activeClassName="active"
+                                     activeClassName="disabled"
                             >{t('create')}</NavLink> :
                             <NavLink to='/signin'
                                      className={c.btnClass}
-                                     activeClassName="active"
+                                     activeClassName="disabled"
                             >{t('signin')}</NavLink> }
                     </div>
                 </div>

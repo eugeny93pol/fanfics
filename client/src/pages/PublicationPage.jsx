@@ -109,7 +109,6 @@ export const PublicationPage = () => {
                         </div>
                     </div>
                 }
-
             </div>
         </div>
         }</>

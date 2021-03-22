@@ -9,17 +9,21 @@ export const SelectGenres = ({ genres, callback, initial }) => {
 
     useEffect(() => {
         setOptions(
-            genres.map(genre => ({ value: genre._id, label: genre.name[i18n.language] }))
+            genres.map(genre => ({
+                value: genre.name[i18n.language],
+                label: genre.name[i18n.language],
+                _id: genre._id
+            }))
         )
     }, [genres, setOptions, i18n.language])
 
     useEffect(() => {
-        setSelected(options.filter(opt => ( initial.includes(opt.value))))
+        setSelected(options.filter(opt => (initial.map(i=>i._id).includes(opt._id))))
     },[options, initial])
 
     const changeHandler = (selected) => {
         setSelected(selected)
-        callback(selected.map(item => item.value))
+        callback(selected.map(genre => ({_id: genre._id, name: genre.value})))
     }
 
     return (

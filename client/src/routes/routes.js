@@ -4,11 +4,10 @@ import { MainPage } from '../pages/MainPage'
 import { SignupPage } from '../pages/SignupPage'
 import { SigninPage } from '../pages/SigninPage'
 import { ProfilePage } from '../pages/ProfilePage'
-import { SettingsPage } from '../pages/SettingsPage'
 import { PublicationPage } from '../pages/PublicationPage'
-import { GenresPage } from '../pages/GenresPage'
 import { CreatePage } from '../pages/CreatePage'
 import { UsersPage } from '../pages/UsersPage'
+import { EditPage } from '../pages/EditPage'
 
 export const useRoutes = (isAuth) => {
 
@@ -16,7 +15,6 @@ export const useRoutes = (isAuth) => {
         <Switch>
             <Route path='/' exact component={MainPage}/>
             <Route path='/publication/:id' exact component={PublicationPage}/>
-            <Route path='/genre/' exact component={GenresPage}/>
             <Route path='/filter/:id' exact component={MainPage}/>
 
             {!isAuth && <Route path='/signup' exact component={SignupPage}/>}
@@ -25,8 +23,8 @@ export const useRoutes = (isAuth) => {
 
 
             {isAuth && <Route path='/profile/:id' exact component={ProfilePage}/>}
-            {isAuth && <Route path='/settings' exact component={SettingsPage}/>}
-            {isAuth && <Route path='/:id/create' exact component={CreatePage}/>}
+            {isAuth && <Route path='/create' exact component={CreatePage}/>}
+            {isAuth && <Route path='/edit/:id' exact component={EditPage}/>}
             {isAuth && <Route path='/users' exact component={UsersPage}/>}
 
             <Redirect to='/'/>

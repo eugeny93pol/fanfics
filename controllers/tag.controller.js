@@ -19,8 +19,8 @@ const saveOrUpdateTags = async (data) => {
     const tags = []
     for(const t of data) {
         let tag
-        if (mongoose.isValidObjectId(t.id)) {
-            tag = await Tag.findById(t.id)
+        if (mongoose.isValidObjectId(t._id)) {
+            tag = await Tag.findById(t._id)
             tag.popularity++
         } else {
             tag = new Tag({name: t.name})
@@ -28,6 +28,15 @@ const saveOrUpdateTags = async (data) => {
         tags.push(await tag.save())
     }
     return tags
+}
+
+const checkChangeTags = async (tags, publication) => {
+    const added = tags.filter(tag => !publication.tags.includes(tag._id))
+    const removed = publication.tags.filter(id => !tags.map(tag => tag._id).includes(id.toString()))
+    tags = tags.filter(tag => publication.tags.includes(tag._id))
+
+    await deleteTagsFromPublication(removed)
+    return (await tags.concat(await saveOrUpdateTags(added)))
 }
 
 const deleteTagsFromPublication = async (data) => {
@@ -41,4 +50,4 @@ const deleteTagsFromPublication = async (data) => {
     return count
 }
 
-module.exports = { getTags, loadTags, saveOrUpdateTags, deleteTagsFromPublication }
+module.exports = { getTags, loadTags, saveOrUpdateTags, deleteTagsFromPublication, checkChangeTags }

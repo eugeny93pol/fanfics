@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { ChapterCreate } from '../components/chapter/ChapterCreate'
 import { Loader } from '../components/loaders/Loader'
 import { nanoid } from 'nanoid'
-import { useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { PublicationHeadCreate } from '../components/publication/PublicationHeadCreate'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
@@ -16,27 +16,28 @@ import { isMobile } from "react-device-detect"
 import { TouchBackend } from 'react-dnd-touch-backend'
 
 
-export const CreatePage = () => {
+export const CreatePage = ({ initial }) => {
     const [meta, setMeta] = useState({ genres: [], tags: [] })
-    const [publication, setPublication] = useState({
+    const [publication, setPublication] = useState( initial || {
         title: '',
         description: '',
         genres: [],
         tags: [],
         chapters: [],
-        author: useParams().id,
+        author: '',
         _id: ''
     })
 
     const { error, clearError, loading, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { token, userData } = useContext(AuthContext)
     const { c } = useThemedClasses()
     const { t } = useTranslation()
+    const history = useHistory()
     const dragBackend = useMemo(() => isMobile ? TouchBackend : HTML5Backend)
 
     const loadData = useCallback(async () => {
         try {
-            const fetched = await request(`/api/create/`, 'GET', null, {
+            const fetched = await request('/api/create/', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
             setMeta(fetched)
@@ -45,14 +46,14 @@ export const CreatePage = () => {
 
     const saveHandler = useCallback(async () => {
         try {
-            const response = await request(`/api/create/`, 'POST', { ...publication }, {
+            const response = await request('/api/publications/', 'POST', { ...publication }, {
                 Authorization: `Bearer ${token}`
             })
-            setPublication(response.publication)
+            history.push(`/publication/${response.publication._id}`)
         } catch (e) {}
     })
 
-    const changeHeadData = (head) => {
+    const changeHeadData = useCallback((head) => {
         setPublication({
             ...publication,
             title: head.title,
@@ -60,7 +61,7 @@ export const CreatePage = () => {
             genres: head.genres,
             tags: head.tags
         })
-    }
+    },[publication])
 
     const changeChapter = (chapter) => {
         setPublication({
@@ -102,10 +103,14 @@ export const CreatePage = () => {
         })
     }, [publication.chapters])
 
-
     useEffect(() => {
         loadData()
     }, [loadData])
+
+    useEffect(() => {
+        const author = history.location.state ? history.location.state.author : userData.id
+        !publication.author && setPublication({...publication, author})
+    }, [])
 
     useEffect( () => {
         console.log(error)
@@ -120,7 +125,7 @@ export const CreatePage = () => {
         <>{!loading && meta &&
         <div className={`row mt-3 ${c.textClass}`}>
             <aside className={c.sidebarClass}>
-                {publication.chapters.length > 0 &&
+                { publication.chapters.length > 0 &&
                     <ContentsDraggable publication={publication} moveChapter={moveChapter}/>
                 }
             </aside>
@@ -130,15 +135,17 @@ export const CreatePage = () => {
                 <DndProvider backend={dragBackend}>
                     {
                         publication.chapters.map((chapter, i) =>
-                            <ChapterCreate
-                                key={chapter._id}
-                                id={chapter._id}
-                                index={i}
-                                initial={chapter}
-                                changeChapter={changeChapter}
-                                removeChapter={removeChapter}
-                                moveChapter={moveChapter}
-                            />)
+                            <div className="anchorScroll" id={`chapter${i}`} key={chapter._id}>
+                                <ChapterCreate
+                                    id={chapter._id}
+                                    index={i}
+                                    initial={chapter}
+                                    changeChapter={changeChapter}
+                                    removeChapter={removeChapter}
+                                    moveChapter={moveChapter}
+                                />
+                            </div>
+                            )
                     }
                 </DndProvider>
 
