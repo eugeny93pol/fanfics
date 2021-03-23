@@ -1,45 +1,80 @@
-const mongoose = require('mongoose')
-const Publication = require('../models/Publication')
-const Chapter = require('../models/Chapter')
-const Comment = require('../models/Comment')
-const errorHandler = require('../utils/errorHandler')
-
 const algoliasearch = require('algoliasearch')
+const removeMd = require('remove-markdown')
+const errorHandler = require('../utils/errorHandler')
+const Publication = require('../models/Publication')
 
-const client = algoliasearch('TENFJKMODS', 'aaf1be4e6152e5112a7372ea04cc9325')
 
-const index = client.initIndex('chapters')
+const client = algoliasearch(
+    process.env.ALGOLIASEARCH_APPLICATION_ID,
+    process.env.ALGOLIASEARCH_API_KEY
+)
 
-const createIndex = async (req, res) => {
-    try {
-        const chapters = await Chapter.find().select('title content')
+const globalIndex = client.initIndex('global')
 
-        const reorganised = chapters.map(ch => ({
-            _id: ch._id,
-            title: ch.title,
-            content: ch.content,
-            objectID: ch._id
-        }))
+const getAllPublicationsText = async () => {
+    return (
+        await Publication
+            .find()
+            .select('title description')
+            .populate('author','name')
+            .populate('chapters', 'title content')
+            .populate('comments', 'text')
+    )
+}
 
-        await index.saveObjects(reorganised)
+const getOnePublicationText = async (_id) => {
+    return (
+        await Publication
+            .findById(_id)
+            .select('title description')
+            .populate('author','name')
+            .populate('chapters', 'title content')
+            .populate('comments', 'text')
+    )
+}
 
-        res.status(200).json({message: 's:index_created', reorganised})
-    } catch (e) {
-        errorHandler(res, e)
+const preparePublication = (publication) => {
+    return {
+        objectID: publication._id,
+        title: publication.title,
+        description: publication.description,
+        author: publication.author.name,
+        chapters: publication.chapters.map(ch => ({ title: ch.title, content: removeMd(ch.content) })),
+        comments: publication.comments.map(com => com.text)
     }
 }
 
+const createIndex = async (req, res) => {
+    try {
+        const data = await getAllPublicationsText()
+        const prepared = data.map(pub => preparePublication(pub))
+        await globalIndex.saveObjects(prepared)
+        res.status(200).json({message: 's:indexes_created'})
+    } catch (e) { errorHandler(res, e) }
+}
 
+const addToIndex = async (_id) => {
+    const publication = await getOnePublicationText(_id)
+    const prepared = preparePublication(publication)
+    await globalIndex.saveObject(prepared)
+}
 
+const deleteFromIndex = async (objectId) => {
+    await globalIndex.deleteObject(objectId)
+}
+
+const updateIndex = async (_id) => {
+    await addToIndex(_id)
+}
 
 const search = async (req, res) => {
     try {
         const textQuery = req.query.text
-        const data = await index.search(textQuery)
-        res.status(200).json({ data })
+        const data = await globalIndex.search(textQuery)
+        res.status(200).json({ result: data.hits })
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports = { search, createIndex }
+module.exports = { search, createIndex, updateIndex, addToIndex, deleteFromIndex }

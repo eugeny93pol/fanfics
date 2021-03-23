@@ -1,6 +1,7 @@
 const Comment = require('../models/Comment')
 const Publication = require('../models/Publication')
 const errorHandler = require('../utils/errorHandler')
+const { updateIndex } = require('./search.controller')
 
 let socketConnection
 
@@ -16,7 +17,7 @@ const postComment = async (req, res) => {
         await comment.save()
         await publication.comments.push(comment)
         await publication.save()
-
+        await updateIndex(publication._id)
         const emitComment = await Comment.findById(comment._id).populate({
             path: 'user',
             select: 'name'

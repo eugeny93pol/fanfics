@@ -1,6 +1,9 @@
 const Publication = require('../models/Publication')
 const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
+const { addToIndex } = require('./search.controller')
+const { updateIndex } = require('./search.controller')
+const { deleteFromIndex } = require('./search.controller')
 const { checkChangeChapters } = require('./chapter.controller')
 const { checkChangeTags } = require('./tag.controller')
 const { saveOrUpdateChapters } = require('./chapter.controller')
@@ -15,9 +18,11 @@ const savePublication = async (req, res) => {
         let publication
         if (!mongoose.isValidObjectId(req.body._id)) {
             publication = await createPublication(req.body)
+            await addToIndex(publication._id)
             return res.status(201).json({message: 's:publication_created', publication })
         } else {
             await updatePublication(req, res)
+            await updateIndex(req.body._id)
         }
     } catch (e) {
         errorHandler(res, e)
@@ -28,36 +33,40 @@ const createPublication = async (data) => {
     const { title, description, author, genres } = data
     const tags = await saveOrUpdateTags(data.tags)
     const chapters = await saveOrUpdateChapters(data.chapters, author)
-    const publication = new Publication({
+    let publication = new Publication({
         title, description, author,
         genres: genres.map(genre => genre._id),
         tags: tags.map(tag => tag._id),
         chapters: chapters.map(chapter => chapter._id)
     })
-    return (await publication.save())
+    publication = await publication.save()
+
+    return publication
 }
 
 const updatePublication = async (req, res) => {
-    const { _id, title, description, author, genres } = req.body
+    try {
+        const { _id, title, description, author, genres } = req.body
 
-    const duplicate = await Publication.findOne({author, title})
-    if (duplicate && duplicate._id != _id) {
-        return res.status(400).json({message: 's:duplicate_title'})
-    }
+        const duplicate = await Publication.findOne({author, title})
+        if (duplicate && duplicate._id != _id) {
+            return res.status(400).json({message: 's:duplicate_title'})
+        }
 
-    const publication = await Publication.findById(_id)
-    const tags = await checkChangeTags(req.body.tags, publication)
-    const chapters = await checkChangeChapters(req.body.chapters, publication)
+        const publication = await Publication.findById(_id)
+        const tags = await checkChangeTags(req.body.tags, publication)
+        const chapters = await checkChangeChapters(req.body.chapters, publication)
 
-    publication.title = title
-    publication.description = description
-    publication.genres = genres.map(genre => genre._id)
-    publication.tags = tags.map(tag => tag._id)
-    publication.chapters = chapters.map(chapter => chapter._id)
-    publication.updated = Date.now()
+        publication.title = title
+        publication.description = description
+        publication.genres = genres.map(genre => genre._id)
+        publication.tags = tags.map(tag => tag._id)
+        publication.chapters = chapters.map(chapter => chapter._id)
+        publication.updated = Date.now()
+        await publication.save()
 
-    await publication.save()
-    return res.status(200).json({message: 's:publication_updated', publication })
+        return res.status(200).json({message: 's:publication_updated', publication })
+    } catch (e) { errorHandler(res, e) }
 }
 
 const getPublications = async (req, res) => {
@@ -94,7 +103,7 @@ const deletePublication = async (req, res) => {
         await deleteComments(publication.comments)
         await deleteChapters(publication.chapters)
         await deleteRates(publication.rates)
-
+        await deleteFromIndex(publication._id)
         await publication.delete()
         res.status(200).json({ message: 's:publication_removed'})
     } catch (e) {

@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
 
 
-const saveOrUpdateChapters = async (data, author) => {
+const saveOrUpdateChapters = async (data, publication) => {
     const chapters = []
     for(const ch of data) {
         let chapter
@@ -17,7 +17,7 @@ const saveOrUpdateChapters = async (data, author) => {
             }
         } else {
             chapter = new Chapter()
-            chapter.author = author
+            chapter.publication = publication
         }
         chapter.title = ch.title
         chapter.content = ch.content
