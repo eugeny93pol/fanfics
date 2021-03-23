@@ -6,5 +6,5 @@ const commentSchema = new Schema({
     text: { type: String, required: true },
     created: { type: Date, default: Date.now },
 })
-
+commentSchema.index({ text: 'text' })
 module.exports = model('Comment', commentSchema)

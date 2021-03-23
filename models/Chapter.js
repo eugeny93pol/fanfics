@@ -8,4 +8,5 @@ const chapterSchema = new Schema({
     created: { type: Date, default: Date.now },
     updated: { type: Date, default: Date.now },
 })
+chapterSchema.index({ title: 'text', content: 'text' })
 module.exports = model('Chapter', chapterSchema)

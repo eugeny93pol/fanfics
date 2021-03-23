@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { SocialButtons } from '../components/socialButtons/SocialButtons'
 import { useHttp } from '../hooks/http.hook'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 
@@ -99,7 +98,6 @@ export const SignupPage = () => {
                     disabled={ loading }
                 >{t('signup')}</button>
                 <Link to="/signin" className={`w-100 btn-lg mb-2 ${c.btnSecClass}`}>{t('signin')}</Link>
-                <SocialButtons/>
             </form>
         </main>
     )

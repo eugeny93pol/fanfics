@@ -28,8 +28,6 @@ export const TableUsers = ({ columns, data, setSelectedRows }) => {
             useRowSelect
         )
 
-
-
     useEffect(() => {
         setSelectedRows(selectedFlatRows.map(row => row.original))
     }, [selectedRowIds])

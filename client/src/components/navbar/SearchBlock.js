@@ -4,41 +4,39 @@ import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 
 export const SearchBlock = () => {
-    const [searchText, setSearchText] = useState('')
+    const [text, setText] = useState('')
     const { loading, error, clearError, request } = useHttp()
     const { t } = useTranslation()
     const { c } = useThemedClasses()
 
     const searchChangeHandler = event => {
-        setSearchText(event.target.value)
+        setText(event.target.value)
     }
 
-    const searchPressHandler = event => {
-        event.key === 'Enter' && searchHandler()
-    }
+    const searchHandler = async (event) => {
+        event.preventDefault()
+        if (text.length > 0) {
+            try {
+                const result = await request(`/api/search/?text=${text}`, 'GET')
+                console.log(result.data)
+            } catch (e) {
 
-    const searchHandler = async () => {
-
-        try {
-
-        } catch (e) {
-
+            }
         }
     }
 
     return (
-        <form className="d-flex">
+        <form className="d-flex" onSubmit={ searchHandler }>
             <input className={`me-2 ${c.inputClass}`}
                    type="search"
                    onChange={ searchChangeHandler }
-                   onKeyPress={ searchPressHandler }
-                   value={ searchText }
+                   value={ text }
                    placeholder={t('search')}
                    aria-label="Search"/>
             <button className={ c.btnOutlineClass }
                     type="submit"
-                    onClick={ searchHandler }
                     aria-label="Search button"
+                    disabled={text.length === 0}
             ><i className="bi bi-search"/></button>
         </form>
     )

@@ -31,18 +31,6 @@ export const useTableSettings = (refreshTable) => {
             Cell: e =><a className={ c.linkClass } href={`mailto:${e.value}`}> { e.value } </a>
         },
         {
-            Header: t('table-header.publications'),
-            accessor: 'publications',
-            Cell: e => e.value.length,
-            Filter: ''
-        },
-        {
-            Header: t('table-header.comments'),
-            accessor: 'comments',
-            Cell: e => e.value.length,
-            Filter: ''
-        },
-        {
             Header: t('table-header.status'),
             accessor: 'role',
             Filter: SelectColumnFilter,

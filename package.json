@@ -23,6 +23,7 @@
   "author": "Evgeny Poluyanovich <eugeny.pol93@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "algoliasearch": "^4.8.6",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.25.0",
     "config": "^3.3.3",

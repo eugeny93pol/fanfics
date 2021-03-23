@@ -13,4 +13,5 @@ const publicationSchema = new Schema({
     rates: [{ type: Schema.Types.ObjectId, ref: 'Rate'}],
     averageRating: { type: Number, default: 0 }
 })
+publicationSchema.index({ title: 'text', description: 'text' })
 module.exports = model('Publication', publicationSchema)
