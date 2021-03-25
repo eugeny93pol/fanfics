@@ -5,7 +5,7 @@ import { useHttp } from '../../hooks/http.hook'
 export const FBButton = () => {
     const {request} = useHttp()
     const clickHandler = useCallback(async () => {
-        const response = await request('/auth/facebook')
+        const response = await request('api/auth/facebook')
         console.log(response)
     }, [request])
 
