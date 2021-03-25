@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
-import './index.css'
+import '../navbar/index.css'
 import { ModalSearch } from '../modal/ModalSearch'
 
 export const SearchBlock = () => {

@@ -1,13 +1,15 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { connectSearchBox } from 'react-instantsearch-dom'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
+import { useHttp } from '../../hooks/http.hook'
 
 
-
-const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
+export const SearchInput = ({ cbSetResults }) => {
     const { t } = useTranslation()
     const { c } = useThemedClasses()
+    const [query, setQuery] = useState('')
+    const { error, clearError, request } = useHttp()
+
 
     const callbackRef = useCallback(inputElement => {
         if (inputElement) {
@@ -17,9 +19,29 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
         }
     }, [])
 
+    const getSearchResults = useCallback(async () => {
+        try {
+            const data = await request(`/api/search/?text=${query}`)
+            cbSetResults(data.result)
+        } catch (e) {}
+    }, [request, query])
+
     const submitHandler = (event) => {
         event.preventDefault()
     }
+
+    const changeHandler = (event) => {
+        setQuery(event.target.value)
+
+    }
+
+    useEffect(() => {
+        if (query.length) {
+            getSearchResults()
+        } else {
+            cbSetResults(null)
+        }
+    },[query, getSearchResults])
 
 
     return (
@@ -31,21 +53,19 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => {
                 <input className={c.searchInputClass}
                        id="searchInput"
                        type="search"
-                       onChange={event => refine(event.currentTarget.value)}
-                       value={currentRefinement}
+                       onChange={changeHandler}
+                       value={query}
                        placeholder={t('search')}
                        aria-label="Search"
                        ref={callbackRef}
                 />
                 <button
                     type="reset"
-                    onClick={() => refine('')}
+                    onClick={() => setQuery('')}
                     className={c.searchClearClass}
-                    disabled={!currentRefinement}
+                    disabled={!query.length}
                 ><i className="bi bi-backspace"/></button>
             </div>
         </form>
     )
 }
-
-export const SearchInput = connectSearchBox(SearchBox)

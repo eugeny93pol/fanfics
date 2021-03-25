@@ -71,7 +71,7 @@ const search = async (req, res) => {
     try {
         const textQuery = req.query.text
         const data = await globalIndex.search(textQuery)
-        res.status(200).json({ result: data.hits })
+        res.status(200).json({ result: data })
     } catch (e) {
         errorHandler(res, e)
     }

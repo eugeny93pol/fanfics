@@ -6,7 +6,6 @@ import { useHttp } from '../hooks/http.hook'
 import { LoaderCard } from '../components/loaders/LoaderCard'
 import { TagsCloud } from '../components/tags/TagsCloud'
 import { Loader } from '../components/loaders/Loader'
-import { SearchBox } from 'react-instantsearch-dom';
 
 
 

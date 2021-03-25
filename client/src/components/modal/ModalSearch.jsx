@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Portal from '../portal/Portal'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { Helmet } from "react-helmet-async"
-import { SearchInput } from '../navbar/SearchInput'
-import { SearchResults } from '../navbar/SearchResults'
+import { SearchInput } from '../search/SearchInput'
+import { SearchResults } from '../search/SearchResults'
 
 export const ModalSearch = ({ isOpen, onCancel }) => {
     const { c } = useThemedClasses()
+
+    const [results, setResults] = useState([])
+
+    const cbSetResults = useCallback((results) => {
+        setResults(results)
+    })
 
     return (
         <>{ isOpen &&
@@ -15,14 +21,14 @@ export const ModalSearch = ({ isOpen, onCancel }) => {
                 <div className="modal-dialog modal-lg modal-dialog-scrollable">
                     <div className="modal-content bg-transparent border-0">
                         <div className={c.searchInputWrapperClass}>
-                            <SearchInput/>
+                            <SearchInput cbSetResults={cbSetResults}/>
                             <button
                                 className={c.searchModalCloseClass}
                                 onClick={onCancel}
                                 type="button"
                             />
                         </div>
-                        <SearchResults/>
+                        <SearchResults results={results} cbCloseModal={onCancel}/>
                     </div>
                 </div>
             </div>
