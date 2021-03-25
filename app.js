@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const http = require('http')
 const path = require('path')
+const passport = require('passport')
 require('dotenv').config()
 
 
@@ -31,6 +32,7 @@ async function start() {
             useCreateIndex: true
         })
         httpServer.listen(PORT, () =>console.log(`Server start on port ${PORT} ...`))
+        require('./middleware/passport.middleware')(passport)
         require('./controllers/comment.controller').subscribeToComments(io)
     } catch (e) {
         console.log('Server error', e.message)
