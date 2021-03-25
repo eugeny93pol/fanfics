@@ -4,7 +4,7 @@ import { io } from 'socket.io-client'
 import { CommentForm } from './CommentForm'
 import { Comment } from './Comment'
 
-const socket = io()
+
 
 export const CommentsModule = ({publication}) => {
     const [comments, setComments] = useState(publication.comments || [])
@@ -12,13 +12,14 @@ export const CommentsModule = ({publication}) => {
     const { t } = useTranslation()
 
     useEffect(() => {
+        const socket = io()
         socket.on('comment', (comment) => {
             setComments(prev => prev.concat(comment))
         })
         socket.emit('subscribe', { _id: publication._id })
         return () => socket.disconnect()
 
-    }, [socket])
+    }, [])
 
 
     return(

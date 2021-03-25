@@ -16,7 +16,6 @@ export const PublicationMenu = ({publication, cbDelete}) => {
             const response = await request('/api/publications/', 'DELETE',
                 { _id: publication._id },
                 { Authorization: `Bearer ${token}` })
-            console.log(response)
             cbDelete(publication._id)
         } catch (e) {}
     },[request, token, publication])

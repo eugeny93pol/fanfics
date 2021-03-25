@@ -23,6 +23,7 @@
     "react-dropzone": "^11.3.1",
     "react-helmet-async": "^1.0.9",
     "react-i18next": "^11.8.8",
+    "react-instantsearch-dom": "^6.10.3",
     "react-markdown": "^5.0.3",
     "react-rating": "^2.0.5",
     "react-router-dom": "^5.2.0",

@@ -33,7 +33,7 @@ export const PublicationPage = () => {
 
     const deleteHandler = useCallback(() => {
         setPublication(null)
-        history.goBack()
+        history.push('/')
     }, [publication])
 
     useEffect(() => {

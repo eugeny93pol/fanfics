@@ -91,6 +91,7 @@
   "registration": "Регистрация",
 
   "search": "Поиск",
+  "search-results.count": "Всего результов - {{count}}",
   "settings": "Настройки",
   "signin": "Войти",
   "signup": "Зарегистрироваться",

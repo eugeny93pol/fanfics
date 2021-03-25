@@ -2,6 +2,7 @@ import React from 'react'
 import Portal from '../portal/Portal'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
+import { Helmet } from "react-helmet-async"
 
 export const Modal = ({ title, isOpen, onCancel, onSubmit, children }) => {
     const { t } = useTranslation()
@@ -32,7 +33,10 @@ export const Modal = ({ title, isOpen, onCancel, onSubmit, children }) => {
                         </div>
                     </div>
                 </div>
-            <div className={c.modalBackdropClass}/>
+                <div className={c.modalBackdropClass}/>
+                <Helmet>
+                    <body style={"overflow: hidden"}/>
+                </Helmet>
             </Portal>
         }</>
     )

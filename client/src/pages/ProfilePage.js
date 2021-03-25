@@ -45,6 +45,10 @@ export const ProfilePage = () => {
         setUser(userData)
     }
 
+    const deleteHandler = useCallback((id) => {
+        setPublications(prev => prev.filter(pub => pub._id !== id))
+    }, [publications])
+
     useEffect(() => {
         loadData()
     },[loadData])
@@ -83,7 +87,10 @@ export const ProfilePage = () => {
 
                     <section className="mt-3">
                         {publications.map((publication) =>
-                            <PublicationPreview publication={publication} key={publication._id}/>
+                            <PublicationPreview
+                                publication={publication}
+                                cbDelete={deleteHandler}
+                                key={publication._id}/>
                         )}
                     </section>
                 </main>

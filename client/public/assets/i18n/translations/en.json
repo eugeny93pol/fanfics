@@ -91,6 +91,7 @@
   "registration": "Registration",
 
   "search": "Search",
+  "search-results.count": "Total results - {{count}}",
   "settings": "Settings",
   "signin": "Sign In",
   "signup": "Sign Up",

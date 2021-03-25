@@ -8,6 +8,7 @@ import { PublicationPage } from '../pages/PublicationPage'
 import { CreatePage } from '../pages/CreatePage'
 import { UsersPage } from '../pages/UsersPage'
 import { EditPage } from '../pages/EditPage'
+import { SettingsPage } from '../pages/SettingsPage'
 
 export const useRoutes = (isAuth) => {
 
@@ -16,6 +17,7 @@ export const useRoutes = (isAuth) => {
             <Route path='/' exact component={MainPage}/>
             <Route path='/publication/:id' exact component={PublicationPage}/>
             <Route path='/filter/:id' exact component={MainPage}/>
+            <Route path='/search' exact component={SettingsPage}/>
 
             {!isAuth && <Route path='/signup' exact component={SignupPage}/>}
             {!isAuth && <Route path='/signin' exact component={SigninPage}/>}

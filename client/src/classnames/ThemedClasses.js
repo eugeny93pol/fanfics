@@ -39,6 +39,17 @@ export const useThemedClasses = () => {
         'btn-outline-secondary': isDark
     })
 
+    const btnSearchClass = classNames({
+        'bg-gray-dark': isDark,
+        'border': true,
+        'border-secondary': isDark,
+        'btn': true,
+        'searchBtnInput': true,
+        'text-muted': isDark,
+        'text-secondary': !isDark,
+        'w-100': true
+    })
+
     const btnSecClass = classNames({
         'btn': true,
         'btn-outline-secondary': !isDark,
@@ -115,7 +126,6 @@ export const useThemedClasses = () => {
     const modalBackdropClass = classNames({
         "modal-backdrop": true,
         "show": true,
-        "bg-gray-dark": isDark
     })
 
     const navbarClass = classNames({
@@ -155,6 +165,80 @@ export const useThemedClasses = () => {
         'text-info': isDark,
         'text-dark': !isDark
     })
+
+    const searchClearClass = classNames({
+        'btn':true,
+        'btn-lg': true,
+        'text-light': isDark,
+        'border-bottom-0': true,
+        'border-top-0': true,
+        'border-start-0': true,
+        'border-secondary': isDark,
+        'border': !isDark,
+        'shadow-none': true,
+        'rounded-0': true
+    })
+
+    const searchInputClass = classNames({
+        'form-control': true,
+        'form-control-lg': true,
+        'border-0': true,
+        'bg-gray-dark': isDark,
+        'text-light': isDark,
+        'shadow-none': true,
+    })
+
+    const searchInputWrapperClass = classNames({
+        'modal-header': true,
+        'p-0': true,
+        'mb-1': true,
+        'border': true,
+        'rounded': true,
+        'bg-body': !isDark,
+        'bg-gray-dark': isDark,
+        'border-light': !isDark,
+        'border-secondary': isDark,
+    })
+
+    const searchLabelClass = classNames({
+        'btn':true,
+        'btn-lg': true,
+        'border-0': true,
+        'bg-body': !isDark,
+        'shadow-none': true,
+        'text-light': isDark
+    })
+
+    const searchModalCloseClass = classNames({
+        'btn':true,
+        'btn-close': true,
+        'btn-close-white': isDark,
+        'm-0': true,
+        'ps-4': true,
+        'shadow-none': true
+    })
+
+    const searchResultClass = classNames({
+        'list-group-item':true,
+        'border-top-0': true,
+        'border-start-0': true,
+        'border-end-0': true,
+        'border-bottom': true,
+        'border': isDark,
+        'border-secondary': isDark,
+        'text-light': isDark,
+        'text-body': !isDark,
+        'bg-gray-dark': isDark
+    })
+
+    const searchResultsClass = classNames({
+        'modal-body':true,
+        'p-0': true,
+        'rounded': true,
+        'border': isDark,
+        'border-secondary': isDark,
+    })
+
 
     const selectClass = classNames({
         'form-select': true,
@@ -198,6 +282,7 @@ export const useThemedClasses = () => {
         btnCloseClass,
         btnCloseAbsClass,
         btnOutlineClass,
+        btnSearchClass,
         btnSecClass,
         cardImage,
         contentsClass,
@@ -212,6 +297,13 @@ export const useThemedClasses = () => {
         navbarClass,
         publicationPreviewClass,
         rateFullClass,
+        searchClearClass,
+        searchInputClass,
+        searchInputWrapperClass,
+        searchLabelClass,
+        searchModalCloseClass,
+        searchResultClass,
+        searchResultsClass,
         selectClass,
         sidebarClass,
         tableClass,
