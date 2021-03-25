@@ -41,7 +41,6 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
                     body: formData
                 })
                 const data = await response.json()
-                console.log(data)
                 uploaded.push(data.url)
             }
             setUploading(false)

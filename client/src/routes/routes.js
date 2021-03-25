@@ -29,7 +29,7 @@ export const useRoutes = (isAuth) => {
             {isAuth && <Route path='/edit/:id' exact component={EditPage}/>}
             {isAuth && <Route path='/users' exact component={UsersPage}/>}
 
-            <Redirect to='/'/>
+            {/*<Redirect to='/'/>*/}
         </Switch>
     )
 }
