@@ -2,7 +2,7 @@ import React from 'react'
 
 export const YAButton = () => {
     const clickHandler = () => {
-        window.open('http://localhost:5000/oauth/yandex', '_self')
+        window.open('/oauth/yandex', '_self')
     }
 
     return (

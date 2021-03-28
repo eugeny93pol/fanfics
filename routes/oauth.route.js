@@ -10,13 +10,13 @@ const authenticate = (provider) => {
 const cbAuthenticate = (provider) => {
     return passport.authenticate(provider, {
         session: false,
-        failureRedirect: 'http://localhost:3000/signin/?status=cancel'
+        failureRedirect: '/signin/?status=cancel'
     })
 }
 
 const cbRedirect = () => {
     return (req, res) => {
-        res.redirect(`http://localhost:3000/?access_token=${req.user.token}`)
+        res.redirect(`/?access_token=${req.user.token}`)
     }
 }
 

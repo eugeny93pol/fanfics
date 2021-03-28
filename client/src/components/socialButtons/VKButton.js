@@ -2,7 +2,7 @@ import React from 'react'
 
 export const VKButton = () => {
     const clickHandler = () => {
-        window.open('http://localhost:5000/oauth/vk', '_self')
+        window.open('/oauth/vk', '_self')
     }
 
     return (
