@@ -4,6 +4,7 @@ const passport = require('passport')
 const authenticate = (provider) => {
     const options = { session: false }
     if (provider !== 'yandex') { options.scope = ['email'] }
+    if (provider === 'google') { options.scope = options.scope.concat('profile') }
     return passport.authenticate(provider, options)
 }
 
@@ -25,6 +26,9 @@ router.get('/facebook/callback', cbAuthenticate('facebook'), cbRedirect())
 
 router.get('/vk', authenticate('vkontakte'))
 router.get('/vk/callback', cbAuthenticate('vkontakte'), cbRedirect())
+
+router.get('/google', authenticate('google'))
+router.get('/google/callback', cbAuthenticate('google'), cbRedirect())
 
 router.get('/yandex', authenticate('yandex'))
 router.get('/yandex/callback', cbAuthenticate('yandex'), cbRedirect())

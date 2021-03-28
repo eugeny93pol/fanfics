@@ -1,16 +1,15 @@
 import React from 'react'
 
-export const TWButton = () => {
+export const GoogleButton = () => {
     const clickHandler = () => {
-        window.open('/oauth/twitter', '_self')
+        window.open('/oauth/google', '_self')
     }
 
     return (
         <button
-            className="btn btn-lg tw-btn social-btn"
+            className="btn btn-lg google-btn social-btn"
             type="button"
             onClick={ clickHandler }
         />
-
     )
 }

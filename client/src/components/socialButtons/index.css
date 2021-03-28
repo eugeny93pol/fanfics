@@ -27,13 +27,14 @@
     background-color: #0099e6;
 }
 
-.tw-btn {
-    background: #1da0f1 url("icons/tw-icon.svg") no-repeat center;
+.google-btn {
+    background: #fff url("icons/google-icon.svg") no-repeat center;
+    background-origin: padding-box;
 }
 
-.tw-btn:hover,
-.tw-btn:focus {
-    background-color: rgba(29,160,241,.85);
+.google-btn:hover,
+.google-btn:focus {
+    background-color: rgba(255,255,255,.90);
 }
 
 .ya-btn {

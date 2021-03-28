@@ -2,7 +2,7 @@ import React from 'react'
 
 export const FBButton = () => {
     const clickHandler =  () => {
-        window.open('/oauth/facebook', '_self')
+        window.open('http://localhost:5000/oauth/facebook', '_self')
     }
 
     return (
