@@ -2,7 +2,7 @@ import React from 'react'
 
 export const TWButton = () => {
     const clickHandler = () => {
-        window.open('http://localhost:5000/oauth/twitter', '_self')
+        window.open('/oauth/twitter', '_self')
     }
 
     return (

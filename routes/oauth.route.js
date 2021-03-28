@@ -20,14 +20,14 @@ const cbRedirect = () => {
     }
 }
 
-router.get(`/facebook`, authenticate('facebook'))
-router.get(`${process.env.REDIRECT_HOSTNAME}/facebook/callback`, cbAuthenticate('facebook'), cbRedirect())
+router.get('/facebook', authenticate('facebook'))
+router.get('/facebook/callback', cbAuthenticate('facebook'), cbRedirect())
 
-router.get(`/vk`, authenticate('vkontakte'))
-router.get(`${process.env.REDIRECT_HOSTNAME}/vk/callback`, cbAuthenticate('vkontakte'), cbRedirect())
+router.get('/vk', authenticate('vkontakte'))
+router.get('/vk/callback', cbAuthenticate('vkontakte'), cbRedirect())
 
-router.get(`/yandex`, authenticate('yandex'))
-router.get(`${process.env.REDIRECT_HOSTNAME}/yandex/callback`, cbAuthenticate('yandex'), cbRedirect())
+router.get('/yandex', authenticate('yandex'))
+router.get('/yandex/callback', cbAuthenticate('yandex'), cbRedirect())
 
 
 module.exports = router
