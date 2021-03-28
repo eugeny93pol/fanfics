@@ -51,6 +51,9 @@
   "filters.title": "Title",
   "filters.title-placeholder": "Filter by title",
 
+  "filter-page.by-tag": "Publications by tag",
+  "filter-page.by-genre": "Publications by genre",
+
   "login": "Login",
   "logout": "Logout",
 

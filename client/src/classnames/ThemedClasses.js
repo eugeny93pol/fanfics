@@ -170,6 +170,10 @@ export const useThemedClasses = () => {
         'navbar-dark': isDark,
     })
 
+    const pageTitleClass = classNames({
+        'text-light': isDark,
+    })
+
     const publicationPreviewClass = classNames({
         'card': true,
         'mb-3': true,
@@ -328,6 +332,7 @@ export const useThemedClasses = () => {
         modalClass,
         modalBackdropClass,
         navbarClass,
+        pageTitleClass,
         publicationPreviewClass,
         rateFullClass,
         searchClearClass,

@@ -51,6 +51,9 @@
   "filters.title": "Название",
   "filters.title-placeholder": "Фильтровать по названию",
 
+  "filter-page.by-tag": "Публикации с тегом",
+  "filter-page.by-genre": "Публикации в жанре",
+
   "login": "Вход",
   "logout": "Выйти",
 

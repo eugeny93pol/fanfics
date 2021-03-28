@@ -324,12 +324,14 @@ img {
 }
 
 @media only screen and (orientation: landscape) and (max-height: 150px) {
-    input:focus {
-        height: 100%!important;
+    input[type="text"]:focus,
+    input[type="search"]:focus,
+    input[type="password"]:focus {
+        height: 50px!important;
         width: 100%!important;
         position: fixed!important;
-        top:0!important;
+        bottom:0!important;
         left:0!important;
-        z-index: 9999999;
+        z-index: 9999999!important;
     }
 }

@@ -8,14 +8,13 @@ import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { PublicationPreview } from '../components/publication/PublicationPreview'
 import { ToastServerErrors } from '../components/toast/ToastServerErrors'
-import { Filters } from '../components/profile/Filters'
+import { Filters } from '../components/filter/Filters'
 
 
 export const ProfilePage = () => {
     const [user, setUser] = useState(null)
     const [publications, setPublications] = useState([])
     const [filtered, setFiltered] = useState([])
-    const [sort, setSort] = useState(null)
 
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
@@ -38,45 +37,6 @@ export const ProfilePage = () => {
             setFiltered(userPublications.publications)
         } catch (e) {}
     }, [token, pageId, request])
-
-    const changeSort = useCallback((sort) => {
-        setSort(sort)
-        sortPublications(filtered, sort)
-    })
-
-    const sortPublications = (publications, sort) => {
-        if(sort) {
-            const original = publications.slice()
-            setFiltered(original.sort((a, b) => {
-                let result
-                if(sort.field === 'averageRating') {
-                    result = (a-b)
-                } else
-                if(sort.field === 'comments') {
-                    result = (a.comments.length-b.comments.length)
-                } else
-                if(sort.field === 'title') {
-                    result = a.title.localeCompare(b.title)
-                } else {
-                    result = a.updated < b.updated ? -1 : 1
-                }
-                return result * sort.order
-            }))
-        } else {
-            setFiltered(publications)
-        }
-    }
-
-    const changeFilter = useCallback((filter) => {
-        const result = publications.filter(pub => {
-            let genres = pub.genres.filter(g => filter.genres.includes(g._id))
-            let tags = pub.tags.filter(t => filter.tags.includes(t._id))
-            return pub.title.toLowerCase().includes(filter.title.toLowerCase())
-                && genres.length === filter.genres.length
-                && tags.length === filter.tags.length
-        })
-        sortPublications(result, sort)
-    })
 
     const createBtnHandler = () => {
         history.push({
@@ -122,8 +82,8 @@ export const ProfilePage = () => {
                 <main className="col-md-9 ms-auto mt-3 mt-md-0">
                     <div className={c.formClass}>
                         <h3 className="mb-3">{t('profile-page.title')}</h3>
-                        { publications.length ?
-                            <Filters publications={ publications } cbSetSort={ changeSort } cbSetFilter={ changeFilter }/>
+                        { !publications.isEmpty ?
+                            <Filters publications={ publications } cbSetFiltered={ setFiltered }/>
                             : t('profile-page.no-publications')
                         }
                     </div>

@@ -5,7 +5,15 @@ export const TagsList = ({tags}) => {
     return (
         <div className="d-flex flex-wrap gap-1">
             {tags.map(tag =>
-                <Link to={`/tag/${tag._id}`} className="tag" key={tag._id}><i className="bi bi-tag"/> {tag.name}</Link>
+                <Link
+                    to={{
+                        pathname: `/publications`,
+                        search: `field=tags&id=${tag._id}`,
+                        state: { name: tag.name }
+                    }}
+                    className="tag"
+                    key={tag._id}><i className="bi bi-tag"
+                /> {tag.name}</Link>
             )}
         </div>
     )

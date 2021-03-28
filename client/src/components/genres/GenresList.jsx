@@ -8,7 +8,11 @@ export const GenresList = ({genres}) => {
         <div className="breadcrumb">
             { genres.map(genre =>
                 <Link key={genre._id}
-                      to={`/genre/${genre._id}`}
+                      to={{
+                          pathname: `/publications`,
+                          search: `field=genres&id=${genre._id}`,
+                          state: { name: genre.name }
+                      }}
                       className="breadcrumb-item link-secondary text-decoration-none"
                 >{genre.name[i18n.language]}</Link>
             )}

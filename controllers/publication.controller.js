@@ -153,6 +153,21 @@ const getUserPublications = async (id) => {
     )
 }
 
+const getUserPublicationsByArrayIncludeId = async (req, res) => {
+    try {
+        const id = req.params.id
+        const field = req.params.field
+        const publications =
+            await Publication.
+            find({[field]: { $in: [id] }}).
+            populate('author', 'name').
+            populate('tags').
+            populate('genres').
+            populate('rates')
+        res.status(200).json({ publications })
+    } catch (e) { errorHandler(res, e) }
+}
+
 const getPublication = async (id, user) => {
     const publication =
         await Publication.
@@ -204,4 +219,10 @@ const getPublicationEdit = async (req, res) => {
     }
 }
 
-module.exports = { savePublication, getPublications, deletePublication, getPublicationEdit }
+module.exports = {
+    savePublication,
+    getPublications,
+    deletePublication,
+    getPublicationEdit,
+    getUserPublicationsByArrayIncludeId
+}

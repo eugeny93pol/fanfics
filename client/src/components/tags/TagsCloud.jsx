@@ -24,14 +24,17 @@ export const TagsCloud = ({tags}) => {
 
     useEffect(() => {
         tags && setRanges(calcRanges(tags))
-        tags && console.log()
     }, [tags])
     return (
         <div className="gap-1 tagsCloud">
         {ranges && tags.map((tag) =>
             <Link
                 key={tag._id}
-                to={`/tag/${tag._id}`}
+                to={{
+                    pathname: `/publications`,
+                    search: `field=tags&id=${tag._id}`,
+                    state: { name: tag.name }
+                }}
                 style={{
                     fontSize: `${calcSize(tag.popularity, ranges)}rem`,
                     color: colors[tag.popularity % colors.length],
