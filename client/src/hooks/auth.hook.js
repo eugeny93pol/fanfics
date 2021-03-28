@@ -1,3 +1,4 @@
+import jwt_decode from "jwt-decode"
 import {useState, useCallback, useEffect} from 'react'
 
 
@@ -7,12 +8,16 @@ export const useAuth = () => {
     const [isAuth, setIsAuth] = useState(false)
     const [ready, setReady] = useState(false)
 
-    const login = useCallback((jwtToken, user) => {
+    const login = useCallback((jwtToken) => {
+        const decoded = jwt_decode(jwtToken)
+        const user = {
+            id: decoded.userId,
+            role: decoded.userRole
+        }
         setToken(jwtToken)
         setUserData(user)
         setIsAuth(true)
         localStorage.setItem('token', JSON.stringify(jwtToken))
-        localStorage.setItem('userData', JSON.stringify(user))
     }, [])
 
     const logout = useCallback(() => {
@@ -20,13 +25,11 @@ export const useAuth = () => {
         setUserData(null)
         setIsAuth(false)
         localStorage.removeItem('token')
-        localStorage.removeItem('userData')
     }, [])
 
     useEffect(() => {
-        const tokenStored = JSON.parse(localStorage.getItem('token'))
-        const userDataStored = JSON.parse(localStorage.getItem('userData'))
-        tokenStored && userDataStored ? login(tokenStored, userDataStored) : logout()
+        const savedToken = JSON.parse(localStorage.getItem('token'))
+        savedToken ? login(savedToken) : logout()
         setReady(true)
     }, [login, logout])
 

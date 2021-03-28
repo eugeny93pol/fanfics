@@ -6,6 +6,7 @@ import { useThemedClasses } from '../classnames/ThemedClasses'
 import { TableUsers } from '../components/table/TableUsers'
 import { useTableSettings } from '../components/table/TableSettings'
 import { UsersToolbar } from '../components/toolbar/UsersToolbar'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 
 
 export const UsersPage = () => {
@@ -35,30 +36,26 @@ export const UsersPage = () => {
         loadData()
     },[loadData])
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
     return (
          <>
-            <div className="row mt-3">
-                <div className="col d-flex justify-content-end">
-                    <UsersToolbar ids={selectedIds} update={loadData}/>
-                </div>
-            </div>
-            <div className="row mt-3">
-                <div className="col">
-                    <div className={c.tableWrapperClass}>
-                        {
-                            users ?
-                                <TableUsers columns={columns} data={users} setSelectedRows={setSelectedRows}/>
-                            :
-                                <Loader classes={['my-5']}/>
-                        }
-                    </div>
-                </div>
-            </div>
-        </>
+             <div className="row mt-3">
+                 <div className="col d-flex justify-content-end">
+                     <UsersToolbar ids={selectedIds} update={loadData}/>
+                 </div>
+             </div>
+             <div className="row mt-3">
+                 <div className="col">
+                     <div className={c.tableWrapperClass}>
+                         {
+                             users ?
+                                 <TableUsers columns={columns} data={users} setSelectedRows={setSelectedRows}/>
+                             :
+                                 <Loader classes={['my-5']}/>
+                         }
+                     </div>
+                 </div>
+             </div>
+             <ToastServerErrors error={error} cbClearError={clearError}/>
+         </>
     )
 }

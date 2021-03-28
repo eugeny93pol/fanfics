@@ -9,8 +9,6 @@ export const ThemeSelector = () => {
         theme.toggleTheme(event.target.value)
     }
 
-
-
     return (
         <div className="btn-group btn-group-sm w-100" onChange={ changeTheme }>
             <input className="btn-check" id="light" type="radio" value="light" name="theme"

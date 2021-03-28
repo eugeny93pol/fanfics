@@ -1,9 +1,7 @@
 import React from 'react'
 
 export const Loader = (props) => {
-
     const classes = ['spinner-border', 'text-info']
-
     if (props.classes) {
         classes.push(...props.classes)
     }

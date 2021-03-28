@@ -56,6 +56,12 @@ export const useThemedClasses = () => {
         'btn-outline-light': isDark
     })
 
+    const btnSortClass = classNames({
+        'btn': true,
+        'btn-outline-secondary': isDark,
+        'btn-outline-dark': !isDark
+    })
+
     const cardImage = classNames({
         'card': true,
         'mb-4': true,
@@ -91,7 +97,7 @@ export const useThemedClasses = () => {
         'shadow-sm': !isDark,
         'shadow': isDark,
         'bg-body': !isDark,
-        'bg-dark': isDark
+        'bg-dark': isDark,
     })
 
     const inputClass = classNames({
@@ -112,6 +118,23 @@ export const useThemedClasses = () => {
     const linkClass = classNames({
         'link-dark': !isDark,
         'link-info': isDark
+    })
+
+    const filterFormClass = classNames({
+        'card card-body': true,
+        'bg-light': !isDark,
+        'bg-gray-dark': isDark
+    })
+
+    const filterInputClass = classNames({
+        "form-control ": true,
+        'bg-gray-dark border-secondary text-light': isDark
+    })
+
+    const filterTitleLabelClass = classNames({
+        'input-group-text text-light': true,
+        'bg-dark ': !isDark,
+        'bg-secondary border-secondary': isDark
     })
 
     const modalClass = classNames({
@@ -276,6 +299,12 @@ export const useThemedClasses = () => {
         'text-light': isDark
     })
 
+    const toastClass = classNames({
+        'toast border-0 text-light fade': true,
+        'bg-dark ': !isDark,
+        'bg-secondary ': isDark,
+    })
+
 
     const c = {
         btnClass,
@@ -284,10 +313,14 @@ export const useThemedClasses = () => {
         btnOutlineClass,
         btnSearchClass,
         btnSecClass,
+        btnSortClass,
         cardImage,
         contentsClass,
         dropdownClass,
         dropzoneClass,
+        filterFormClass,
+        filterInputClass,
+        filterTitleLabelClass,
         formClass,
         inputClass,
         inputInfoClass,
@@ -308,7 +341,8 @@ export const useThemedClasses = () => {
         sidebarClass,
         tableClass,
         tableWrapperClass,
-        textClass
+        textClass,
+        toastClass
     }
     return { c }
 }

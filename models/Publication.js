@@ -1,8 +1,8 @@
 const {Schema, model} = require('mongoose')
 
 const publicationSchema = new Schema({
-    title: { type: String, required: true },//
-    description: { type: String },//
+    title: { type: String, required: true },
+    description: { type: String },
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     genres: [{ type: Schema.Types.ObjectId, ref: 'Genre'}],
     tags: [{ type: Schema.Types.ObjectId, ref: 'Tag'}],

@@ -9,8 +9,6 @@ export const LanguageSelector = () => {
         i18n.changeLanguage(event.target.value)
     }
 
-
-
     return (
         <div className="btn-group btn-group-sm w-100" onChange={ changeLanguage }>
             <input className="btn-check" id="en" type="radio" value="en" name="language"

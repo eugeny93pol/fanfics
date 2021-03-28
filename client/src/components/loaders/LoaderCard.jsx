@@ -3,7 +3,6 @@ import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 
 export const LoaderCard = () => {
-
     const { c } = useThemedClasses()
     const { t } = useTranslation()
 

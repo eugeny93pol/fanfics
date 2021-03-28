@@ -1,7 +1,7 @@
 const router = require('express').Router()
 //const passport = require('passport')
 const role = require('../middleware/role.middleware')
-const check = require('../handlers/checkFields.handler')
+const check = require('../utils/checkFields.handler')
 const { getUser, updateUser } = require('../controllers/user.controller')
 
 

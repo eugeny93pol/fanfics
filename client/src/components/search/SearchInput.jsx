@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useHttp } from '../../hooks/http.hook'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 
 export const SearchInput = ({ cbSetResults }) => {
@@ -66,6 +67,7 @@ export const SearchInput = ({ cbSetResults }) => {
                     disabled={!query.length}
                 ><i className="bi bi-backspace"/></button>
             </div>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </form>
     )
 }

@@ -49,7 +49,7 @@ const createIndex = async (req, res) => {
         const data = await getAllPublicationsText()
         const prepared = data.map(pub => preparePublication(pub))
         await globalIndex.saveObjects(prepared)
-        res.status(200).json({message: 's:indexes_created'})
+        res.status(200).json({message: 's_indexes_created'})
     } catch (e) { errorHandler(res, e) }
 }
 

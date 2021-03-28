@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Modal } from '../modal/Modal'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const PublicationMenu = ({publication, cbDelete}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -33,11 +34,6 @@ export const PublicationMenu = ({publication, cbDelete}) => {
         setIsModalOpen(false)
     }
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
     return (
         <>
             <button className="btn menuButton" type="button" data-bs-toggle="collapse"
@@ -63,6 +59,7 @@ export const PublicationMenu = ({publication, cbDelete}) => {
             >
                 <p>{t('publication-preview-modal.text', { title: publication.title})}</p>
             </Modal>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </>
     )
 }

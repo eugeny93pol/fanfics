@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const SelectActions = ({row, refresh}) => {
     const { c } = useThemedClasses()
@@ -39,10 +40,6 @@ export const SelectActions = ({row, refresh}) => {
     const deleteHandler = async () => {
         await deleteUser(user._id)
     }
-
-    useEffect( () => {
-        clearError()
-    }, [error, clearError])
 
 
     return (
@@ -101,6 +98,7 @@ export const SelectActions = ({row, refresh}) => {
                     </button>
                 </li>
             </ul>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </div>
     )
 }

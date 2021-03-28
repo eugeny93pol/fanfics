@@ -1,31 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useHttp } from '../hooks/http.hook'
-import { AuthContext } from '../context/AuthContext'
-import { Loader } from './loaders/Loader'
-import { useThemedClasses } from '../classnames/ThemedClasses'
+import { useHttp } from '../../hooks/http.hook'
+import { AuthContext } from '../../context/AuthContext'
+import { Loader } from '../loaders/Loader'
+import { useThemedClasses } from '../../classnames/ThemedClasses'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 
-export const ProfileInfo = (props) => {
+export const ProfileInfo = ({ user, changeUserData }) => {
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
     const [form, setForm] = useState({ name: '', email: '' })
-
     const { c } = useThemedClasses()
-
-    const user = props.user
-    const changeUserData = props.changeUserData
-
-    useEffect(() => {
-        setForm({
-            name: user.name,
-            email: user.email
-        })
-    },[user])
-
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
     const changeHandler = (event) => {
         setForm({ ...form, [event.target.name]: event.target.value })
@@ -46,8 +31,17 @@ export const ProfileInfo = (props) => {
                 { Authorization: `Bearer ${token}`
                 })
             changeUserData(data.user)
-        } catch (e) { }
+        } catch (e) {
+            setForm({ name: user.name, email: user.email })
+        }
     }
+
+    useEffect(() => {
+        setForm({
+            name: user.name,
+            email: user.email
+        })
+    },[user])
 
     if (loading) {
         return <Loader classes={['spinner-border-sm my-2']}/>
@@ -79,6 +73,7 @@ export const ProfileInfo = (props) => {
                 />
             </form>
             }
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </>
     )
 }

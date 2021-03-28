@@ -13,13 +13,27 @@ const { deleteChapters } = require('./chapter.controller')
 const { deleteTagsFromPublication } = require('./tag.controller')
 const { deleteComments } = require('./comment.controller')
 
+
+const checkDuplicate = async (req) => {
+    const {author, title, _id } = req.body
+    const duplicate = await Publication.findOne({author, title})
+    if (duplicate && duplicate._id != _id) {
+        return true
+    }
+    return false
+}
+
 const savePublication = async (req, res) => {
     try {
+        const isDuplicate = await checkDuplicate(req)
+        if (isDuplicate) {
+            return res.status(400).json({message: 's_duplicate_title'})
+        }
         let publication
         if (!mongoose.isValidObjectId(req.body._id)) {
             publication = await createPublication(req.body)
             await addToIndex(publication._id)
-            return res.status(201).json({message: 's:publication_created', publication })
+            return res.status(201).json({message: 's_publication_created', publication })
         } else {
             await updatePublication(req, res)
             await updateIndex(req.body._id)
@@ -46,13 +60,7 @@ const createPublication = async (data) => {
 
 const updatePublication = async (req, res) => {
     try {
-        const { _id, title, description, author, genres } = req.body
-
-        const duplicate = await Publication.findOne({author, title})
-        if (duplicate && duplicate._id != _id) {
-            return res.status(400).json({message: 's:duplicate_title'})
-        }
-
+        const { _id, title, description, genres } = req.body
         const publication = await Publication.findById(_id)
         const tags = await checkChangeTags(req.body.tags, publication)
         const chapters = await checkChangeChapters(req.body.chapters, publication)
@@ -65,7 +73,7 @@ const updatePublication = async (req, res) => {
         publication.updated = Date.now()
         await publication.save()
 
-        return res.status(200).json({message: 's:publication_updated', publication })
+        return res.status(200).json({message: 's_publication_updated', publication })
     } catch (e) { errorHandler(res, e) }
 }
 
@@ -87,7 +95,7 @@ const getPublications = async (req, res) => {
                 publications = await getPublicationEdit(req.query.edit)
                 break
             default:
-                res.status(400).json({message: 's:incorrect_query_parameters'})
+                res.status(400).json({message: 's_bad_request'})
         }
         res.status(200).json({ publications })
     } catch (e) {
@@ -105,7 +113,7 @@ const deletePublication = async (req, res) => {
         await deleteRates(publication.rates)
         await deleteFromIndex(publication._id)
         await publication.delete()
-        res.status(200).json({ message: 's:publication_removed'})
+        res.status(200).json({ message: 's_publication_removed'})
     } catch (e) {
         errorHandler(res, e)
     }
@@ -175,7 +183,7 @@ const getPublicationEdit = async (req, res) => {
     try {
         const id = req.params.id
         if (!mongoose.isValidObjectId(id)) {
-            return res.status(400).json({ message: 's:incorrect_id'})
+            return res.status(400).json({ message: 's_incorrect_id'})
         }
 
         const publication = await Publication.
@@ -187,7 +195,7 @@ const getPublicationEdit = async (req, res) => {
 
         const { userId, userRole } = req.userData
         if (userId != publication.author && userRole !== 'admin') {
-            return res.status(403).json({ message: 's:not_authorized' })
+            return res.status(403).json({ message: 's_not_authorized' })
         }
 
         res.status(200).json({ publication })

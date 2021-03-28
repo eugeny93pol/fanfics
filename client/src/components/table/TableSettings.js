@@ -44,7 +44,6 @@ export const useTableSettings = (refreshTable) => {
             Filter: ''
         }
     ]
-
     return { columns }
 }
 

@@ -9,11 +9,11 @@ const createGenre = async (req, res) => {
     try {
         let candidate = await Genre.findOne({ $or:[{ 'name.en': req.body.en }, { 'name.ru': req.body.ru }] })
         if (candidate) {
-             return res.status(400).json({message: 'That genre already exist'})
+             return res.status(400).json({ message: 's_genre_exists' })
         }
         const genre = new Genre({ 'name.en': req.body.en, 'name.ru': req.body.ru })
         await genre.save()
-        res.status(201).json({ message: 'Genre created', genre })
+        res.status(201).json({ message: 's_genre_created', genre })
     } catch (e) {
         errorHandler(res, e)
     }

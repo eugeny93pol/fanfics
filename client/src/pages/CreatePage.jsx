@@ -14,6 +14,7 @@ import update from 'immutability-helper'
 import { ContentsDraggable } from '../components/contents/ContentsDraggable'
 import { isMobile } from "react-device-detect"
 import { TouchBackend } from 'react-dnd-touch-backend'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 
 
 export const CreatePage = ({ initial }) => {
@@ -112,14 +113,7 @@ export const CreatePage = ({ initial }) => {
         !publication.author && setPublication({...publication, author})
     }, [])
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
-    if (loading) {
-        return <Loader classes={['my-5']}/>
-    }
+    if (loading) { return <Loader classes={['my-5']}/> }
 
     return (
         <>{!loading && meta &&
@@ -162,6 +156,8 @@ export const CreatePage = ({ initial }) => {
                 </div>
             </main>
         </div>
-        }</>
+        }
+        <ToastServerErrors error={error} cbClearError={clearError}/>
+        </>
     )
 }

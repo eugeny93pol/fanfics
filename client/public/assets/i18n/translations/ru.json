@@ -46,6 +46,11 @@
 
   "email": "Электронная почта",
 
+  "filters.genres": "Жанры",
+  "filters.tags": "Тэги",
+  "filters.title": "Название",
+  "filters.title-placeholder": "Фильтровать по названию",
+
   "login": "Вход",
   "logout": "Выйти",
 
@@ -71,6 +76,7 @@
 
   "profile.info": "О профиле",
   "profile-page.create": "Создать фанфик",
+  "profile-page.no-publications": "Нет публикаций",
   "profile-page.title": "Здесь собраны ваши публикации",
 
   "publication-page.comments-input-button": "Комментировать",
@@ -90,6 +96,19 @@
 
   "registration": "Регистрация",
 
+  "s_auth_failed": "Такой пользователь не зарегистрирован, или введен неверный пароль",
+  "s_bad_request": "Некорректные параметры запроса, попробуйте снова",
+  "s_duplicate_title": "У Вас уже есть публикация с таким названием",
+  "s_incorrect_id": "Некорректный ID",
+  "s_invalid_form_data": "Проверьте введенные данные",
+  "s_genre_exists": "Такой жанр уже существует",
+  "s_not_authorized": "Недостаточно прав для выполнения данного действия",
+  "s_user_blocked": "Пользователь заблокирован",
+  "s_user_created": "Пользователь успешно создан",
+  "s_user_exists": "Такой пользователь уже существует",
+  "s_user_not_found": "Такой пользователь не найден",
+  "s_server_internal_error": "Внутренняя ошибка сервера",
+
   "search": "Поиск",
   "search-results.count": "Всего результов - {{count}}",
   "settings": "Настройки",
@@ -97,6 +116,11 @@
   "signup": "Зарегистрироваться",
   "site.description": "Мордор — техногенная цивилизация, опороченная победителями",
   "site.name": "Мордор",
+
+  "sort-panel.comments": "Комментарии",
+  "sort-panel.date": "Дата",
+  "sort-panel.rating": "Рейтинг",
+  "sort-panel.title": "Название",
 
   "theme.dark": "Темная тема",
 

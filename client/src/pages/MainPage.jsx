@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 import { PublicationPreview } from '../components/publication/PublicationPreview'
@@ -6,8 +6,10 @@ import { useHttp } from '../hooks/http.hook'
 import { LoaderCard } from '../components/loaders/LoaderCard'
 import { TagsCloud } from '../components/tags/TagsCloud'
 import { Loader } from '../components/loaders/Loader'
-
-
+import queryString from 'query-string'
+import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 
 
 export const MainPage = () => {
@@ -20,7 +22,8 @@ export const MainPage = () => {
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const { loading, error, clearError, request } = useHttp()
-
+    const history = useHistory()
+    const auth = useContext(AuthContext)
 
     const loadPublications = useCallback(async () => {
         try {
@@ -64,17 +67,16 @@ export const MainPage = () => {
 
     useEffect(() => {
         loadTags()
+        const search = queryString.parse(history.location.search)
+        if(search.access_token) {
+            auth.login(search.access_token)
+            history.push({ search: '' })
+        }
     },[])
-
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
     return(
         <main className={`row mt-4 ${c.textClass}`}>
             <div className="col-lg-8">
-
                 <nav>
                     <div className="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <button className="nav-link active" id="nav-top-tab" data-bs-toggle="tab"
@@ -122,6 +124,7 @@ export const MainPage = () => {
                 <h2 className="mb-4">{t('main-page-title.tag-cloud')}</h2>
                 <TagsCloud tags={tags}/>
             </aside>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </main>
     )
 }

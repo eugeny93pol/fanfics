@@ -1,9 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
 import { Loader } from '../loaders/Loader'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const CommentForm = ({publicationId}) => {
     const [text, setText] = useState('')
@@ -29,10 +30,6 @@ export const CommentForm = ({publicationId}) => {
         } catch (e) {}
     }, [text, request, token, publicationId])
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
     return(
         <>
@@ -59,6 +56,7 @@ export const CommentForm = ({publicationId}) => {
                     }
                 </div>
             </form>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </>
     )
 }

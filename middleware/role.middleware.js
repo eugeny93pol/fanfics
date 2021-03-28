@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/User')
 
 module.exports = (roles) => {
-    return (req, res, next) => {
+    return async (req, res, next) => {
         if (req.method === 'OPTIONS') {
             return next()
         }
@@ -11,8 +12,12 @@ module.exports = (roles) => {
                 return res.status(401).json({message: 's:not_login'})
             }
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-            const userRole = decodedToken.userRole
-            if (!roles.includes(userRole)) {
+            const id = decodedToken.userId
+            const user = await User.findById(id)
+            if (user.role === 'blocked') {
+                return res.status(403).json({message: 's:user_blocked'})
+            }
+            if (!roles.includes(user.role)) {
                 return res.status(403).json({message: 's:not_authorized'})
             }
             req.userData = { userId: decodedToken.userId, userRole: decodedToken.userRole }

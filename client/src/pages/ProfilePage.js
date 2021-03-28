@@ -3,15 +3,19 @@ import { AuthContext } from '../context/AuthContext'
 import { useParams, useHistory } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { Loader } from '../components/loaders/Loader'
-import { ProfileInfo } from '../components/ProfileInfo'
+import { ProfileInfo } from '../components/profile/ProfileInfo'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../classnames/ThemedClasses'
 import { PublicationPreview } from '../components/publication/PublicationPreview'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
+import { Filters } from '../components/profile/Filters'
 
 
 export const ProfilePage = () => {
     const [user, setUser] = useState(null)
     const [publications, setPublications] = useState([])
+    const [filtered, setFiltered] = useState([])
+    const [sort, setSort] = useState(null)
 
     const { loading, error, clearError, request } = useHttp()
     const { token } = useContext(AuthContext)
@@ -31,8 +35,48 @@ export const ProfilePage = () => {
                 Authorization: `Bearer ${token}`
             })
             setPublications(userPublications.publications)
+            setFiltered(userPublications.publications)
         } catch (e) {}
     }, [token, pageId, request])
+
+    const changeSort = useCallback((sort) => {
+        setSort(sort)
+        sortPublications(filtered, sort)
+    })
+
+    const sortPublications = (publications, sort) => {
+        if(sort) {
+            const original = publications.slice()
+            setFiltered(original.sort((a, b) => {
+                let result
+                if(sort.field === 'averageRating') {
+                    result = (a-b)
+                } else
+                if(sort.field === 'comments') {
+                    result = (a.comments.length-b.comments.length)
+                } else
+                if(sort.field === 'title') {
+                    result = a.title.localeCompare(b.title)
+                } else {
+                    result = a.updated < b.updated ? -1 : 1
+                }
+                return result * sort.order
+            }))
+        } else {
+            setFiltered(publications)
+        }
+    }
+
+    const changeFilter = useCallback((filter) => {
+        const result = publications.filter(pub => {
+            let genres = pub.genres.filter(g => filter.genres.includes(g._id))
+            let tags = pub.tags.filter(t => filter.tags.includes(t._id))
+            return pub.title.toLowerCase().includes(filter.title.toLowerCase())
+                && genres.length === filter.genres.length
+                && tags.length === filter.tags.length
+        })
+        sortPublications(result, sort)
+    })
 
     const createBtnHandler = () => {
         history.push({
@@ -47,16 +91,12 @@ export const ProfilePage = () => {
 
     const deleteHandler = useCallback((id) => {
         setPublications(prev => prev.filter(pub => pub._id !== id))
-    }, [publications])
+        setFiltered(prev => prev.filter(pub => pub._id !== id))
+    }, [publications, filtered])
 
     useEffect(() => {
         loadData()
     },[loadData])
-
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
     if (loading) {
         return <Loader classes={['my-5']}/>
@@ -82,11 +122,14 @@ export const ProfilePage = () => {
                 <main className="col-md-9 ms-auto mt-3 mt-md-0">
                     <div className={c.formClass}>
                         <h3 className="mb-3">{t('profile-page.title')}</h3>
-                        <div className={c.formClass}>Sort</div>
+                        { publications.length ?
+                            <Filters publications={ publications } cbSetSort={ changeSort } cbSetFilter={ changeFilter }/>
+                            : t('profile-page.no-publications')
+                        }
                     </div>
 
                     <section className="mt-3">
-                        {publications.map((publication) =>
+                        {filtered.map((publication) =>
                             <PublicationPreview
                                 publication={publication}
                                 cbDelete={deleteHandler}
@@ -95,7 +138,7 @@ export const ProfilePage = () => {
                     </section>
                 </main>
             </div>
-
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </>
     )
 }

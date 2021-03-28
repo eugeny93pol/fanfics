@@ -3,18 +3,27 @@ const mongoose = require('mongoose')
 const http = require('http')
 const path = require('path')
 const passport = require('passport')
+const cors = require('cors')
 require('dotenv').config()
 
 
 const app = express()
 const httpServer = http.createServer(app)
 const io = require('socket.io')(httpServer)
-
 const PORT = process.env.PORT
+
+// app.use(cors({//
+//     origin:"http://localhost:3000",
+//     methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
+//     credentials:true
+// }))
 
 app.use(express.json({ extended: true}))
 
+app.use('/oauth', require('./routes/oauth.route.js'))
 app.use('/api', require('./routes/index.route'))
+
+app.use(passport.initialize())
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useHttp } from '../hooks/http.hook'
 import { AuthContext } from '../context/AuthContext'
 import { CreatePage } from './CreatePage'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 
 
 export const EditPage = () => {
@@ -24,14 +25,12 @@ export const EditPage = () => {
         loadPublication()
     },[loadPublication])
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
     return (
-        <>{ !loading && publication &&
+        <>
+            { !loading && publication &&
                 <CreatePage initial={publication}/>
-        }</>
+            }
+            <ToastServerErrors error={error} cbClearError={clearError}/>
+        </>
     )
 }

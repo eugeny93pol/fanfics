@@ -1,7 +1,8 @@
 import React from 'react'
 import { VKButton } from './VKButton'
 import { FBButton } from './FBButton'
-import { TWButton } from './TWButton'
+import { YAButton } from './YAButton'
+import './index.css'
 
 export const SocialButtons = () => {
 
@@ -9,7 +10,7 @@ export const SocialButtons = () => {
         <div className="mt-3 d-flex justify-content-center">
             <VKButton/>
             <FBButton/>
-            <TWButton/>
+            <YAButton/>
         </div>
     )
 }

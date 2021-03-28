@@ -5,9 +5,9 @@ const userSchema = new Schema({
     email: { type: String },
     password: { type: String }, //users from vk dont have password and email
     role: { type: String, ref: 'Role' },
-    vkid: { type: String },
-    fbid: { type: String },
-    twid: { type: String },
+    vkontakte_id: { type: String },
+    facebook_id: { type: String },
+    yandex_id: { type: String },
     achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement'}],
 })
 

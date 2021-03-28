@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useHttp } from '../../hooks/http.hook'
 import { AuthContext } from '../../context/AuthContext'
 import { Loader } from '../loaders/Loader'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const Dropzone = ({setSelectedFiles, initial}) => {
     const [files, setFiles] = useState(initial || [])
@@ -75,11 +76,6 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
         setFiles([])
     }
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
     useEffect(() => {
         setSelectedFiles(files)
     }, [files])
@@ -109,6 +105,7 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
                     ))
                 }
             </div>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </div>
     )
 }

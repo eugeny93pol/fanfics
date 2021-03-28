@@ -11,6 +11,7 @@ import { ChapterView } from '../components/chapter/ChapterView'
 import { TagsList } from '../components/tags/TagsList'
 import { CommentsModule } from '../components/comments/CommentsModule'
 import { PublicationMenu } from '../components/publication/PublicationMenu'
+import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 
 
 export const PublicationPage = () => {
@@ -39,11 +40,6 @@ export const PublicationPage = () => {
     useEffect(() => {
         loadData()
     },[loadData])
-
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
     useEffect(() => {
         publication &&
@@ -111,6 +107,8 @@ export const PublicationPage = () => {
                 }
             </div>
         </div>
-        }</>
+        }
+        <ToastServerErrors error={error} cbClearError={clearError}/>
+        </>
     )
 }

@@ -3,6 +3,7 @@ import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const UsersToolbar = ({ids, update}) => {
     const { token } = useContext(AuthContext)
@@ -86,6 +87,7 @@ export const UsersToolbar = ({ids, update}) => {
                     <span className="visually-hidden">{t('table-users-actions.delete')}</span>
                 </button>
             </div>
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </div>
     )
 }

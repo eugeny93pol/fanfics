@@ -5,10 +5,8 @@ import { CommentForm } from './CommentForm'
 import { Comment } from './Comment'
 
 
-
 export const CommentsModule = ({publication}) => {
     const [comments, setComments] = useState(publication.comments || [])
-
     const { t } = useTranslation()
 
     useEffect(() => {
@@ -20,7 +18,6 @@ export const CommentsModule = ({publication}) => {
         return () => socket.disconnect()
 
     }, [])
-
 
     return(
         <>

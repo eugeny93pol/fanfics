@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom'
 
 export const SearchResults = ({ results, cbCloseModal }) => {
     const [props, setProps] = useState(results)
-
     const { t } = useTranslation()
     const { c } = useThemedClasses()
 

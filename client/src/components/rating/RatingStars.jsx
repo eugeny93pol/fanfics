@@ -4,6 +4,7 @@ import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
 import { useTranslation } from 'react-i18next'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 
 export const RatingStars = ({ average, readonly, userRate, publicationId }) =>{
@@ -29,11 +30,6 @@ export const RatingStars = ({ average, readonly, userRate, publicationId }) =>{
         } catch (e) {}
     }, [token, request, userData, publicationId])
 
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
-
     return (
         <>
             <Rating
@@ -49,6 +45,7 @@ export const RatingStars = ({ average, readonly, userRate, publicationId }) =>{
             { averageRating>0 &&
                 <div className="text-muted">{t('rating.average', { value: averageRating.toFixed(1) })}</div>
             }
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </>
     )
 }

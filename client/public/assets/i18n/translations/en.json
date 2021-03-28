@@ -46,6 +46,11 @@
 
   "email": "Email address",
 
+  "filters.genres": "Genres",
+  "filters.tags": "Tags",
+  "filters.title": "Title",
+  "filters.title-placeholder": "Filter by title",
+
   "login": "Login",
   "logout": "Logout",
 
@@ -71,6 +76,7 @@
 
   "profile.info": "Profile info",
   "profile-page.create": "Create fanfic",
+  "profile-page.no-publications": "No publications",
   "profile-page.title": "Here you can find your publications",
 
   "publication-page.comments-input-button": "Comment",
@@ -90,6 +96,19 @@
 
   "registration": "Registration",
 
+  "s_auth_failed": "This user is not registered, or the password is incorrect",
+  "s_bad_request": "Invalid request parameters, please try again",
+  "s_duplicate_title": "You already have a publication with this title",
+  "s_incorrect_id": "Incorrect ID",
+  "s_invalid_form_data": "Check the entered data",
+  "s_genre_exists": "This genre already exists",
+  "s_not_authorized": "User not authorized to perform this action",
+  "s_user_blocked": "User is blocked",
+  "s_user_created": "User created successfully",
+  "s_user_exists": "This user already exists",
+  "s_user_not_found": "No such user found",
+  "s_server_internal_error": "Internal server error",
+
   "search": "Search",
   "search-results.count": "Total results - {{count}}",
   "settings": "Settings",
@@ -97,6 +116,11 @@
   "signup": "Sign Up",
   "site.description": "Mordor - technological civilization, discredited by the victors",
   "site.name": "Mordor",
+
+  "sort-panel.comments": "Comments",
+  "sort-panel.date": "Date",
+  "sort-panel.rating": "Rating",
+  "sort-panel.title": "Title",
 
   "theme.dark": "Dark theme",
 

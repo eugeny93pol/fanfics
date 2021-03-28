@@ -122,44 +122,6 @@ img {
     background-image: linear-gradient(transparent, transparent);
 }
 
-.social-btn {
-    width: 48px;
-    height: 48px;
-    margin-right: 0.5rem;
-}
-
-.social-btn:last-child {
-    margin-right: 0;
-}
-
-.vk-btn {
-    background: #5181b8 url("./images/vk-icon.svg") no-repeat center;
-}
-
-.vk-btn:hover,
-.vk-btn:focus {
-    background-color: #2a5885;
-}
-
-.fb-btn {
-    background: #1877f2 url("./images/fb-icon.svg") no-repeat center;
-    background-position-y: 8px;
-}
-
-.fb-btn:hover,
-.fb-btn:focus {
-    background-color: #0099e6;
-}
-
-.tw-btn {
-    background: #1da0f1 url("./images/tw-icon.svg") no-repeat center;
-}
-
-.tw-btn:hover,
-.tw-btn:focus {
-    background-color: rgba(29,160,241,.85);
-}
-
 .form-edit {
     cursor: pointer;
     background-repeat: no-repeat;

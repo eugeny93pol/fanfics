@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
+import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 
 export const ChapterView = ({data, index, authorId, hasAccess}) => {
@@ -24,11 +25,6 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
             setChapter(fetched.chapter)
         } catch (e) {}
     },[request, token, userData, chapter])
-
-    useEffect( () => {
-        console.log(error)
-        clearError()
-    }, [error, clearError])
 
 
     return (
@@ -64,7 +60,7 @@ export const ChapterView = ({data, index, authorId, hasAccess}) => {
                     <div>{chapter.likes.length}</div>
                 </div>
             }
+            <ToastServerErrors error={error} cbClearError={clearError}/>
         </section>
-
     )
 }
