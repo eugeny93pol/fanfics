@@ -20,13 +20,13 @@ const cbRedirect = () => {
     }
 }
 
-router.get(`${process.env.REDIRECT_HOSTNAME}/facebook`, authenticate('facebook'))
+router.get(`/facebook`, authenticate('facebook'))
 router.get(`${process.env.REDIRECT_HOSTNAME}/facebook/callback`, cbAuthenticate('facebook'), cbRedirect())
 
-router.get(`${process.env.REDIRECT_HOSTNAME}/vk`, authenticate('vkontakte'))
+router.get(`/vk`, authenticate('vkontakte'))
 router.get(`${process.env.REDIRECT_HOSTNAME}/vk/callback`, cbAuthenticate('vkontakte'), cbRedirect())
 
-router.get(`${process.env.REDIRECT_HOSTNAME}/yandex`, authenticate('yandex'))
+router.get(`/yandex`, authenticate('yandex'))
 router.get(`${process.env.REDIRECT_HOSTNAME}/yandex/callback`, cbAuthenticate('yandex'), cbRedirect())
 
 
