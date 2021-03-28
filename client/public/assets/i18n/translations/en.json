@@ -74,6 +74,7 @@
 
   "password": "Password",
   "password.hint": "Your password must be 6 characters long.",
+  "privacy-policy": "Privacy Policy",
   "profile": "Profile",
   "profile.go": "Go to profile",
 

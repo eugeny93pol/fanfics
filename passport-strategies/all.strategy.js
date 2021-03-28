@@ -10,7 +10,6 @@ module.exports = (provider) => async (accessToken, refreshToken, profile, done) 
                 { email: profile.emails[0].value }
             ]
         })
-        console.log(profile)
         if (user) {
             user[`${provider}_id`] = profile.id
             user.email = profile.emails[0].value

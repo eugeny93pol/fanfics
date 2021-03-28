@@ -12,11 +12,11 @@ const httpServer = http.createServer(app)
 const io = require('socket.io')(httpServer)
 const PORT = process.env.PORT
 
-// app.use(cors({//
-//     origin:"http://localhost:3000",
-//     methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
-//     credentials:true
-// }))
+app.use(cors({//
+    origin:"https://mordor-fanfics.herokuapp.com/",
+    methods:"GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials:true
+}))
 
 app.use(express.json({ extended: true}))
 
