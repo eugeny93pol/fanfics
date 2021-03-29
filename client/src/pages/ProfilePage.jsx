@@ -17,7 +17,7 @@ export const ProfilePage = () => {
     const [filtered, setFiltered] = useState([])
 
     const { loading, error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
     const { t } = useTranslation()
     const { c } = useThemedClasses()
     const history = useHistory()
@@ -25,18 +25,18 @@ export const ProfilePage = () => {
 
     const loadData = useCallback(async () => {
         try {
+            const token = await getToken()
             const userData = await request(`/api/user/${pageId}`, 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: await token
             })
             setUser(userData.user)
-
             const userPublications = await request(`/api/publications/user/?user=${pageId}`, 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: await token
             })
             setPublications(userPublications.publications)
             setFiltered(userPublications.publications)
         } catch (e) {}
-    }, [token, pageId, request])
+    }, [ pageId, request])
 
     const createBtnHandler = () => {
         history.push({

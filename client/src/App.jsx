@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useState } from 'react'
+import React, { Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { ThemeContext } from './context/ThemeContext'
@@ -12,7 +12,7 @@ import './i18n/i18n'
 import 'bootstrap/dist/js/bootstrap.bundle.min'
 
 function App() {
-    const { token, login, logout, userData, isAuth, ready } = useAuth()
+    const { getToken, login, logout, userData, isAuth, ready } = useAuth()
     const { theme, toggleTheme } = useTheme()
     const routes = useRoutes(isAuth)
     const loader = <Loader classes={['my-5']}/>
@@ -22,7 +22,7 @@ function App() {
     return (
         <HelmetProvider>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
-                <AuthContext.Provider value={{ token, login, logout, userData, isAuth }}>
+                <AuthContext.Provider value={{ getToken, login, logout, userData, isAuth }}>
                     <Router>
                         <Suspense fallback={ loader }>
                             <Navbar/>

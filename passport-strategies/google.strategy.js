@@ -4,7 +4,7 @@ const callbackStrategy = require('./all.strategy')
 const options = {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/oauth/google/callback',
+    callbackURL: 'https://mordor-fanfics.herokuapp.com/oauth/google/callback',
     profileFields: ['id', 'displayName', 'email']
 }
 

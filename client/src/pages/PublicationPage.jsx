@@ -12,12 +12,14 @@ import { TagsList } from '../components/tags/TagsList'
 import { CommentsModule } from '../components/comments/CommentsModule'
 import { PublicationMenu } from '../components/publication/PublicationMenu'
 import { ToastServerErrors } from '../components/toast/ToastServerErrors'
+import { useTranslation } from 'react-i18next'
 
 
 export const PublicationPage = () => {
     const [hasAccess, setHasAccess] = useState(false)
     const [publication, setPublication] = useState(null)
     const { c } = useThemedClasses()
+    const { t } = useTranslation()
     const { userData, isAuth } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
     const pageId = useParams().id
@@ -45,7 +47,7 @@ export const PublicationPage = () => {
         publication &&
         isAuth &&
         setHasAccess(userData.role === 'admin'
-            || userData.id === publication.author._id)
+            || publication.author && (userData.id === publication.author._id))
     },[publication, userData, isAuth])
 
     if (loading) return <Loader classes={['my-5']}/>
@@ -77,6 +79,7 @@ export const PublicationPage = () => {
                         <ChapterView data={chapter} key={chapter._id}
                                      authorId={publication.author._id}
                                      index={i}
+                                     hasAccess={hasAccess}
                         />)
                     }
                 </div>
@@ -84,15 +87,20 @@ export const PublicationPage = () => {
                 <div className="text-center mb-5">
                     <div className="text-muted">{new Date(publication.updated).toLocaleString()}</div>
                     <div>
-                        <Link to={`/profile/${publication.author._id}`}
-                              className={`nav-link link-secondary px-0 ${ !hasAccess ? 'disabled' : ''}`}
-                        >{publication.author.name}</Link>
+                        { publication.author ?
+                            <Link to={`/profile/${publication.author._id}`}
+                                  className={`nav-link link-secondary px-0 ${ !hasAccess ? 'disabled' : ''}`}
+                            >{publication.author.name}</Link>
+                            :
+                            <span className="text-muted">{t('publication.user-deleted')}</span>
+                        }
                     </div>
                     <RatingStars
                         publicationId={publication._id}
                         average={publication.averageRating}
                         userRate={publication.rates[0]}
-                        readonly={!isAuth || userData.id === publication.author._id}
+                        readonly={
+                            !isAuth || publication.author && (userData.id === publication.author._id) }
                     />
                 </div>
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { useTranslation } from 'react-i18next'
 import { AuthContext } from '../../context/AuthContext'
@@ -6,7 +6,7 @@ import { useHttp } from '../../hooks/http.hook'
 import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const UsersToolbar = ({ids, update}) => {
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
     const { c } = useThemedClasses()
     const { t } = useTranslation()
@@ -20,23 +20,25 @@ export const UsersToolbar = ({ids, update}) => {
         await deleteUsers(ids)
     }
 
-    const changeRoles = async (usersIds, role) => {
+    const changeRoles = useCallback(async (usersIds, role) => {
         try {
+            const token = await getToken()
             await request('/api/admin/update', 'PATCH',
                 { usersIds, role },
-                { Authorization: `Bearer ${token}` })
+                { Authorization: token })
             update()
         } catch (e) {}
-    }
+    }, [request])
 
-    const deleteUsers = async (usersIds) => {
+    const deleteUsers = useCallback(async (usersIds) => {
         try {
+            const token = await getToken()
             await request('/api/admin/delete', 'DELETE',
                 { usersIds },
-                { Authorization: `Bearer ${token}` })
+                { Authorization: token })
             update()
         } catch (e) {}
-    }
+    },[request])
 
     return (
         <div className="btn-toolbar" role="toolbar" aria-label="Toolbar">

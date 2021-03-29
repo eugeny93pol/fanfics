@@ -11,7 +11,7 @@ export const CommentForm = ({publicationId}) => {
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const { loading, error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
 
     const changeHandler = (event) => {
         setText(event.target.value)
@@ -20,15 +20,16 @@ export const CommentForm = ({publicationId}) => {
     const sendCommentHandler = useCallback(async (event) => {
         event.preventDefault()
         try {
+            const token = await getToken()
             await request(`/api/comments/`, 'POST', {
                 publication: publicationId,
                 comment: text
             }, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             setText('')
         } catch (e) {}
-    }, [text, request, token, publicationId])
+    }, [text, request, publicationId])
 
 
     return(

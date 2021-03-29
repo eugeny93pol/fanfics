@@ -1,13 +1,13 @@
 import React from 'react'
 
-export const GoogleButton = () => {
+export const VKButton = () => {
     const clickHandler = () => {
-        window.open('/oauth/google', '_self')
+        window.open('https://mordor-fanfics.herokuapp.com/oauth/vk', '_self')
     }
 
     return (
         <button
-            className="btn btn-lg google-btn social-btn"
+            className="btn btn-lg vk-btn social-btn"
             type="button"
             onClick={ clickHandler }
         />

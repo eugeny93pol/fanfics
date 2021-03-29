@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useHttp } from '../../hooks/http.hook'
 import { AuthContext } from '../../context/AuthContext'
 import { Loader } from '../loaders/Loader'
@@ -8,7 +8,7 @@ import { ToastServerErrors } from '../toast/ToastServerErrors'
 
 export const ProfileInfo = ({ user, changeUserData }) => {
     const { loading, error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
     const [form, setForm] = useState({ name: '', email: '' })
     const { c } = useThemedClasses()
 
@@ -24,17 +24,18 @@ export const ProfileInfo = ({ user, changeUserData }) => {
         setForm({ ...form, [event.target.name]: user[event.target.name] })
     }
 
-    const updateUserData = async () => {
+    const updateUserData = useCallback(async () => {
         try {
+            const token = await getToken()
             const data = await request(`/api/user/update`, 'PATCH',
                 { ...form, userId: user._id },
-                { Authorization: `Bearer ${token}`
+                { Authorization: token
                 })
             changeUserData(data.user)
         } catch (e) {
             setForm({ name: user.name, email: user.email })
         }
-    }
+    },[request, form, changeUserData])
 
     useEffect(() => {
         setForm({

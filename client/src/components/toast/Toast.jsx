@@ -39,7 +39,7 @@ export const Toast = ({ message, isOpen, onCancel }) => {
     return (
         <>{ isOpen &&
         <Portal className="modal-open">
-            <div className="position-fixed bottom-0 end-0 p-3">
+            <div className="position-fixed bottom-0 end-0 p-2 pb-5 p-sm-3">
                 <div id="toast" className={`${c.toastClass} ${show}`} role="alert" aria-live="assertive" aria-atomic="true">
                     <div className="d-flex">
                         <div className="toast-body">

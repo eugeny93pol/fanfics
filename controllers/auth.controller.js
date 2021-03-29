@@ -2,7 +2,8 @@ const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const errorHandler = require('../utils/errorHandler')
-const generateAccessToken = require('../utils/generateToken')
+const { generateAccessToken } = require('../utils/generateToken')
+const { generateRefreshToken } = require('../utils/generateToken')
 
 
 const login = async (req, res) => {
@@ -29,7 +30,8 @@ const login = async (req, res) => {
         }
 
         const token = generateAccessToken(user._id, user.role)
-        res.status(200).json( { token })
+        const refreshToken = generateRefreshToken(user._id, user.role)
+        res.status(200).json( { token, refreshToken })
     } catch (e) {
         errorHandler(res, e)
     }
@@ -66,9 +68,10 @@ const registration = async (req, res) => {
     }
 }
 
-const checkAuth = async (req, res) => {
-    const token = generateAccessToken(req.userData.userId, req.userData.userRole)
-    res.status(200).json( { token })
+const refreshToken = async (req, res) => {
+    const refresh = generateRefreshToken(req.userData.userId, req.userData.userRole)
+    const access = generateAccessToken(req.userData.userId, req.userData.userRole)
+    res.status(200).json( { refreshToken: refresh, token: access })
 }
 
-module.exports = { login, registration, checkAuth, generateAccessToken }
+module.exports = { login, registration, refreshToken }

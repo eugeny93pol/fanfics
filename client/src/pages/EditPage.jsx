@@ -9,17 +9,18 @@ import { ToastServerErrors } from '../components/toast/ToastServerErrors'
 export const EditPage = () => {
     const [publication, setPublication] = useState(null)
     const { loading, error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
     const pageId = useParams().id
 
     const loadPublication = useCallback(async () => {
         try {
+            const token = await getToken()
             const fetched = await request(`/api/publications/edit/${pageId}`, 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             setPublication(fetched.publication)
         } catch (e) {}
-    }, [token, pageId, request])
+    }, [pageId, request])
 
     useEffect(() => {
         loadPublication()

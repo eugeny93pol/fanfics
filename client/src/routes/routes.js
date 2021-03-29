@@ -9,6 +9,7 @@ import { CreatePage } from '../pages/CreatePage'
 import { UsersPage } from '../pages/UsersPage'
 import { EditPage } from '../pages/EditPage'
 import { FilterPage } from '../pages/FilterPage'
+import { EditChapterPage } from '../pages/EditChapterPage'
 
 export const useRoutes = (isAuth) => {
 
@@ -25,6 +26,7 @@ export const useRoutes = (isAuth) => {
             {isAuth && <Route path='/create' exact component={CreatePage}/>}
             {isAuth && <Route path='/edit/:id' exact component={EditPage}/>}
             {isAuth && <Route path='/users' exact component={UsersPage}/>}
+            {isAuth && <Route path='/chapter' exact component={EditChapterPage}/>}
 
             <Redirect to='/'/>
         </Switch>

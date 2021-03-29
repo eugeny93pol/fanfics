@@ -14,18 +14,19 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
     const { t } = useTranslation()
 
     const { error, clearError, request } = useHttp()
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
 
     const getSign = useCallback(async () => {
         setUploading(true)
         try {
+            const token = await getToken()
             return await request(`/api/upload/`, 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
         } catch (e) {
             setUploading(false)
         }
-    },[request, token])
+    },[request])
 
     const uploadImages = useCallback(async (files, options) => {
         const formData = new FormData()
@@ -55,7 +56,7 @@ export const Dropzone = ({setSelectedFiles, initial}) => {
         const options = await getSign()
         const uploaded = await uploadImages(acceptedFiles, options)
         setFiles(uploaded)
-    }, [token, request, getSign, uploadImages])
+    }, [request, getSign, uploadImages])
 
     const options = {
         onDrop,

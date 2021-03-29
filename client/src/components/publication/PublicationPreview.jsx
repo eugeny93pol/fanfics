@@ -18,7 +18,7 @@ export const PublicationPreview = ({publication, cbDelete}) => {
     useEffect(() => {
         isAuth &&
         setHasAccess(userData.role === 'admin'
-            || userData.id === publication.author._id)
+            || publication.author && (userData.id === publication.author._id))
     },[publication, userData])
 
     return (<>
@@ -57,9 +57,13 @@ export const PublicationPreview = ({publication, cbDelete}) => {
                     }
                 </div>
                 <div className="w-50 text-end">
-                    <Link to={`/profile/${publication.author._id}`}
-                          className={`nav-link link-secondary profileLink px-0 ${ !hasAccess && 'disabled'}`}
-                    >{publication.author.name}</Link>
+                    { publication.author ?
+                        <Link to={`/profile/${publication.author._id}`}
+                              className={`nav-link link-secondary profileLink px-0 ${!hasAccess ? 'disabled' : ''}`}
+                        >{publication.author.name}</Link>
+                        :
+                        <span className="text-muted">{t('publication.user-deleted')}</span>
+                    }
                 </div>
             </div>
         </div>

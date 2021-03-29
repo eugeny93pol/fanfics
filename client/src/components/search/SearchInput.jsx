@@ -25,7 +25,7 @@ export const SearchInput = ({ cbSetResults }) => {
             const data = await request(`/api/search/?text=${query}`)
             cbSetResults(data.result)
         } catch (e) {}
-    }, [request, query])
+    }, [request, query, cbSetResults])
 
     const submitHandler = (event) => {
         event.preventDefault()

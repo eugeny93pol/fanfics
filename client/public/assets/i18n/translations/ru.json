@@ -4,6 +4,9 @@
   "contents.title": "Содержание",
   "create": "Создать",
 
+  "chapter-edit-button.save": "Сохранить главу",
+  "chapter-delete-modal.text": "Вы действительно хотите удалить главу {{title}}?",
+
   "create-page.title": "Создайте свой фанфик",
   "create-page-button.add": "Добавить главу",
   "create-page-button.save": "Сохранить фанфик",
@@ -82,6 +85,8 @@
   "profile-page.create": "Создать фанфик",
   "profile-page.no-publications": "Нет публикаций",
   "profile-page.title": "Здесь собраны ваши публикации",
+
+  "publication.user-deleted": "Пользователь удален",
 
   "publication-page.comments-input-button": "Комментировать",
   "publication-page.comments-input-label": "Оставить комментарий",

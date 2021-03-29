@@ -7,7 +7,7 @@ import { MarkdownEditor } from '../editor/MarkdownEditor'
 import { useSettingsDnD } from '../../hooks/settinsDnD.hook'
 
 
-export const ChapterCreate = ({id, index, initial, moveChapter, changeChapter, removeChapter}) => {
+export const ChapterCreate = ({id, index, initial, moveChapter , changeChapter, removeChapter}) => {
     const [chapter, setChapter] = useState(initial)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const { t } = useTranslation()
@@ -82,7 +82,6 @@ export const ChapterCreate = ({id, index, initial, moveChapter, changeChapter, r
                                    onChange={changeHandler}
                                    name="title"
                                    value={chapter.title}
-
                             />
                         </div>
 

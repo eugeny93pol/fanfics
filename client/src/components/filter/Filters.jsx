@@ -103,7 +103,7 @@ export const Filters = ({ publications, cbSetFiltered }) => {
 
     useEffect(() => {
         setId(queryString.parse(history.location.search).id)
-    },[])
+    },[history.location.search])
 
     return (
         <div className={c.formClass}>

@@ -290,6 +290,35 @@ img {
     width: calc(100% - 50px);
 }
 
+
+.chapterButton {
+    position: absolute;
+    right: 0;
+    color: rgba(0,0,0,.55);
+    z-index: 99999;
+}
+
+.chapterButton:focus,
+.chapterButton:focus {
+    box-shadow: none;
+    color: rgba(0,0,0,.7);
+}
+
+.bg-dark .chapterButton {
+    color: var(--bs-secondary);
+}
+
+.bg-dark .chapterButton:hover,
+.bg-dark .chapterButton:focus {
+    color: var(--bs-light);
+}
+
+.chapterMenu {
+    right: 1rem!important;
+    top: 6rem!important;
+    z-index: 99999;
+}
+
 @media (min-width: 576px) {
     .card.ratio {
         --bs-aspect-ratio: 50%;

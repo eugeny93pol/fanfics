@@ -1,44 +1,10 @@
 const Chapter = require('../models/Chapter')
-const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
+const { saveOrUpdateChapters } = require('./publication.controller')
+const { addToIndex } = require('./search.controller')
+const { deleteChapters } = require('./publication.controller')
+const { getPublicationsByArray } = require('./publication.controller')
 
-
-const saveOrUpdateChapters = async (data, publication) => {
-    const chapters = []
-    for(const ch of data) {
-        let chapter
-        if (mongoose.isValidObjectId(ch._id)) {
-            chapter = await Chapter.findById(ch._id)
-            if (chapter.title !== ch.title ||
-                chapter.content !== ch.content ||
-                chapter.files.join() !== ch.files.join()
-            ) {
-                chapter.updated = Date.now()
-            }
-        } else {
-            chapter = new Chapter()
-            chapter.publication = publication
-        }
-        chapter.title = ch.title
-        chapter.content = ch.content
-        chapter.files = ch.files
-        chapters.push(await chapter.save())
-    }
-    return chapters
-}
-
-const deleteChapters = async (chapters) => {
-    const result = await Chapter.deleteMany({_id: {$in: chapters}})
-    return result.n
-}
-
-const checkChangeChapters = async (chapters, publication) => {
-    const removed = publication.chapters
-        .filter(id => !chapters.map(ch => ch._id)
-            .includes(id.toString()))
-    await deleteChapters(removed)
-    return (await saveOrUpdateChapters(chapters))
-}
 
 const likeChapter = async (req, res) => {
     try {
@@ -55,4 +21,36 @@ const likeChapter = async (req, res) => {
     }
 }
 
-module.exports = { saveOrUpdateChapters, likeChapter, deleteChapters, checkChangeChapters }
+const deleteChapter = async (req, res) => {
+    try {
+        const id = req.body._id
+        const publications = await getPublicationsByArray(id, 'chapters')
+        const publication = publications[0]
+
+        publication.chapters = publication.chapters.filter(ch => ch._id.toString() !== id)
+        await addToIndex(publication._id)
+        await deleteChapters([id])
+        await publication.save()
+        res.status(200).json({ publication })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+const updateChapter = async (req, res) => {
+    try {
+        const id = req.body._id
+        const publications = await getPublicationsByArray(id, 'chapters')
+        const publication = publications[0]
+
+        await saveOrUpdateChapters([req.body])
+
+        await addToIndex(publication._id)
+        await publication.save()
+        res.status(200).json({ publication })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports = { likeChapter, deleteChapter, updateChapter }

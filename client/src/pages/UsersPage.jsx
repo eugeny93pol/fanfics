@@ -13,17 +13,18 @@ export const UsersPage = () => {
     const [users, setUsers] = useState(null)
     const [selectedIds, setSelectedIds] = useState(null)
     const { error, clearError, request } = useHttp()
-    const { token, userData } = useContext(AuthContext)
+    const { getToken, userData } = useContext(AuthContext)
     const { c } = useThemedClasses()
 
     const loadData = useCallback(async () => {
         try {
+            const token = await getToken()
             const fetchedUsers = await request('/api/admin/users', 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             setUsers(fetchedUsers.users)
         } catch (e) {}
-    }, [token, request])
+    }, [request])
 
     const { columns } = useTableSettings(loadData)
 

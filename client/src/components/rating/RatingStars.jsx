@@ -1,5 +1,5 @@
 import Rating from 'react-rating'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { AuthContext } from '../../context/AuthContext'
 import { useHttp } from '../../hooks/http.hook'
@@ -12,23 +12,24 @@ export const RatingStars = ({ average, readonly, userRate, publicationId }) =>{
     const [averageRating, setAverageRating] = useState(average)
     const { c } = useThemedClasses()
     const { t } = useTranslation()
-    const { userData, token } = useContext(AuthContext)
+    const { userData, getToken } = useContext(AuthContext)
     const { error, clearError, request } = useHttp()
 
     const changeRateHandler = useCallback(async (rate) => {
         setRate(rate)
         try {
+            const token = await getToken()
             const fetched = await request(`/api/publications/rate`, 'PATCH', {
                 id: publicationId,
                 user: userData.id,
                 value: rate
             },{
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             setRate(fetched.rate.value)
             setAverageRating(fetched.average)
         } catch (e) {}
-    }, [token, request, userData, publicationId])
+    }, [request, userData, publicationId])
 
     return (
         <>

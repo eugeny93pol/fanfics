@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useThemedClasses } from '../../classnames/ThemedClasses'
 import { AuthContext } from '../../context/AuthContext'
@@ -9,28 +9,30 @@ export const SelectActions = ({row, refresh}) => {
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const { userData } = useContext(AuthContext)
-    const { token } = useContext(AuthContext)
+    const { getToken } = useContext(AuthContext)
     const { loading, error, clearError, request } = useHttp()
 
     const user = row.original
 
-    const changeRole = async (id, role) => {
+    const changeRole = useCallback(async (id, role) => {
         try {
+            const token = await getToken()
             await request('/api/admin/update', 'PATCH',
                 { usersIds: [id], role },
-                { Authorization: `Bearer ${token}` })
+                { Authorization: token })
             refresh()
         } catch (e) {}
-    }
+    },[request])
 
-    const deleteUser = async (id) => {
+    const deleteUser = useCallback(async (id) => {
         try {
+            const token = await getToken()
             await request('/api/admin/delete', 'DELETE',
                 { usersIds: [id] },
-                { Authorization: `Bearer ${token}` })
+                { Authorization: token })
             refresh()
         } catch (e) {}
-    }
+    },[request])
 
     const changeHandler = async (e) => {
         const role = e.target.getAttribute('data-role')

@@ -19,7 +19,7 @@ export const SigninPage = () => {
     const submitHandler = async (form) => {
         try {
             const data = await request('/api/auth/signin', 'POST', {...form})
-            auth.login(data.token)
+            auth.login(data.token, data.refreshToken)
         } catch (e) { }
     }
 

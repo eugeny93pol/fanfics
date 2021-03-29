@@ -1,15 +1,13 @@
 const Publication = require('../models/Publication')
+const Chapter = require('../models/Chapter')
 const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
 const { addToIndex } = require('./search.controller')
 const { updateIndex } = require('./search.controller')
 const { deleteFromIndex } = require('./search.controller')
-const { checkChangeChapters } = require('./chapter.controller')
 const { checkChangeTags } = require('./tag.controller')
-const { saveOrUpdateChapters } = require('./chapter.controller')
 const { saveOrUpdateTags } = require('./tag.controller')
 const { deleteRates } = require('./rate.controller')
-const { deleteChapters } = require('./chapter.controller')
 const { deleteTagsFromPublication } = require('./tag.controller')
 const { deleteComments } = require('./comment.controller')
 
@@ -43,10 +41,46 @@ const savePublication = async (req, res) => {
     }
 }
 
+const saveOrUpdateChapters = async (data) => {
+    const chapters = []
+    for(const ch of data) {
+        let chapter
+        if (mongoose.isValidObjectId(ch._id)) {
+            chapter = await Chapter.findById(ch._id)
+            if (chapter.title !== ch.title ||
+                chapter.content !== ch.content ||
+                chapter.files.join() !== ch.files.join()
+            ) {
+                chapter.updated = Date.now()
+            }
+        } else {
+            chapter = new Chapter()
+        }
+        chapter.title = ch.title
+        chapter.content = ch.content
+        chapter.files = ch.files
+        chapters.push(await chapter.save())
+    }
+    return chapters
+}
+
+const deleteChapters = async (chapters) => {
+    const result = await Chapter.deleteMany({_id: {$in: chapters}})
+    return result.n
+}
+
+const checkChangeChapters = async (chapters, publication) => {
+    const removed = publication.chapters
+        .filter(id => !chapters.map(ch => ch._id)
+            .includes(id.toString()))
+    await deleteChapters(removed)
+    return (await saveOrUpdateChapters(chapters))
+}
+
 const createPublication = async (data) => {
     const { title, description, author, genres } = data
     const tags = await saveOrUpdateTags(data.tags)
-    const chapters = await saveOrUpdateChapters(data.chapters, author)
+    const chapters = await saveOrUpdateChapters(data.chapters)
     let publication = new Publication({
         title, description, author,
         genres: genres.map(genre => genre._id),
@@ -80,7 +114,6 @@ const updatePublication = async (req, res) => {
 const getPublications = async (req, res) => {
     try {
         let publications
-
         switch (true) {
             case !!req.query.sort:
                 publications = await getSortedPublications(req.query)
@@ -153,17 +186,20 @@ const getUserPublications = async (id) => {
     )
 }
 
-const getUserPublicationsByArrayIncludeId = async (req, res) => {
+const getPublicationsByArray = async (id, field) => {
+    return ( await Publication.
+        find({[field]: { $in: [id] }}).
+        populate('author', 'name').
+        populate('tags').
+        populate('genres').
+        populate('rates'))
+}
+
+const getPublicationsByArrayIncludeId = async (req, res) => {
     try {
         const id = req.params.id
         const field = req.params.field
-        const publications =
-            await Publication.
-            find({[field]: { $in: [id] }}).
-            populate('author', 'name').
-            populate('tags').
-            populate('genres').
-            populate('rates')
+        const publications = await getPublicationsByArray(id, field)
         res.status(200).json({ publications })
     } catch (e) { errorHandler(res, e) }
 }
@@ -175,6 +211,10 @@ const getPublication = async (id, user) => {
         populate('author', 'name').
         populate('tags').
         populate('genres').
+        populate({
+            path: 'rates',
+            select: 'value user'
+        }).
         populate('chapters').
         populate({
             path: 'comments',
@@ -185,11 +225,7 @@ const getPublication = async (id, user) => {
         })
 
     if (mongoose.isValidObjectId(user)) {
-        publication.populate({
-            path: 'rates',
-            match: { user: user },
-            select: 'value'
-        })
+        publication.rates = publication.rates.filter(rate => rate.user.toString() === user)
     }
     return publication
 }
@@ -224,5 +260,8 @@ module.exports = {
     getPublications,
     deletePublication,
     getPublicationEdit,
-    getUserPublicationsByArrayIncludeId
+    getPublicationsByArray,
+    getPublicationsByArrayIncludeId,
+    saveOrUpdateChapters,
+    deleteChapters
 }

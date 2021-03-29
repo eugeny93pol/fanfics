@@ -30,7 +30,7 @@ export const CreatePage = ({ initial }) => {
     })
 
     const { error, clearError, loading, request } = useHttp()
-    const { token, userData } = useContext(AuthContext)
+    const { getToken, userData } = useContext(AuthContext)
     const { c } = useThemedClasses()
     const { t } = useTranslation()
     const history = useHistory()
@@ -38,21 +38,23 @@ export const CreatePage = ({ initial }) => {
 
     const loadData = useCallback(async () => {
         try {
+            const token = await getToken()
             const fetched = await request('/api/create/', 'GET', null, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             setMeta(fetched)
         } catch (e) {}
-    }, [token, request])
+    }, [request])
 
     const saveHandler = useCallback(async () => {
         try {
+            const token = await getToken()
             const response = await request('/api/publications/', 'POST', { ...publication }, {
-                Authorization: `Bearer ${token}`
+                Authorization: token
             })
             history.push(`/publication/${response.publication._id}`)
         } catch (e) {}
-    })
+    }, [request, publication])
 
     const changeHeadData = useCallback((head) => {
         setPublication({

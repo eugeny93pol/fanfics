@@ -4,6 +4,9 @@
   "contents.title": "Contents",
   "create": "Create",
 
+  "chapter-edit-button.save": "Save chapter",
+  "chapter-delete-modal.text": "Do you really want to delete a chapter {{title}}?",
+
   "create-page.title": "Create your fanfic",
   "create-page-button.add": "Add new chapter",
   "create-page-button.save": "Save fanfic",
@@ -82,6 +85,8 @@
   "profile-page.create": "Create fanfic",
   "profile-page.no-publications": "No publications",
   "profile-page.title": "Here you can find your publications",
+
+  "publication.user-deleted": "User deleted",
 
   "publication-page.comments-input-button": "Comment",
   "publication-page.comments-input-label": "Leave a comment",
