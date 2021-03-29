@@ -2,7 +2,7 @@ import React from 'react'
 
 export const YAButton = () => {
     const clickHandler = () => {
-        window.open('https://mordor-fanfics.herokuapp.com/oauth/yandex', '_self')
+        window.open('/oauth/yandex', '_self')
     }
 
     return (

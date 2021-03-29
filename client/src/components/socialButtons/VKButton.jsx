@@ -2,7 +2,7 @@ import React from 'react'
 
 export const VKButton = () => {
     const clickHandler = () => {
-        window.open('https://mordor-fanfics.herokuapp.com/oauth/vk', '_self')
+        window.open('/oauth/vk', '_self')
     }
 
     return (

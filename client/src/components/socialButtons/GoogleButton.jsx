@@ -2,7 +2,7 @@ import React from 'react'
 
 export const GoogleButton = () => {
     const clickHandler = () => {
-        window.open('https://mordor-fanfics.herokuapp.com/oauth/google', '_self')
+        window.open('oauth/google', '_self')
     }
 
     return (
