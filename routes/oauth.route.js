@@ -17,7 +17,7 @@ const cbAuthenticate = (provider) => {
 
 const cbRedirect = () => {
     return (req, res) => {
-        res.redirect(`/?access_token=${req.user.token}`)
+        res.redirect(`/?access_token=${req.user.token}&refresh_token=${req.user.refreshToken}`)
     }
 }
 

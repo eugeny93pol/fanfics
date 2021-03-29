@@ -68,8 +68,8 @@ export const MainPage = () => {
     useEffect(() => {
         loadTags()
         const search = queryString.parse(history.location.search)
-        if(search.access_token) {
-            auth.login(search.access_token)
+        if(search.access_token && search.refresh_token) {
+            auth.login(search.access_token, search.refresh_token)
             history.push({ search: '' })
         }
     },[])

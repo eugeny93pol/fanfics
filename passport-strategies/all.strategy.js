@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const generateAccessToken = require('../utils/generateToken')
+const { generateRefreshToken } = require('../utils/generateToken')
 
 
 module.exports = (provider) => async (accessToken, refreshToken, profile, done) => {
@@ -23,7 +24,8 @@ module.exports = (provider) => async (accessToken, refreshToken, profile, done) 
         }
         await user.save()
         const token = generateAccessToken(user._id, user.role)
-        done(null, { user, token })
+        const refreshToken = generateRefreshToken(user._id, user.role)
+        done(null, { user, token, refreshToken })
     } catch (e) {
         done(e, false)
     }
