@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const generateAccessToken = require('../utils/generateToken')
+const { generateAccessToken } = require('../utils/generateToken')
 const { generateRefreshToken } = require('../utils/generateToken')
 
 
